@@ -1,0 +1,75 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Category {
+  id: String!
+  type: String!
+}
+
+type PriceHistory {
+  price: String!
+  date: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Price {
+  currentPrice: String!
+  history: [PriceHistory!]
+}
+
+type Info {
+  name: String!
+  year: String
+}
+
+type Liquor {
+  id: String!
+  img: String!
+  category: Category!
+  price: Price!
+  info: Info!
+}
+
+type Query {
+  getAllLiquor: [Liquor!]!
+}
+
+type Mutation {
+  createLiquor(options: CreateLiquorInput!): Liquor!
+}
+
+input CreateLiquorInput {
+  img: String
+  category: CategoryType!
+  price: PriceType
+  info: InfoType!
+}
+
+input CategoryType {
+  id: String!
+  type: String!
+}
+
+input PriceType {
+  currentPrice: String!
+  history: [PriceHistoryType!]
+}
+
+input PriceHistoryType {
+  price: String!
+  date: DateTime!
+}
+
+input InfoType {
+  name: String!
+  year: String
+}
+
+type Subscription {
+  updatedLiquorList: Liquor!
+}

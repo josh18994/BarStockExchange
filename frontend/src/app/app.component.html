@@ -1,0 +1,13 @@
+<button (click)="simulateStore()">Simulate Store</button>
+<div *ngIf="liquors?.length > 0">
+  <ul>
+    <li *ngFor="let liquor of liquors">
+      <div>
+        BrandName: {{liquor.brandName}}
+      </div>
+      <div>
+        Type: {{liquor.type}}
+      </div>
+    </li>
+  </ul>
+</div>
