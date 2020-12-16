@@ -8,19 +8,22 @@ export class InfoType {
     @Field()
     name: string;
 
-    @Field(() => String, { nullable: true })
+    @Field({ nullable: true })
     year: string;
+
 }
 
 @InputType()
-export class CategoryType{
-
-    @Field()
-    id: string;
+export class CategoryType {
 
     @IsNotEmpty()
     @Field()
-    type: string;
+    categoryId: string;
+
+    @IsOptional()
+    @Field({nullable: true})
+    categoryType: string;
+
 }
 
 @InputType()
@@ -31,6 +34,7 @@ export class PriceHistoryType {
 
     @Field()
     date: Date;
+
 }
 
 @InputType()
@@ -41,14 +45,15 @@ export class PriceType {
     currentPrice: string;
 
     @IsOptional()
-    @Field(() => [PriceHistoryType], {nullable: true})
+    @Field(() => [PriceHistoryType], { nullable: true })
     history?: PriceHistoryType[]
+
 }
 
 @InputType()
-export class CreateLiquorInput {
+export class LiquorInput {
 
-    @Field(() => String, { nullable: true })
+    @Field({ nullable: true })
     img: string;
 
     @IsNotEmpty()

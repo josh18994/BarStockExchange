@@ -3,7 +3,11 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from 'mongoose';
 import { Price, Info, Category } from './types/liquor.types';
 
-export type LiquorDocument = Liquor & Document;
+export class ModelFeautres {
+    _doc: any
+}
+
+export type LiquorDocument = Liquor & Document & ModelFeautres;
 
 @ObjectType()
 @Schema()
@@ -13,7 +17,7 @@ export class Liquor {
     @Prop()
     id: string;
 
-    @Field()
+    @Field({nullable: true})
     @Prop()
     img: string;
 
