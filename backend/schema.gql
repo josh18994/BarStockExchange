@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 type Category {
-  id: String!
-  type: String!
+  categoryId: String!
+  categoryType: String!
 }
 
 type PriceHistory {
@@ -29,7 +29,7 @@ type Info {
 
 type Liquor {
   id: String!
-  img: String!
+  img: String
   category: Category!
   price: Price!
   info: Info!
@@ -37,13 +37,15 @@ type Liquor {
 
 type Query {
   getAllLiquor: [Liquor!]!
+  getLiquorById(id: String!): Liquor!
 }
 
 type Mutation {
-  createLiquor(options: CreateLiquorInput!): Liquor!
+  createLiquor(options: LiquorInput!): Liquor!
+  updateLiquor(id: String!, options: LiquorInput!): Liquor
 }
 
-input CreateLiquorInput {
+input LiquorInput {
   img: String
   category: CategoryType!
   price: PriceType
@@ -51,8 +53,8 @@ input CreateLiquorInput {
 }
 
 input CategoryType {
-  id: String!
-  type: String!
+  categoryId: String!
+  categoryType: String
 }
 
 input PriceType {
