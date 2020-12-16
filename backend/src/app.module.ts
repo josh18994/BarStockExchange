@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { LiquorModule } from './liquor/liquor.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
+import { MONGO_DB_CONNECT } from './constants/personal.settings';
 
 @Module({
   imports: [
@@ -10,7 +11,9 @@ import { GraphQLModule } from '@nestjs/graphql';
       autoSchemaFile: './schema.gql',
       installSubscriptionHandlers: true,
     }),
-    MongooseModule.forRoot('mongodb+srv://joshua:enqzElyXMVy6KYJY@cluster0.huuxj.mongodb.net/liquor?retryWrites=true&w=majority')
+
+    // Create file src/constants/personal.settings.ts and add mongo string connect as a enum
+    MongooseModule.forRoot(MONGO_DB_CONNECT)
   ],
   controllers: [],
   providers: [],
