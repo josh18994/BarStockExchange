@@ -33,6 +33,7 @@
     "rxjs": "~6.6.3",
     "subscriptions-transport-ws": "^0.9.18",
     "tslib": "^2.0.0",
+    "vanilla-tilt": "^1.7.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

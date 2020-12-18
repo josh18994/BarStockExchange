@@ -11,10 +11,24 @@ export function reducer(state: ILiquorAppState = initialState, action: Actions):
   switch (action.type) {
 
     case ActionTypes.TestLiquorAppSuccess:
-      console.log(action.payload);
       return {
         ...state,
         data: action.payload.result
+      };
+
+    case ActionTypes.UpdateRecieved:
+      const updatedDataFromServer = action.payload.data.updatedLiquorList;
+      const stateData = [...state.data];
+      const newStateData = [];
+      stateData.forEach(obj => {
+        if (obj.id === updatedDataFromServer.id) {
+          newStateData.push(updatedDataFromServer);
+        }
+        else { newStateData.push(obj); }
+      });
+      return {
+        ...state,
+        data: newStateData
       };
 
     default:
