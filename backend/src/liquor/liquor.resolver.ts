@@ -13,7 +13,6 @@ export class TestLiquorOutput {
     @Field()
     message: string;
 }
-
 @Resolver()
 export class LiquorResolver {
     constructor(
@@ -29,17 +28,18 @@ export class LiquorResolver {
         return liquor;
     }
 
-    @Mutation(() => Liquor, {nullable: true})
+    @Mutation(() => Liquor, { nullable: true })
     async updateLiquor(
         @Args('options', ValidationPipe) options: LiquorInput,
         @Args('id') id: string
     ): Promise<Liquor | void> {
         const liquor = await this.liquorService.updateLiquor(options, id);
-        if(liquor) {
+        if (liquor) {
             pubSub.publish(LIQUOR_ADDED, { updatedLiquorList: liquor });
         }
         return liquor;
     }
+
 
     @Query(() => [Liquor])
     getAllLiquor(): Promise<Liquor[] | undefined> {

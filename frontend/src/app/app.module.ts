@@ -8,10 +8,12 @@ import { effects, reducers } from './state';
 import { EffectsModule } from '@ngrx/effects';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LiquorTileComponent } from './components/liquor/liquor-tile/liquor-tile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LiquorTileComponent
   ],
   imports: [
     BrowserModule,

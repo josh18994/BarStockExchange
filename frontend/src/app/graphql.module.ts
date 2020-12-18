@@ -40,11 +40,11 @@ interface Definintion {
 
         // Create an http link:
         const http = httpLink.create({
-          uri: 'http://localhost:3000/graphql',
+          uri: 'http://localhost:4000/graphql',
         });
 
         const ws = new WebSocketLink({
-          uri: `ws://localhost:5000/`,
+          uri: `ws://localhost:4000/graphql`,
           options: {
             reconnect: true,
           },

@@ -1,0 +1,10 @@
+<div class="box" [attr.data-category]="liquorCategory">
+  <h2 class="name">{{liquorItem.info.name}}</h2>
+  <h4 class="category">{{liquorItem.category.categoryType}}</h4>
+  <h4 class="price">${{liquorItem.price.currentPrice}}</h4>
+  <div class="circle"></div>
+  <img src="../../../../assets/whiskey.png" class="product">
+  <a href="#" class="buy">Buy Now</a>
+</div>
+
+<!-- too add glare use data-tilt-glare="true" data-tilt-scale="1.1" -->

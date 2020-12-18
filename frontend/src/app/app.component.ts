@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from './state';
-import { TestLiquorApp } from './state/app/app.actions';
-import { ILiquorAppState } from './state/app/app.state';
+import { StartConnection, TestLiquorApp } from './state/app/app.actions';
 
 @Component({
   selector: 'app-root',
@@ -11,20 +10,21 @@ import { ILiquorAppState } from './state/app/app.state';
 })
 export class AppComponent implements OnInit {
 
-  public liquors = [];
+  public liquorList;
 
   constructor(private store: Store<IAppState>) { }
 
 
   ngOnInit() {
-    this.store.select(state => state.app).subscribe((val) => {
-      if (val.data.length) {
-        this.liquors.push(...val.data);
-      }
-    });
+    this.store.select(state => state.app)
+      .subscribe((val) => {
+        if (val.data.length) {
+          this.liquorList = val.data;
+        }
+      });
+
+    this.store.dispatch(new TestLiquorApp());
+    this.store.dispatch(new StartConnection());
   }
 
-  public simulateStore() {
-    this.store.dispatch(new TestLiquorApp());
-  }
 }
