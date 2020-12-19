@@ -35,14 +35,28 @@ type Liquor {
   info: Info!
 }
 
+type User {
+  firstName: String!
+  lastName: String!
+  username: String!
+  email: String!
+}
+
+type AuthType {
+  user: User!
+}
+
 type Query {
   getAllLiquor: [Liquor!]!
   getLiquorById(id: String!): Liquor!
+  getAllUsers: [User!]!
 }
 
 type Mutation {
   createLiquor(options: LiquorInput!): Liquor!
   updateLiquor(id: String!, options: LiquorInput!): Liquor
+  createUser(inputCredentials: CreateUserInput!): User!
+  login(inputCredentials: LoginInput!): AuthType!
 }
 
 input LiquorInput {
@@ -70,6 +84,19 @@ input PriceHistoryType {
 input InfoType {
   name: String!
   year: String
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  username: String!
+  password: String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
 }
 
 type Subscription {

@@ -1,9 +1,11 @@
 import { ValidationPipe } from "@nestjs/common";
-import { Args, Field, Mutation, ObjectType, Query, Resolver, Subscription } from "@nestjs/graphql";
+import { Args, Context, Field, Mutation, ObjectType, Query, Resolver, Subscription } from "@nestjs/graphql";
 import { PubSub } from "graphql-subscriptions";
 import { Liquor } from "src/liquor/liquor.schema";
 import { LiquorInput } from "./types/liquor.input";
 import { LiquorService } from "./liquor.service";
+import { UseGuards } from "@nestjs/common";
+import { GqlAuthGuard } from "src/auth/auth.guard";
 
 const pubSub = new PubSub();
 const LIQUOR_ADDED = 'liquorAddedSuccessfully';
@@ -19,20 +21,34 @@ export class LiquorResolver {
         private liquorService: LiquorService
     ) { }
 
+    //TODO: Make sure only admin can make changes to database
+
+    @UseGuards(GqlAuthGuard)
     @Mutation(() => Liquor)
     async createLiquor(
-        @Args('options', ValidationPipe) options: LiquorInput
+        @Args('options', ValidationPipe) options: LiquorInput,
+        @Context() ctx,
     ): Promise<Liquor> {
+        if(ctx.req.user.username !== 'admin') {
+            console.log('You do not have required permissions, Login as admin to perform action');
+        }
+        console.log(ctx.req);
         const liquor = await this.liquorService.createLiquor(options);
         pubSub.publish(LIQUOR_ADDED, { updatedLiquorList: liquor });
         return liquor;
     }
 
+    @UseGuards(GqlAuthGuard)
     @Mutation(() => Liquor, { nullable: true })
     async updateLiquor(
         @Args('options', ValidationPipe) options: LiquorInput,
-        @Args('id') id: string
+        @Args('id') id: string,
+        @Context() ctx,
     ): Promise<Liquor | void> {
+        console.log(ctx.req.user);
+        if(ctx.req.user.username !== 'admin') {
+            console.log('You do not have required permissions, Login as admin to perform action');
+        }
         const liquor = await this.liquorService.updateLiquor(options, id);
         if (liquor) {
             pubSub.publish(LIQUOR_ADDED, { updatedLiquorList: liquor });
@@ -40,9 +56,8 @@ export class LiquorResolver {
         return liquor;
     }
 
-
     @Query(() => [Liquor])
-    getAllLiquor(): Promise<Liquor[] | undefined> {
+    getAllLiquor(): Promise<Liquor[]> {
         return this.liquorService.getAllLiquor();
     }
 
@@ -55,4 +70,5 @@ export class LiquorResolver {
     updatedLiquorList() {
         return pubSub.asyncIterator(LIQUOR_ADDED);
     }
+
 }
