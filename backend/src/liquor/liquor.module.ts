@@ -5,7 +5,13 @@ import { LiquorResolver } from './liquor.resolver';
 import { LiquorService } from './liquor.service';
 
 @Module({
-  imports:[MongooseModule.forFeature([{name: Liquor.name, schema: LiquorSchema}])],
-  providers: [LiquorService, LiquorResolver]
+  imports: [
+    MongooseModule.forFeature([
+      { name: Liquor.name, schema: LiquorSchema }
+    ])],
+  providers: [
+    LiquorService,
+    LiquorResolver
+  ]
 })
 export class LiquorModule { }
