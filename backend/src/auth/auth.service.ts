@@ -24,11 +24,12 @@ export class AuthService {
         }
 
         const token = await this.jwtToken(user);
-        ctx.res.set({Authorization: `Bearer ${token}`});
+        ctx.res.cookie('Authentication', token);
 
         return {
-            user,
+            user, token
         };
+        
 
 
     }

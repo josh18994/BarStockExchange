@@ -6,4 +6,7 @@ export class AuthType {
     @Field()
     user: User;
 
+    @Field()
+    token: String;
+
 }
