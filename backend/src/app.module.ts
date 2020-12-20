@@ -13,7 +13,11 @@ import { AuthModule } from './auth/auth.module';
     GraphQLModule.forRoot({
       autoSchemaFile: './schema.gql',
       installSubscriptionHandlers: true,
-      context: ({ req, res }) => ({ req, res })
+      context: ({ req, res }) => ({ req, res }),
+      cors: {
+        credentials: true,
+        origin: true
+      }
     }),
 
     // Create file src/constants/personal.settings.ts and add mongo string connect as a enum
