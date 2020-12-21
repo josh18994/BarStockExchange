@@ -3,7 +3,7 @@ import { Actions, ActionTypes } from './app.actions';
 import { ILiquorAppState } from './app.state';
 
 export const initialState: ILiquorAppState = {
-  data: []
+  data: [],
 };
 
 
@@ -29,6 +29,11 @@ export function reducer(state: ILiquorAppState = initialState, action: Actions):
       return {
         ...state,
         data: newStateData
+      };
+
+    case ActionTypes.Failure:
+      return {
+        ...state,
       };
 
     default:

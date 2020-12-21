@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { CookieService } from 'ngx-cookie-service';
+import { AUTHENTICATION_COOKIE_NAME } from './common/constants';
 import { IAppState } from './state';
-import { StartConnection, TestLiquorApp } from './state/app/app.actions';
-
+import { AuthenticateCookie } from './state/app/app.actions';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,21 +11,14 @@ import { StartConnection, TestLiquorApp } from './state/app/app.actions';
 })
 export class AppComponent implements OnInit {
 
-  public liquorList;
-
-  constructor(private store: Store<IAppState>) { }
-
+  constructor(private cookieService: CookieService, private store: Store<IAppState>) { }
 
   ngOnInit() {
-    this.store.select(state => state.app)
-      .subscribe((val) => {
-        if (val.data.length) {
-          this.liquorList = val.data;
-        }
-      });
+    console.log(this.cookieService.get(AUTHENTICATION_COOKIE_NAME));
 
-    this.store.dispatch(new TestLiquorApp());
-    this.store.dispatch(new StartConnection());
+    if (this.cookieService.get(AUTHENTICATION_COOKIE_NAME)) {
+      this.store.dispatch(new AuthenticateCookie());
+    }
   }
 
 }
