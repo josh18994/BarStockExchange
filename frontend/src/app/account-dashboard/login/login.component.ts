@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AlertService } from 'src/app/services/alert.service';
 import { IAppState } from 'src/app/state';
-import { LoginUser } from 'src/app/state/auth/auth.actions';
+import { CheckUserExists, LoginUser } from 'src/app/state/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   public loading = false;
   public submitted = false;
   public form: FormGroup;
+  public customError = false;
 
   constructor(
     private store: Store<IAppState>,
@@ -25,26 +26,26 @@ export class LoginComponent implements OnInit {
     private alertService: AlertService,
     private formBuilder: FormBuilder) { }
 
+// TODO TRY TESTING WITH NGONDESTROY, and remove the error when new value is recieved.
+
 
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required]],
       password: ['', Validators.required]
     });
 
-    this.store.select(state => state.auth)
-      .subscribe((val) => {
-        if (val.user.username) {
-          this.router.navigate(['/liquor']);
-        }
-        this.loading = val.loading;
-      });
+    this.store.select(state => state.auth).subscribe((val) => {
+      if (val.validate.usernameExists !== undefined && !val.validate.usernameExists) {
+        this.customError = true;
+      }
+    });
   }
 
   get f() { return this.form.controls; }
 
-  onSubmit() {
+  login() {
     this.submitted = true;
     this.alertService.clear();
     if (this.form.invalid) {
@@ -54,8 +55,9 @@ export class LoginComponent implements OnInit {
   }
 
   validateUsername() {
-    console.log('lost focus');
+    console.log(this.form.get('username').value);
 
+    this.store.dispatch(new CheckUserExists(this.form.get('username').value));
   }
 
 }

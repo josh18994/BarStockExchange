@@ -5,8 +5,10 @@ export enum ActionTypes {
   LoginUser = '[Auth-APP] LoginUser',
   LoginUserSuccessful = '[Auth-APP] LoginUserSuccessful',
   Failure = '[Auth-APP] Failure',
-  AuthenticateCookie = '[LIQUOR-APP] AuthenticateCookie',
-  AuthenticateCookieSuccessful = '[LIQUOR-APP] AuthenticateCookieSuccessful'
+  AuthenticateCookie = '[Auth-APP] AuthenticateCookie',
+  AuthenticateCookieSuccessful = '[Auth-APP] AuthenticateCookieSuccessful',
+  CheckUserExists = '[Auth-APP] CheckUserExists',
+  CheckUserExistsSuccessful = '[Auth-APP] CheckUserExistsSuccessful'
 }
 
 export class LoginUser implements Action {
@@ -28,6 +30,16 @@ export class AuthenticateCookieSuccessful implements Action {
   constructor(public payload: IUser) { }
 }
 
+export class CheckUserExists implements Action {
+  public readonly type = ActionTypes.CheckUserExists;
+  constructor(public username: string) { }
+}
+
+export class CheckUserExistsSuccessful implements Action {
+  public readonly type = ActionTypes.CheckUserExistsSuccessful;
+  constructor(public response: any) { }
+}
+
 export class Failure implements Action {
   public readonly type = ActionTypes.Failure;
   constructor(public error: any) { }
@@ -37,4 +49,6 @@ export type Actions = LoginUser |
   LoginUserSuccessful |
   Failure |
   AuthenticateCookie |
-  AuthenticateCookieSuccessful;
+  AuthenticateCookieSuccessful |
+  CheckUserExists |
+  CheckUserExistsSuccessful;

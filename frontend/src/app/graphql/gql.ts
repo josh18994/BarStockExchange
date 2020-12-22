@@ -79,3 +79,10 @@ export const AUTHENTICATE_COOKIE = gql`
     username
   }
 }`;
+
+export const CHECK_USER_EXISTS = gql`
+  query CheckUserExists($username: String!){
+    checkUserExists(username: $username)
+}`;
+
+

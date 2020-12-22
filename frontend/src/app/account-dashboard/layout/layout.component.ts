@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/services/auth.service';
 import { IAppState } from 'src/app/state';
@@ -14,16 +14,11 @@ import { IAppState } from 'src/app/state';
 export class LayoutComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private store: Store<IAppState>) { }
 
   ngOnInit(): void {
-
-    console.log(this.router.url);
-
-
     this.store.select(state => state.auth)
     .subscribe((val) => {
       if (!val.loading && val.user.username) {

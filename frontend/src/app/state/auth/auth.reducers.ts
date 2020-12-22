@@ -1,11 +1,13 @@
 import { IUser } from 'src/app/models/IUser';
+import { IValidate } from 'src/app/models/IValidate';
 import { Actions, ActionTypes } from './auth.actions';
 import { IAuthState } from './auth.state';
 
 export const initialState: IAuthState = {
   user: {} as IUser,
   loading: false,
-  error: []
+  error: [],
+  validate: {} as IValidate
 };
 
 
@@ -29,7 +31,7 @@ export function reducer(state: IAuthState = initialState, action: Actions): IAut
       return {
         ...state,
         loading: true
-      }
+      };
 
     case ActionTypes.AuthenticateCookieSuccessful:
       return {
@@ -39,12 +41,20 @@ export function reducer(state: IAuthState = initialState, action: Actions): IAut
       };
 
     case ActionTypes.Failure:
-      console.log(action.error);
       return {
         ...state,
         loading: false,
         error: action.error
       };
+
+    case ActionTypes.CheckUserExistsSuccessful:
+    return {
+      ...state,
+      validate: {
+        ...state.validate,
+        usernameExists: action.response
+      }
+    };
 
     default:
       return state;

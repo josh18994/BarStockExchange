@@ -30,8 +30,6 @@ export class LiquorTileComponent implements OnInit {
   }
 
   test() {
-    console.log('logged');
-
     this.store.dispatch(new GetLiquorById());
   }
 }

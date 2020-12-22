@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { AUTHENTICATE_COOKIE, LOGIN_USER } from '../graphql/gql';
+import { AUTHENTICATE_COOKIE, LOGIN_USER, CHECK_USER_EXISTS } from '../graphql/gql';
 import { CookieService } from 'ngx-cookie-service';
 import { AUTHENTICATION_COOKIE_NAME } from '../common/constants';
 
@@ -31,6 +31,10 @@ export class AuthService {
 
   public authenticateCookie(): Observable<any> {
     return this.apollo.query({ query: AUTHENTICATE_COOKIE });
+  }
+
+  public checkUserExists(username): Observable<any> {
+    return this.apollo.query({ query: CHECK_USER_EXISTS, variables: { username } });
   }
 
 }

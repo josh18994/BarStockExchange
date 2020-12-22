@@ -54,8 +54,6 @@ export class AppEffects {
     mergeMap((action: GetLiquorById) => this.appService.getLiquorById()
       .pipe(
         map((response: any) => {
-          console.log(response);
-
           return new GetLiquorByIdSuccess(response);
         })
       )

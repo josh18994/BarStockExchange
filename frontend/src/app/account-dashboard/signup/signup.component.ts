@@ -30,13 +30,24 @@ export class SignupComponent implements OnInit {
     this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onSubmit() {
-    console.log("reached here");
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      return;
+    }
+
+  }
+
+
+  validateName() {
+    console.log("lost focus");
 
   }
 

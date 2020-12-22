@@ -4,7 +4,16 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { IUser } from 'src/app/models/IUser';
 import { AuthService } from 'src/app/services/auth.service';
-import { ActionTypes, AuthenticateCookie, AuthenticateCookieSuccessful, Failure, LoginUser, LoginUserSuccessful } from './auth.actions';
+import {
+  ActionTypes,
+  AuthenticateCookie,
+  AuthenticateCookieSuccessful,
+  CheckUserExists,
+  Failure,
+  LoginUser,
+  LoginUserSuccessful,
+  CheckUserExistsSuccessful
+} from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -44,7 +53,23 @@ export class AuthEffects {
           return new AuthenticateCookieSuccessful(payload);
         }),
         catchError(error => {
-          return of(new Failure(error))
+          return of(new Failure(error));
+        })
+      )
+    )
+  );
+
+  @Effect()
+  public checkUserExists$ = this.actions$.pipe(
+    ofType<CheckUserExists>(ActionTypes.CheckUserExists),
+    mergeMap((action: CheckUserExists) => this.authService.checkUserExists(action.username)
+      .pipe(
+        map((response) => {
+          const payload = response.data.checkUserExists;
+          return new CheckUserExistsSuccessful(payload);
+        }),
+        catchError(error => {
+          return of(new Failure(error));
         })
       )
     )
