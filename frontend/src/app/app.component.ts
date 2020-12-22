@@ -19,14 +19,15 @@ export class AppComponent implements OnInit {
   constructor(private cookieService: CookieService, private store: Store<IAppState>) { }
 
   ngOnInit() {
-
-    // this.authState = this.store.select(state => state.auth);
-
     this.authState = this.store.select(state => state.auth);
 
     if (this.cookieService.get(AUTHENTICATION_COOKIE_NAME)) {
       this.store.dispatch(new AuthenticateCookie());
     }
+  }
+
+  logout() {
+    this.cookieService.delete(AUTHENTICATION_COOKIE_NAME);
   }
 }
 // TODO: 2. Show navbar based on User

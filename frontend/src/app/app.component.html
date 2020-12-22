@@ -3,17 +3,17 @@
     <div class="logo">Bar Stock Exchange</div>
     <nav>
       <ul *ngIf="!!(authState | async).user.firstName">
-        <span>Welcome {{(authState | async).user.firstName.toUpperCase()}}</span>
-        <li><a href="">SignOut</a></li>
+        <span>Welcome {{(authState | async).user?.firstName.toUpperCase()}}</span>
+        <li (click)="logout()"><a href="">LogOut</a></li>
       </ul>
       <ul *ngIf="!(authState | async).user.firstName">
-        <li><a href="">Login</a> </li>
-        <li><a href="">SignUp</a></li>
+        <li><a routerLink="/login">Login</a> </li>
+        <li><a routerLink="/signup">Signup</a></li>
       </ul>
     </nav>
   </div>
 </div>
 
-<app-loader *ngIf="(authState | async).loading"></app-loader>
+<!-- <app-loader *ngIf="(authState | async).loading"></app-loader> -->
 
 <router-outlet *ngIf="!(authState | async).loading"></router-outlet>

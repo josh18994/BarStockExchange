@@ -21,7 +21,7 @@ import { effects, reducers } from './state';
     LiquorComponent,
     LiquorTileComponent,
     WelcomeComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
