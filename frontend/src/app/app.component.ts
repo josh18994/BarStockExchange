@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { CookieService } from 'ngx-cookie-service';
+import { AUTHENTICATION_COOKIE_NAME } from './common/constants';
 import { IAppState } from './state';
-import { StartConnection, TestLiquorApp } from './state/app/app.actions';
-
+import { AuthenticateCookie } from './state/auth/auth.actions';
+import { Observable } from 'rxjs';
+import { IAuthState } from './state/auth/auth.state';
+import { IUser } from './models/IUser';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,21 +14,28 @@ import { StartConnection, TestLiquorApp } from './state/app/app.actions';
 })
 export class AppComponent implements OnInit {
 
-  public liquorList;
+  public authState: Observable<IAuthState>;
 
-  constructor(private store: Store<IAppState>) { }
-
+  constructor(private cookieService: CookieService, private store: Store<IAppState>) { }
 
   ngOnInit() {
-    this.store.select(state => state.app)
-      .subscribe((val) => {
-        if (val.data.length) {
-          this.liquorList = val.data;
-        }
-      });
 
-    this.store.dispatch(new TestLiquorApp());
-    this.store.dispatch(new StartConnection());
+    // this.authState = this.store.select(state => state.auth);
+
+    this.authState = this.store.select(state => state.auth);
+
+    if (this.cookieService.get(AUTHENTICATION_COOKIE_NAME)) {
+      this.store.dispatch(new AuthenticateCookie());
+    }
   }
-
 }
+// TODO: 2. Show navbar based on User
+// TODO: 3. Signup User scenario
+// TODO: 4. Show Errors on Forms
+
+
+
+
+
+
+

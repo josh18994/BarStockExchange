@@ -1,34 +1,18 @@
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { APOLLO_OPTIONS } from 'apollo-angular';
-import { split, ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-import { HttpLink } from 'apollo-angular/http';
-import {WebSocketLink} from '@apollo/client/link/ws';
-import {getMainDefinition} from '@apollo/client/utilities';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { InMemoryCache, split } from '@apollo/client/core';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 
-// const uri = 'http://localhost:3000/graphql'; // <-- add the URL of the GraphQL server here
-// export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
-//   return {
-//     link: httpLink.create({ uri }),
-//     cache: new InMemoryCache(),
-//   };
-// }
 
-// @NgModule({
-//   providers: [
-//     {
-//       provide: APOLLO_OPTIONS,
-//       useFactory: createApollo,
-//       deps: [HttpLink],
-//     },
-//   ],
-// })
 
 interface Definintion {
   kind: string;
   operation?: string;
-};
+}
 
 
 @NgModule({
@@ -41,6 +25,10 @@ interface Definintion {
         // Create an http link:
         const http = httpLink.create({
           uri: 'http://localhost:4000/graphql',
+          withCredentials: true,
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          })
         });
 
         const ws = new WebSocketLink({
@@ -52,8 +40,8 @@ interface Definintion {
 
         const link = split(
           // split based on operation type
-          ({query}) => {
-            const {kind, operation}: Definintion = getMainDefinition(query);
+          ({ query }) => {
+            const { kind, operation }: Definintion = getMainDefinition(query);
             return kind === 'OperationDefinition' && operation === 'subscription';
           },
           ws,

@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver, Query } from "@nestjs/graphql";
+import { Args, Mutation, Resolver, Query, Context } from "@nestjs/graphql";
 import { User } from "./user.schema";
 import { UserService } from "./user.service";
 import { CreateUserInput } from "./types/user.input";
@@ -24,5 +24,13 @@ export class UserResolver {
     @Query(() => [User])
     async getAllUsers(): Promise<User[]> {
         return this.userService.getAllUsers();
+    }
+
+    @UseGuards(GqlAuthGuard)
+    @Query(() => User, {nullable: true})
+    async authenticateCookie(
+        @Context() ctx
+    ): Promise<User> {
+        return ctx.req.user;
     }
 }

@@ -26,6 +26,8 @@ export class AuthService {
         const token = await this.jwtToken(user);
         ctx.res.cookie('Authentication', token);
 
+        // ctx.res.cookie({'Authentication': token, expires: '30'});
+
         return {
             user, token
         };

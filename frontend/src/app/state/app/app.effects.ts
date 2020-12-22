@@ -1,15 +1,22 @@
-import { ActionCreator } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
-import { ActionTypes, StartConnection, TestLiquorApp, TestLiquorAppSuccess, UpdateRecieved } from './app.actions';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { CookieService } from 'ngx-cookie-service';
+import { map, mergeMap } from 'rxjs/operators';
 import { AppService } from 'src/app/services/app.service';
-import { ILiquor } from 'src/app/models/ILiquor';
+import {
+  ActionTypes,
+  GetLiquorById,
+  GetLiquorByIdSuccess,
+  StartConnection,
+  TestLiquorApp,
+  TestLiquorAppSuccess,
+  UpdateRecieved
+} from './app.actions';
 
 
 @Injectable()
 export class AppEffects {
-  constructor(private actions$: Actions, private appService: AppService) { }
+  constructor(private actions$: Actions, private appService: AppService, cookieService: CookieService) { }
 
   @Effect()
   public getLiquorList$ = this.actions$.pipe(
@@ -36,6 +43,20 @@ export class AppEffects {
       .pipe(
         map((response: any) => {
           return new UpdateRecieved(response);
+        })
+      )
+    )
+  );
+
+  @Effect()
+  public getLiquorById$ = this.actions$.pipe(
+    ofType<GetLiquorById>(ActionTypes.GetLiquorById),
+    mergeMap((action: GetLiquorById) => this.appService.getLiquorById()
+      .pipe(
+        map((response: any) => {
+          console.log(response);
+
+          return new GetLiquorByIdSuccess(response);
         })
       )
     )

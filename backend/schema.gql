@@ -51,6 +51,7 @@ type Query {
   getAllLiquor: [Liquor!]!
   getLiquorById(id: String!): Liquor!
   getAllUsers: [User!]!
+  authenticateCookie: User
 }
 
 type Mutation {
