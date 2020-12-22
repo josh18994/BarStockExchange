@@ -52,6 +52,7 @@ type Query {
   getLiquorById(id: String!): Liquor!
   getAllUsers: [User!]!
   authenticateCookie: User
+  checkUserExists(username: String!): Boolean!
 }
 
 type Mutation {

@@ -33,4 +33,14 @@ export class UserResolver {
     ): Promise<User> {
         return ctx.req.user;
     }
+
+    // @UseGuards(GqlAuthGuard)
+    @Query(() => Boolean)
+    async checkUserExists(
+        @Args('username') username: string
+    ): Promise<Boolean> {
+        const user = await this.userService.getUserByUsername(username);
+        if(user) return true;
+        else return false;
+    }
 }
