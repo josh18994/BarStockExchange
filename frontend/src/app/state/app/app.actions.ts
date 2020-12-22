@@ -9,8 +9,6 @@ export enum ActionTypes {
   GetLiquorById = '[LIQUOR-APP] GetLiquorById',
   GetLiquorByIdSuccess = '[LIQUOR-APP] GetLiquorByIdSuccess',
   Failure = '[LIQUOR-APP] Failure',
-  AuthenticateCookie = '[LIQUOR-APP] AuthenticateCookie',
-  AuthenticateCookieSuccessful = '[LIQUOR-APP] AuthenticateCookieSuccessful'
 }
 
 export class TestLiquorApp implements Action {
@@ -40,15 +38,6 @@ export class GetLiquorByIdSuccess implements Action {
   constructor(public payload: any) { }
 }
 
-export class AuthenticateCookie implements Action {
-  public readonly type = ActionTypes.AuthenticateCookie;
-}
-
-export class AuthenticateCookieSuccessful implements Action {
-  public readonly type = ActionTypes.AuthenticateCookieSuccessful;
-  constructor(public payload: any) { }
-}
-
 export class Failure implements Action {
   public readonly type = ActionTypes.Failure;
   constructor(public error: any) { }
@@ -60,6 +49,4 @@ export type Actions = TestLiquorApp |
   UpdateRecieved |
   GetLiquorById |
   GetLiquorByIdSuccess |
-  Failure |
-  AuthenticateCookie |
-  AuthenticateCookieSuccessful;
+  Failure;

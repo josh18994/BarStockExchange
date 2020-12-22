@@ -1,2 +1,19 @@
-<!-- main app container -->
-<router-outlet></router-outlet>
+<div *ngIf="!(authState | async).loading" class="body">
+  <div class="header">
+    <div class="logo">Bar Stock Exchange</div>
+    <nav>
+      <ul *ngIf="!!(authState | async).user.firstName">
+        <span>Welcome {{(authState | async).user.firstName.toUpperCase()}}</span>
+        <li><a href="">SignOut</a></li>
+      </ul>
+      <ul *ngIf="!(authState | async).user.firstName">
+        <li><a href="">Login</a> </li>
+        <li><a href="">SignUp</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<app-loader *ngIf="(authState | async).loading"></app-loader>
+
+<router-outlet *ngIf="!(authState | async).loading"></router-outlet>

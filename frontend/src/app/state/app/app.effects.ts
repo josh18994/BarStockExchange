@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { CookieService } from 'ngx-cookie-service';
-import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { AppService } from 'src/app/services/app.service';
 import {
   ActionTypes,
-  AuthenticateCookie,
-  AuthenticateCookieSuccessful,
-  Failure,
   GetLiquorById,
   GetLiquorByIdSuccess,
   StartConnection,
@@ -61,22 +57,6 @@ export class AppEffects {
           console.log(response);
 
           return new GetLiquorByIdSuccess(response);
-        })
-      )
-    )
-  );
-
-  @Effect()
-  public authenticateCookie$ = this.actions$.pipe(
-    ofType<AuthenticateCookie>(ActionTypes.AuthenticateCookie),
-    mergeMap((action: AuthenticateCookie) => this.appService.authenticateCookie()
-      .pipe(
-        map((response: any) => {
-          console.log(response);
-          return new AuthenticateCookieSuccessful(response);
-        }),
-        catchError(error => {
-          return of(new Failure(error))
         })
       )
     )

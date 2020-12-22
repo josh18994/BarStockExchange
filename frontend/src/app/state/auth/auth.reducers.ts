@@ -4,7 +4,8 @@ import { IAuthState } from './auth.state';
 
 export const initialState: IAuthState = {
   user: {} as IUser,
-  loading: false
+  loading: false,
+  error: []
 };
 
 
@@ -24,11 +25,25 @@ export function reducer(state: IAuthState = initialState, action: Actions): IAut
         loading: false
       };
 
+    case ActionTypes.AuthenticateCookie:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case ActionTypes.AuthenticateCookieSuccessful:
+      return {
+        ...state,
+        user: action.payload,
+        loading: false
+      };
+
     case ActionTypes.Failure:
       console.log(action.error);
       return {
         ...state,
-        loading: false
+        loading: false,
+        error: action.error
       };
 
     default:

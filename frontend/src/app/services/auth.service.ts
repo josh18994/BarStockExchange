@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { LOGIN_USER } from '../graphql/gql';
+import { AUTHENTICATE_COOKIE, LOGIN_USER } from '../graphql/gql';
 import { CookieService } from 'ngx-cookie-service';
 import { AUTHENTICATION_COOKIE_NAME } from '../common/constants';
 
@@ -26,6 +26,11 @@ export class AuthService {
 
   public isLoggedIn(): boolean {
     return !!this.cookieService.get(AUTHENTICATION_COOKIE_NAME);
+  }
+
+
+  public authenticateCookie(): Observable<any> {
+    return this.apollo.query({ query: AUTHENTICATE_COOKIE });
   }
 
 }

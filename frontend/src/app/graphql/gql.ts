@@ -73,6 +73,9 @@ export const LOGIN_USER = gql`
 export const AUTHENTICATE_COOKIE = gql`
 {
   authenticateCookie{
+    email
+    firstName
+    lastName
     username
   }
 }`;

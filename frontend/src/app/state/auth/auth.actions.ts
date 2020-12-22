@@ -4,7 +4,9 @@ import { IUser } from 'src/app/models/IUser';
 export enum ActionTypes {
   LoginUser = '[Auth-APP] LoginUser',
   LoginUserSuccessful = '[Auth-APP] LoginUserSuccessful',
-  Failure = '[Auth-APP] Failure'
+  Failure = '[Auth-APP] Failure',
+  AuthenticateCookie = '[LIQUOR-APP] AuthenticateCookie',
+  AuthenticateCookieSuccessful = '[LIQUOR-APP] AuthenticateCookieSuccessful'
 }
 
 export class LoginUser implements Action {
@@ -17,6 +19,14 @@ export class LoginUserSuccessful implements Action {
   constructor(public payload: IUser) { }
 }
 
+export class AuthenticateCookie implements Action {
+  public readonly type = ActionTypes.AuthenticateCookie;
+}
+
+export class AuthenticateCookieSuccessful implements Action {
+  public readonly type = ActionTypes.AuthenticateCookieSuccessful;
+  constructor(public payload: IUser) { }
+}
 
 export class Failure implements Action {
   public readonly type = ActionTypes.Failure;
@@ -25,4 +35,6 @@ export class Failure implements Action {
 
 export type Actions = LoginUser |
   LoginUserSuccessful |
-  Failure;
+  Failure |
+  AuthenticateCookie |
+  AuthenticateCookieSuccessful;
