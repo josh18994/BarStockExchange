@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private formBuilder: FormBuilder) { }
 
-// TODO TRY TESTING WITH NGONDESTROY, and remove the error when new value is recieved.
+  // TODO TRY TESTING WITH NGONDESTROY, and remove the error when new value is recieved.
 
 
   ngOnInit(): void {
@@ -55,7 +55,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   validateUsername() {
-    this.store.dispatch(new CheckUserExists(this.form.get('username').value));
+    if (!this.form.untouched) {
+      this.store.dispatch(new CheckUserExists(this.form.get('username').value));
+    }
   }
 
 

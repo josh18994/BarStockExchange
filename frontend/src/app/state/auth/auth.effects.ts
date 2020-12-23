@@ -12,7 +12,9 @@ import {
   Failure,
   LoginUser,
   LoginUserSuccessful,
-  CheckUserExistsSuccessful
+  CheckUserExistsSuccessful,
+  CreateUser,
+  CreateUserSucessful
 } from './auth.actions';
 
 @Injectable()
@@ -25,12 +27,12 @@ export class AuthEffects {
     mergeMap((action: LoginUser) => this.authService.loginUser(action.username, action.password)
       .pipe(
         map((response: any) => {
-          const payload: IUser = {
+          const payload = {
             email: response.data.login.user.email,
             firstName: response.data.login.user.firstName,
             lastName: response.data.login.user.lastName,
             username: response.data.login.user.username
-          };
+          } as IUser;
           return new LoginUserSuccessful(payload);
         }),
         catchError(error => of(new Failure(error)))
@@ -44,12 +46,12 @@ export class AuthEffects {
     mergeMap((action: AuthenticateCookie) => this.authService.authenticateCookie()
       .pipe(
         map((response: any) => {
-          const payload: IUser = {
+          const payload = {
             email: response.data.authenticateCookie.email || null,
             firstName: response.data.authenticateCookie.firstName,
             lastName: response.data.authenticateCookie.lastName,
             username: response.data.authenticateCookie.username
-          };
+          } as IUser;
           return new AuthenticateCookieSuccessful(payload);
         }),
         catchError(error => {
@@ -67,6 +69,27 @@ export class AuthEffects {
         map((response) => {
           const payload = response.data.checkUserExists;
           return new CheckUserExistsSuccessful(payload);
+        }),
+        catchError(error => {
+          return of(new Failure(error));
+        })
+      )
+    )
+  );
+
+  @Effect()
+  public createUser$ = this.actions$.pipe(
+    ofType<CreateUser>(ActionTypes.CreateUser),
+    mergeMap((action: CreateUser) => this.authService.createUser(action.payload)
+      .pipe(
+        map((response) => {
+          const payload = {
+            email: response.data.createUser.email || null,
+            firstName: response.data.createUser.firstName,
+            lastName: response.data.createUser.lastName,
+            username: response.data.createUser.username
+          } as IUser;
+          return new LoginUser(payload.username, action.payload.password);
         }),
         catchError(error => {
           return of(new Failure(error));

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AlertService } from 'src/app/services/alert.service';
 import { IAppState } from 'src/app/state';
+import { CreateUser } from 'src/app/state/auth/auth.actions';
 
 @Component({
   selector: 'app-signup',
@@ -42,6 +43,8 @@ export class SignupComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    this.store.dispatch(new CreateUser(this.form.value));
 
   }
 

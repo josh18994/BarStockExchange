@@ -48,13 +48,13 @@ export function reducer(state: IAuthState = initialState, action: Actions): IAut
       };
 
     case ActionTypes.CheckUserExistsSuccessful:
-    return {
-      ...state,
-      validate: {
-        ...state.validate,
-        usernameExists: action.response
-      }
-    };
+      return {
+        ...state,
+        validate: {
+          ...state.validate,
+          usernameExists: action.response
+        }
+      };
 
     case ActionTypes.ClearUsernameExists:
       return {
@@ -63,6 +63,13 @@ export function reducer(state: IAuthState = initialState, action: Actions): IAut
           ...state.validate,
           usernameExists: undefined
         }
+      };
+
+    case ActionTypes.CreateUserSucessful:
+      return {
+        ...state,
+        loading: false,
+        user: action.response
       };
 
     default:

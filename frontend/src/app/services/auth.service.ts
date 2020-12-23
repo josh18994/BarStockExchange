@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { AUTHENTICATE_COOKIE, LOGIN_USER, CHECK_USER_EXISTS } from '../graphql/gql';
+import { AUTHENTICATE_COOKIE, LOGIN_USER, CHECK_USER_EXISTS, CREATE_USER } from '../graphql/gql';
 import { CookieService } from 'ngx-cookie-service';
 import { AUTHENTICATION_COOKIE_NAME } from '../common/constants';
+import { IUser } from '../models/IUser';
 
 
 @Injectable({
@@ -18,6 +19,20 @@ export class AuthService {
     return this.apollo.mutate({
       mutation: LOGIN_USER,
       variables: {
+        username,
+        password
+      }
+    });
+  }
+
+  public createUser(user: IUser): Observable<any> {
+    const {firstName, lastName, email, username, password} = user;
+    return this.apollo.mutate({
+      mutation: CREATE_USER,
+      variables: {
+        firstName,
+        lastName,
+        email,
         username,
         password
       }

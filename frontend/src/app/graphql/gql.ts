@@ -70,6 +70,31 @@ export const LOGIN_USER = gql`
   }
 `;
 
+export const CREATE_USER = gql`
+  mutation SignUp(
+  $firstName: String!
+  $lastName: String!
+  $email: String!
+  $username: String!
+  $password: String!
+  ) {
+    createUser(
+      inputCredentials: {
+        firstName: $firstName
+        lastName: $lastName
+        email: $email
+        username: $username
+        password: $password
+      }
+    ) {
+      firstName
+      lastName
+      email
+      username
+    }
+}
+`;
+
 export const AUTHENTICATE_COOKIE = gql`
 {
   authenticateCookie{

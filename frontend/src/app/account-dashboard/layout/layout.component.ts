@@ -20,13 +20,17 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(state => state.auth)
-    .subscribe((val) => {
-      if (!val.loading && val.user.username) {
-        this.router.navigate(['/liquor']);
-      } else {
-        this.router.navigate([this.router.url]);
-      }
-    });
+      .subscribe((val) => {
+        if (!val.loading && val.user.username) {
+          this.router.navigate(['/liquor']);
+        } else {
+          if (this.router.url.includes('account')) {
+            this.router.navigate(['/login']);
+          // tslint:disable-next-line: curly
+          } else
+            this.router.navigate([this.router.url]);
+        }
+      });
 
   }
 

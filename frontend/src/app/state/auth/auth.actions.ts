@@ -9,7 +9,9 @@ export enum ActionTypes {
   AuthenticateCookieSuccessful = '[Auth-APP] AuthenticateCookieSuccessful',
   CheckUserExists = '[Auth-APP] CheckUserExists',
   CheckUserExistsSuccessful = '[Auth-APP] CheckUserExistsSuccessful',
-  ClearUsernameExists = '[Auth-APP] ClearUsernameExists'
+  ClearUsernameExists = '[Auth-APP] ClearUsernameExists',
+  CreateUser = '[Auth-APP] CreateUser',
+  CreateUserSucessful = '[Auth-APP] CreateUserSucessful'
 }
 
 export class LoginUser implements Action {
@@ -41,6 +43,16 @@ export class CheckUserExistsSuccessful implements Action {
   constructor(public response: any) { }
 }
 
+export class CreateUser implements Action {
+  public readonly type = ActionTypes.CreateUser;
+  constructor(public payload: IUser) { }
+}
+
+export class CreateUserSucessful implements Action {
+  public readonly type = ActionTypes.CreateUserSucessful;
+  constructor(public response: any) { }
+}
+
 export class ClearUsernameExists implements Action {
   public readonly type = ActionTypes.ClearUsernameExists;
 }
@@ -57,4 +69,6 @@ export type Actions = LoginUser |
   AuthenticateCookieSuccessful |
   CheckUserExists |
   CheckUserExistsSuccessful |
-  ClearUsernameExists;
+  ClearUsernameExists |
+  CreateUser |
+  CreateUserSucessful;
