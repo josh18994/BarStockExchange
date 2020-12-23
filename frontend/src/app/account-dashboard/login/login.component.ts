@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AlertService } from 'src/app/services/alert.service';
 import { IAppState } from 'src/app/state';
-import { CheckUserExists, LoginUser } from 'src/app/state/auth/auth.actions';
+import { CheckUserExists, ClearUsernameExists, LoginUser } from 'src/app/state/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +14,11 @@ import { CheckUserExists, LoginUser } from 'src/app/state/auth/auth.actions';
     './login.component.scss'
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public loading = false;
   public submitted = false;
   public form: FormGroup;
-  public customError = false;
+  public customError;
 
   constructor(
     private store: Store<IAppState>,
@@ -32,14 +32,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required]],
-      password: ['', Validators.required]
+      username: ['', [Validators.required, Validators.minLength(5)]],
+      password: ['', [Validators.required, Validators.minLength(5)]]
     });
 
     this.store.select(state => state.auth).subscribe((val) => {
-      if (val.validate.usernameExists !== undefined && !val.validate.usernameExists) {
-        this.customError = true;
-      }
+      if (val.validate.usernameExists !== undefined) {
+        this.customError = !val.validate.usernameExists;
+      } else this.customError = false;
     });
   }
 
@@ -55,9 +55,14 @@ export class LoginComponent implements OnInit {
   }
 
   validateUsername() {
-    console.log(this.form.get('username').value);
-
     this.store.dispatch(new CheckUserExists(this.form.get('username').value));
   }
+
+
+  ngOnDestroy() {
+    this.store.dispatch(new ClearUsernameExists());
+  }
+
+
 
 }

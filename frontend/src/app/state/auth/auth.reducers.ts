@@ -56,6 +56,15 @@ export function reducer(state: IAuthState = initialState, action: Actions): IAut
       }
     };
 
+    case ActionTypes.ClearUsernameExists:
+      return {
+        ...state,
+        validate: {
+          ...state.validate,
+          usernameExists: undefined
+        }
+      };
+
     default:
       return state;
   }
