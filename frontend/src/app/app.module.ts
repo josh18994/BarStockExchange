@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
@@ -41,7 +42,7 @@ import { effects, reducers } from './state';
     HttpClientModule,
     AccountDashboardModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}, JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

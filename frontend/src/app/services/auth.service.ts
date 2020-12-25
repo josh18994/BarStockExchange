@@ -5,6 +5,8 @@ import { AUTHENTICATE_COOKIE, LOGIN_USER, CHECK_USER_EXISTS, CREATE_USER } from 
 import { CookieService } from 'ngx-cookie-service';
 import { AUTHENTICATION_COOKIE_NAME } from '../common/constants';
 import { IUser } from '../models/IUser';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 
 @Injectable({
@@ -12,7 +14,7 @@ import { IUser } from '../models/IUser';
 })
 export class AuthService {
 
-  constructor(private apollo: Apollo, private cookieService: CookieService) { }
+  constructor(private apollo: Apollo, private cookieService: CookieService, private jwtHelerService: JwtHelperService) { }
 
   // Get All Liquor Brands Query
   public loginUser(username: string, password: string): Observable<any> {
@@ -40,7 +42,8 @@ export class AuthService {
   }
 
   public isLoggedIn(): boolean {
-    return !!this.cookieService.get(AUTHENTICATION_COOKIE_NAME);
+    const cookie = this.cookieService.get(AUTHENTICATION_COOKIE_NAME);
+    return !this.jwtHelerService.isTokenExpired(cookie);
   }
 
 
