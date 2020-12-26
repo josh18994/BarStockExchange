@@ -1,10 +1,14 @@
-<div class="box">
-  <h2 class="name">{{liquorItem.info.name}}</h2>
-  <h4 class="category">{{liquorItem.category.categoryType}}</h4>
-  <h4 class="price">${{liquorItem.price.currentPrice}}</h4>
-  <div class="circle"></div>
-  <img src="../../../../assets/whiskey.png" class="product">
-  <button (click)="test()" href="#" class="buy">Buy Now</button>
-</div>
+<div class="card-one card-width">
+  <button (click)="addToCart(liquorItem)" class="floating-button">+</button>
+  <div class="img-one" [ngStyle]="generateStyle(liquorItem.category.categoryType)">
 
-<!-- too add glare use data-tilt-glare="true" data-tilt-scale="1.1" -->
+  </div>
+  <div class="name">
+    <p>{{liquorItem.info.name}}</p>
+  </div>
+  <div class="content">
+    <p class="price">
+     ${{liquorItem.price.currentPrice}}
+    </p>
+  </div>
+</div>
