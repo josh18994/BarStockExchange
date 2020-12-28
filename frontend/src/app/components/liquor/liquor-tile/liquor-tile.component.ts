@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ILiquor } from 'src/app/models/ILiquor';
 import { IAppState } from 'src/app/state';
-import { GetLiquorById } from 'src/app/state/app/app.actions';
+import { AddToCart } from 'src/app/state/cart/cart.actions';
+
 
 declare var VanillaTilt: any;
 
@@ -13,6 +14,8 @@ declare var VanillaTilt: any;
 })
 export class LiquorTileComponent implements OnInit {
 
+  public authenticatedUser: string;
+
   @Input() public liquorItem: ILiquor;
 
 
@@ -20,17 +23,15 @@ export class LiquorTileComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // VanillaTilt.init(document.querySelector('.box'), {
-    //   max: 25,
-    //   speed: 400
-    // });
-    // VanillaTilt.init(document.querySelectorAll('.box'));
 
+    this.store.select(state => state.auth).subscribe(val => {
+      this.authenticatedUser = val.user.username;
+    });
   }
 
 
-  addToCart(item) {
-    console.log(item);
+  addToCart(item: ILiquor) {
+    this.store.dispatch(new AddToCart(item._id, 1));
   }
 
 
@@ -92,14 +93,6 @@ export class LiquorTileComponent implements OnInit {
         };
     }
 
-
-
-
-
-  }
-
-  test() {
-    this.store.dispatch(new GetLiquorById());
   }
 }
 

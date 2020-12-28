@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { CookieService } from 'ngx-cookie-service';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppService } from 'src/app/services/app.service';
 import {
@@ -16,7 +15,7 @@ import {
 
 @Injectable()
 export class AppEffects {
-  constructor(private actions$: Actions, private appService: AppService, cookieService: CookieService) { }
+  constructor(private actions$: Actions, private appService: AppService) { }
 
   @Effect()
   public getLiquorList$ = this.actions$.pipe(

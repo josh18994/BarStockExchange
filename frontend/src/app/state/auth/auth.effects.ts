@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { IUser } from 'src/app/models/IUser';
 import { AuthService } from 'src/app/services/auth.service';
+import { IAppState } from '..';
+import { GetCart } from '../cart/cart.actions';
 import {
   ActionTypes,
   AuthenticateCookie,
@@ -14,12 +17,13 @@ import {
   LoginUserSuccessful,
   CheckUserExistsSuccessful,
   CreateUser,
-  CreateUserSucessful
+  CreateUserSucessful,
+  GetOrderSuccessful
 } from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
-  constructor(private actions$: Actions, private authService: AuthService) { }
+  constructor(private actions$: Actions, private authService: AuthService, private store: Store<IAppState>) { }
 
   @Effect()
   public loginUser$ = this.actions$.pipe(
@@ -52,6 +56,7 @@ export class AuthEffects {
             lastName: response.data.authenticateCookie.lastName,
             username: response.data.authenticateCookie.username
           } as IUser;
+          this.store.dispatch(new GetCart());
           return new AuthenticateCookieSuccessful(payload);
         }),
         catchError(error => {
@@ -60,6 +65,7 @@ export class AuthEffects {
       )
     )
   );
+
 
   @Effect()
   public checkUserExists$ = this.actions$.pipe(

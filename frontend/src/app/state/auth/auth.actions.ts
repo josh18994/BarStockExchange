@@ -11,7 +11,8 @@ export enum ActionTypes {
   CheckUserExistsSuccessful = '[Auth-APP] CheckUserExistsSuccessful',
   ClearUsernameExists = '[Auth-APP] ClearUsernameExists',
   CreateUser = '[Auth-APP] CreateUser',
-  CreateUserSucessful = '[Auth-APP] CreateUserSucessful'
+  CreateUserSucessful = '[Auth-APP] CreateUserSucessful',
+  GetOrderSuccessful = 'GetOrderSuccessful'
 }
 
 export class LoginUser implements Action {
@@ -57,6 +58,11 @@ export class ClearUsernameExists implements Action {
   public readonly type = ActionTypes.ClearUsernameExists;
 }
 
+export class GetOrderSuccessful implements Action {
+  public readonly type = ActionTypes.GetOrderSuccessful;
+  constructor(public response: any) { }
+}
+
 export class Failure implements Action {
   public readonly type = ActionTypes.Failure;
   constructor(public error: any) { }
@@ -71,4 +77,5 @@ export type Actions = LoginUser |
   CheckUserExistsSuccessful |
   ClearUsernameExists |
   CreateUser |
-  CreateUserSucessful;
+  CreateUserSucessful |
+  GetOrderSuccessful;

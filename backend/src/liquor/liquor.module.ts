@@ -12,6 +12,7 @@ import { LiquorService } from './liquor.service';
   providers: [
     LiquorService,
     LiquorResolver
-  ]
+  ],
+  exports: [LiquorService]
 })
 export class LiquorModule { }
