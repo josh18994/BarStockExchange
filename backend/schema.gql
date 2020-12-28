@@ -33,6 +33,7 @@ type Liquor {
   category: Category!
   price: Price!
   info: Info!
+  _id: ID!
 }
 
 type User {
@@ -40,11 +41,22 @@ type User {
   lastName: String!
   username: String!
   email: String!
+  _id: ID!
 }
 
 type AuthType {
   user: User!
   token: String!
+}
+
+type Product {
+  quantity: Float!
+  liquor: ID!
+}
+
+type Order {
+  user_Id: String!
+  products: [Product!]!
 }
 
 type Query {
@@ -53,6 +65,7 @@ type Query {
   getAllUsers: [User!]!
   authenticateCookie: User
   checkUserExists(username: String!): Boolean!
+  getOrderByUser: Order
 }
 
 type Mutation {
@@ -60,6 +73,7 @@ type Mutation {
   updateLiquor(id: String!, options: LiquorInput!): Liquor
   createUser(inputCredentials: CreateUserInput!): User!
   login(inputCredentials: LoginInput!): AuthType!
+  addToOrder(productInfo: AddToOrderInput!): Order!
 }
 
 input LiquorInput {
@@ -100,6 +114,11 @@ input CreateUserInput {
 input LoginInput {
   username: String!
   password: String!
+}
+
+input AddToOrderInput {
+  liquor: String!
+  quantity: Float!
 }
 
 type Subscription {

@@ -32,7 +32,6 @@ export class LiquorResolver {
         if(ctx.req.user.username !== 'admin') {
             console.log('You do not have required permissions, Login as admin to perform action');
         }
-        console.log(ctx.req);
         const liquor = await this.liquorService.createLiquor(options);
         pubSub.publish(LIQUOR_ADDED, { updatedLiquorList: liquor });
         return liquor;
@@ -45,11 +44,11 @@ export class LiquorResolver {
         @Args('id') id: string,
         @Context() ctx,
     ): Promise<Liquor | void> {
-        console.log(ctx.req.user);
         if(ctx.req.user.username !== 'admin') {
             console.log('You do not have required permissions, Login as admin to perform action');
         }
         const liquor = await this.liquorService.updateLiquor(options, id);
+        
         if (liquor) {
             pubSub.publish(LIQUOR_ADDED, { updatedLiquorList: liquor });
         }

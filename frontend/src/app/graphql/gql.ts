@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 export const START_CONNECTION = gql`
 subscription{
   updatedLiquorList{
+    _id
     id
     category{
       categoryId
@@ -22,6 +23,7 @@ subscription{
 export const GET_LIQUOR = gql`
 {
   getAllLiquor{
+    _id
     id
     img
     category{
@@ -110,4 +112,32 @@ export const CHECK_USER_EXISTS = gql`
     checkUserExists(username: $username)
 }`;
 
+
+export const GET_ORDER_INFO = gql`
+{
+  getOrderByUser{
+    user_Id
+    products{
+      quantity
+      liquor
+    }
+  }
+}
+`;
+
+export const ADD_TO_ORDER = gql`
+  mutation AddToOrder($liquorId: String!, $quantity: Float!) {
+    addToOrder(
+      productInfo: {
+        liquor: $liquorId
+        quantity: $quantity
+      }
+    ) {
+      products {
+        liquor
+        quantity
+      }
+    }
+  }
+`;
 

@@ -4,7 +4,8 @@
     <nav>
       <ul *ngIf="!!(authState | async).user.firstName">
         <span>Welcome {{(authState | async).user?.firstName.toUpperCase()}}</span>
-        <li (click)="logout()"><a href="">LogOut</a></li>
+        <span>${{calculateCartTotal()}}</span>
+        <li (click)="logout()"><a href="">Logout</a></li>
       </ul>
       <ul *ngIf="!(authState | async).user.firstName">
         <li><a routerLink="/login">Login</a> </li>

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Liquor, LiquorDocument } from './liquor.schema';
 import { v4 as uuid } from 'uuid';
-import { LiquorInput } from './types/liquor.input';
+import { Liquor, LiquorDocument } from './liquor.schema';
 import { LiquorCategories } from './types/liquor.category';
+import { LiquorInput } from './types/liquor.input';
 
 @Injectable()
 export class LiquorService {
@@ -40,8 +40,9 @@ export class LiquorService {
         if (updatedData.nModified <= 0) {
             return null;
         }
+        
         return {
-            id, img, category, price, info
+            id, img, category, price, info, _id: found._id
         } as Liquor
     }
 

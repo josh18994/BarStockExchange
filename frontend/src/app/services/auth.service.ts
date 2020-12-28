@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Apollo } from 'apollo-angular';
-import { AUTHENTICATE_COOKIE, LOGIN_USER, CHECK_USER_EXISTS, CREATE_USER } from '../graphql/gql';
-import { CookieService } from 'ngx-cookie-service';
-import { AUTHENTICATION_COOKIE_NAME } from '../common/constants';
-import { IUser } from '../models/IUser';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Apollo } from 'apollo-angular';
+import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
+import { AUTHENTICATION_COOKIE_NAME } from '../common/constants';
+import { AUTHENTICATE_COOKIE, CHECK_USER_EXISTS, CREATE_USER, LOGIN_USER, GET_ORDER_INFO } from '../graphql/gql';
+import { IUser } from '../models/IUser';
 
 
 
@@ -54,5 +54,9 @@ export class AuthService {
   public checkUserExists(username): Observable<any> {
     return this.apollo.query({ query: CHECK_USER_EXISTS, variables: { username } });
   }
+
+  // public getOrderInfo() {
+  //   return this.apollo.query({query: GET_ORDER_INFO});
+  // }
 
 }

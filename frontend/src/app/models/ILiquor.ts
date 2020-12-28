@@ -1,5 +1,5 @@
 export interface ILiquor {
-
+  _id: string;
   id: string;
   img: string;
   category: Category;
@@ -27,3 +27,9 @@ export interface Info {
   name: string;
   year: string;
 }
+
+export interface LiquorInfo {
+  liquorId: string;
+  quantity: number;
+}
+

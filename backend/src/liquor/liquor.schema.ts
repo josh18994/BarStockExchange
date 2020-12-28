@@ -1,6 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 import { Price, Info, Category } from './types/liquor.types';
 
 export class ModelFeautres {
@@ -32,6 +32,9 @@ export class Liquor {
     @Field()
     @Prop({ type: Info })
     info: Info;
+
+    @Field(() => ID)
+    _id: ObjectId
 
 }
 

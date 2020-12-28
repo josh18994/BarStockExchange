@@ -1,6 +1,6 @@
-import { ObjectType, Field } from "@nestjs/graphql";
-import { Prop, Schema, SchemaFactory,  } from "@nestjs/mongoose";
-import { Document } from 'mongoose';
+import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document, ObjectId } from 'mongoose';
 
 
 export class ModelFeautres {
@@ -22,7 +22,7 @@ export class User {
     lastName: string;
 
     @Field()
-    @Prop({unique: true})
+    @Prop({ unique: true })
     username: string;
 
     @Field()
@@ -34,6 +34,9 @@ export class User {
 
     @Prop()
     salt: string;
+
+    @Field(() => ID)
+    _id: ObjectId
 
 }
 
