@@ -15,6 +15,9 @@ import { LiquorComponent } from './components/liquor/liquor.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { GraphQLModule } from './graphql.module';
 import { effects, reducers } from './state';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './common/material/material.module';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -23,9 +26,11 @@ import { effects, reducers } from './state';
     LiquorTileComponent,
     WelcomeComponent,
     LoadingSpinnerComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
+    MaterialModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
         strictActionImmutability: false,
@@ -40,10 +45,12 @@ import { effects, reducers } from './state';
     AppRoutingModule,
     GraphQLModule,
     HttpClientModule,
-    AccountDashboardModule
+    AccountDashboardModule,
+    BrowserAnimationsModule,
   ],
   providers: [CookieService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}, JwtHelperService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CheckoutComponent]
 })
 export class AppModule { }
 

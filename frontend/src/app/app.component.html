@@ -4,6 +4,9 @@
     <nav>
       <ul *ngIf="!!(authState | async).user.firstName">
         <span>Welcome {{(authState | async).user?.firstName.toUpperCase()}}</span>
+        <button (click)="openCheckoutModal()" style="margin: 3px -20px 0 0" mat-icon-button color="accent">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
         <span>${{calculateCartTotal()}}</span>
         <li (click)="logout()"><a href="">Logout</a></li>
       </ul>
@@ -15,6 +18,30 @@
   </div>
 </div>
 
-<!-- <app-loader *ngIf="(authState | async).loading"></app-loader> -->
-
 <router-outlet *ngIf="!(authState | async).loading"></router-outlet>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <app-loader *ngIf="(authState | async).loading"></app-loader> DO NOT UNCOMMENT -->

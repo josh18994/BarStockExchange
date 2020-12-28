@@ -28,10 +28,12 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/vanilla-tilt/dist/vanilla-tilt.js"
+              "node_modules/vanilla-tilt/dist/vanilla-tilt.js",
+              "./node_modules/hammerjs/hammer.min.js"
             ]
           },
           "configurations": {
@@ -93,6 +95,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
             "scripts": [
