@@ -9,6 +9,8 @@ import { IAuthState } from './state/auth/auth.state';
 import { ICartState } from './state/cart/cart.state';
 import { ILiquorAppState } from './state/app/app.state';
 import { ILiquor, LiquorInfo } from './models/ILiquor';
+import { MatDialog } from '@angular/material/dialog';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,7 +25,10 @@ export class AppComponent implements OnInit {
   public liquorList: Array<ILiquor>;
   public userCart: Array<LiquorInfo>;
 
-  constructor(private cookieService: CookieService, private store: Store<IAppState>) { }
+  constructor(
+    private cookieService: CookieService,
+    private store: Store<IAppState>,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.authState = this.store.select(state => state.auth);
@@ -39,6 +44,10 @@ export class AppComponent implements OnInit {
     if (this.cookieService.get(AUTHENTICATION_COOKIE_NAME)) {
       this.store.dispatch(new AuthenticateCookie());
     }
+  }
+
+  openCheckoutModal() {
+    const dialogRef = this.dialog.open(CheckoutComponent);
   }
 
   logout() {
