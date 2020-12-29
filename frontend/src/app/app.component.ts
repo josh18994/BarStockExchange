@@ -70,7 +70,8 @@ export class AppComponent implements OnInit {
         return find;
 
       });
-    return total.toString();
+    if (total === 0) return '   ';
+    return '$' + total.toString();
 
   }
 }
