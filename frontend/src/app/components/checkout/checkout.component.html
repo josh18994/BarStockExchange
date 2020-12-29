@@ -1,2 +1,21 @@
-<p>checkout works!</p>
-<button mat-stroked-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>close</button>
+<h2 mat-dialog-title>Checkout</h2>
+
+
+<div class="container">
+  <div class="item order-summary">1.Summary</div>
+  <div class="item payment">
+    <app-payment></app-payment>
+  </div>
+  <div class="item discount">
+    <app-discount style="width: 100%; transform: translateY(-4px);"></app-discount>
+  </div>
+  <div class="item total">
+    <app-total></app-total>
+  </div>
+</div>
+
+
+
+<!-- <mat-dialog-actions align="end">
+  <button mat-stroked-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>close</button>
+</mat-dialog-actions> -->

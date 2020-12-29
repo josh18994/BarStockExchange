@@ -18,6 +18,9 @@ import { effects, reducers } from './state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './common/material/material.module';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { PaymentComponent } from './components/checkout/payment/payment.component';
+import { DiscountComponent } from './components/checkout/discount/discount.component';
+import { TotalComponent } from './components/checkout/total/total.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +29,13 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     LiquorTileComponent,
     WelcomeComponent,
     LoadingSpinnerComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    PaymentComponent,
+    DiscountComponent,
+    TotalComponent
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     MaterialModule,
     StoreModule.forRoot(reducers, {
@@ -41,7 +48,6 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     //   serializer: CustomSerializer,
     // }),
     EffectsModule.forRoot(effects),
-    ReactiveFormsModule,
     AppRoutingModule,
     GraphQLModule,
     HttpClientModule,
