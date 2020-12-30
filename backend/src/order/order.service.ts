@@ -26,6 +26,8 @@ export class OrderService {
             if (productIndex !== -1) {
                 if (quantity === 0) {
                     order.products.splice(productIndex, 1);
+                } else if(quantity === 1) {
+                    order.products[productIndex].quantity = Number(+order.products[productIndex].quantity + 1);
                 } else {
                     order.products[productIndex].quantity = quantity;
                 }
