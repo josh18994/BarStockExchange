@@ -37,6 +37,7 @@ export class AuthEffects {
             lastName: response.data.login.user.lastName,
             username: response.data.login.user.username
           } as IUser;
+          this.store.dispatch(new GetCart());
           return new LoginUserSuccessful(payload);
         }),
         catchError(error => of(new Failure(error)))

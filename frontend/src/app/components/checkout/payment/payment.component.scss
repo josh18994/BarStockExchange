@@ -1,0 +1,31 @@
+label {
+  padding-left: 10px;
+  margin-bottom: 0px;
+}
+
+.third-row {
+  display: flex;
+}
+
+.cvc-container{
+  flex: 0 0 50%;
+}
+
+
+
+.expiration-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+}
+
+.exp-month {
+  text-align: center;
+}
+
+

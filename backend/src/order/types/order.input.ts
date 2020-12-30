@@ -1,7 +1,7 @@
 import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()
-export class AddToOrderInput {
+export class UpdateOrderInput {
 
     @Field(() => String, {nullable: false})
     liquor: string;

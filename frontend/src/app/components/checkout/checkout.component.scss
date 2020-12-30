@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  height: 95%;
+  display: grid;
+  grid-template-columns: 2fr 1.5fr;
+  grid-template-rows: 2fr 1fr 2fr;
+}
+
+h2 {
+  border-bottom: 1px solid rgba(206, 195, 195, 0.438);
+  padding-bottom: 11px;
+  margin-bottom: -4px;
+  font-size: 1.5rem;
+}
+
+.order-summary {
+  grid-row: 1/4;
+  border-right: 1px solid rgba(206, 195, 195, 0.438);
+  padding: 30px;
+  max-height: 450px;
+}
+
+.payment{
+  padding: 30px;
+  border-bottom: 1px solid rgba(206, 195, 195, 0.438);
+}
+
+.discount {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  border-bottom: 1px solid rgba(206, 195, 195, 0.438);
+}
+
+.total {
+  padding: 30px;
+}

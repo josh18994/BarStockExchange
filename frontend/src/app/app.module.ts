@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { EffectsModule } from '@ngrx/effects';
@@ -18,6 +18,11 @@ import { effects, reducers } from './state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './common/material/material.module';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { PaymentComponent } from './components/checkout/payment/payment.component';
+import { DiscountComponent } from './components/checkout/discount/discount.component';
+import { TotalComponent } from './components/checkout/total/total.component';
+import { SummaryComponent } from './components/checkout/summary/summary.component';
+import { LiquorSummaryInfoComponent } from './components/checkout/summary/liquor-summary-info/liquor-summary-info.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +31,16 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     LiquorTileComponent,
     WelcomeComponent,
     LoadingSpinnerComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    PaymentComponent,
+    DiscountComponent,
+    TotalComponent,
+    SummaryComponent,
+    LiquorSummaryInfoComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    FormsModule,
     BrowserModule,
     MaterialModule,
     StoreModule.forRoot(reducers, {
@@ -41,7 +53,6 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     //   serializer: CustomSerializer,
     // }),
     EffectsModule.forRoot(effects),
-    ReactiveFormsModule,
     AppRoutingModule,
     GraphQLModule,
     HttpClientModule,

@@ -14,7 +14,9 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: [
+    './app.component.scss'
+  ]
 })
 export class AppComponent implements OnInit {
 
@@ -44,10 +46,14 @@ export class AppComponent implements OnInit {
     if (this.cookieService.get(AUTHENTICATION_COOKIE_NAME)) {
       this.store.dispatch(new AuthenticateCookie());
     }
+
   }
 
   openCheckoutModal() {
-    const dialogRef = this.dialog.open(CheckoutComponent);
+    const dialogRef = this.dialog.open(CheckoutComponent, {
+      height: '70vh',
+      width: '80vw'
+    });
   }
 
   logout() {
@@ -64,7 +70,8 @@ export class AppComponent implements OnInit {
         return find;
 
       });
-    return total.toString();
+    if (total === 0) return '   ';
+    return '$' + total.toString();
 
   }
 }

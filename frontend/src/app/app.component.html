@@ -7,7 +7,7 @@
         <button (click)="openCheckoutModal()" style="margin: 3px -20px 0 0" mat-icon-button color="accent">
           <mat-icon>add_shopping_cart</mat-icon>
         </button>
-        <span>${{calculateCartTotal()}}</span>
+        <span>{{calculateCartTotal()}}</span>
         <li (click)="logout()"><a href="">Logout</a></li>
       </ul>
       <ul *ngIf="!(authState | async).user.firstName">
@@ -20,28 +20,6 @@
 
 <router-outlet *ngIf="!(authState | async).loading"></router-outlet>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- <app-checkout></app-checkout> -->
 
 <!-- <app-loader *ngIf="(authState | async).loading"></app-loader> DO NOT UNCOMMENT -->

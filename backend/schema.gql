@@ -73,7 +73,7 @@ type Mutation {
   updateLiquor(id: String!, options: LiquorInput!): Liquor
   createUser(inputCredentials: CreateUserInput!): User!
   login(inputCredentials: LoginInput!): AuthType!
-  addToOrder(productInfo: AddToOrderInput!): Order!
+  updateOrder(productInfo: UpdateOrderInput!): Order!
 }
 
 input LiquorInput {
@@ -116,7 +116,7 @@ input LoginInput {
   password: String!
 }
 
-input AddToOrderInput {
+input UpdateOrderInput {
   liquor: String!
   quantity: Float!
 }
