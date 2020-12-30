@@ -4,7 +4,7 @@ import { GqlAuthGuard } from 'src/auth/auth.guard';
 import { Liquor } from 'src/liquor/liquor.schema';
 import { Order } from './order.schema';
 import { OrderService } from './order.service';
-import { AddToOrderInput } from './types/order.input';
+import { UpdateOrderInput } from './types/order.input';
 
 @ObjectType()
 export class ProductPayload {
@@ -22,11 +22,11 @@ export class OrderResolver {
 
     @UseGuards(GqlAuthGuard)
     @Mutation(() => Order)
-    async addToOrder(
-        @Args('productInfo') addToOrderInput: AddToOrderInput,
+    async updateOrder(
+        @Args('productInfo') updateOrderInput: UpdateOrderInput,
         @Context() ctx
     ) {
-        return this.orderService.addToOrder(addToOrderInput, ctx);
+        return this.orderService.updateOrder(updateOrderInput, ctx);
     }
 
     @UseGuards(GqlAuthGuard)
