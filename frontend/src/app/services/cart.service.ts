@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { ADD_TO_ORDER, GET_ORDER_INFO } from '../graphql/gql';
+import { UPDATE_ORDER, GET_ORDER_INFO } from '../graphql/gql';
 
 
 @Injectable({
@@ -12,9 +12,9 @@ export class CartService {
   constructor(private apollo: Apollo) { }
 
 
-  public addToCart(liquorId: string, quantity: number): Observable<any> {
+  public updateCart(liquorId: string, quantity: number): Observable<any> {
     return this.apollo.mutate({
-      mutation: ADD_TO_ORDER,
+      mutation: UPDATE_ORDER,
       variables: {
         liquorId,
         quantity

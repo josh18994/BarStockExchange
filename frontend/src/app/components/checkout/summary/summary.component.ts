@@ -4,6 +4,7 @@ import { IAppState } from 'src/app/state';
 import { ICartState } from 'src/app/state/cart/cart.state';
 import { Observable } from 'rxjs';
 import { getLiquorInfoById } from 'src/app/state/app/app.selectors';
+import { UpdateCart } from 'src/app/state/cart/cart.actions';
 
 @Component({
   selector: 'app-summary',
@@ -30,6 +31,10 @@ export class SummaryComponent implements OnInit {
       return val;
 
     });
+  }
+
+  deleteItem(id: string) {
+    this.store.dispatch(new UpdateCart(id, 0));
   }
 
 }

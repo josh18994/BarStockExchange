@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ILiquor } from 'src/app/models/ILiquor';
 import { IAppState } from 'src/app/state';
-import { AddToCart } from 'src/app/state/cart/cart.actions';
+import { UpdateCart } from 'src/app/state/cart/cart.actions';
 
 
 declare var VanillaTilt: any;
@@ -15,6 +15,7 @@ declare var VanillaTilt: any;
 export class LiquorTileComponent implements OnInit {
 
   public authenticatedUser: string;
+  public cart;
 
   @Input() public liquorItem: ILiquor;
 
@@ -27,11 +28,17 @@ export class LiquorTileComponent implements OnInit {
     this.store.select(state => state.auth).subscribe(val => {
       this.authenticatedUser = val.user.username;
     });
+
+    this.store.select(state => state.cart).subscribe(val => {
+      this.cart = val.liquor;
+    });
+
   }
 
 
-  addToCart(item: ILiquor) {
-    this.store.dispatch(new AddToCart(item._id, 1));
+  updateCart(item: ILiquor) {
+    const quantity = this.cart.filter(x => x.liquorId === item._id)[0]?.quantity;
+    this.store.dispatch(new UpdateCart(item._id, !!quantity ? quantity + 1 : 1));
   }
 
 

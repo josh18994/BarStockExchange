@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="delete-button">
-      <button mat-mini-fab class="small" color="warn" aria-label="Example icon button with a delete icon">
+      <button (click)="deleteItem(cartItem.liquorId)" mat-mini-fab class="small" color="warn" aria-label="Example icon button with a delete icon">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

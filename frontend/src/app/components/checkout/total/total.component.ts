@@ -44,7 +44,7 @@ export class TotalComponent implements OnInit {
   }
 
   calculateTax() {
-    this.grandTotal =  this.subTotal + +(this.subTotal * 0.06).toFixed(2) + +(this.subTotal * 0.02).toFixed(2);
+    this.grandTotal = +(this.subTotal + this.subTotal * 0.06 + +this.subTotal * 0.02).toFixed(2);
     this.tax = +(this.grandTotal - this.subTotal).toFixed(2);
     return '$' + this.tax.toString();
   }

@@ -125,9 +125,9 @@ export const GET_ORDER_INFO = gql`
 }
 `;
 
-export const ADD_TO_ORDER = gql`
-  mutation AddToOrder($liquorId: String!, $quantity: Float!) {
-    addToOrder(
+export const UPDATE_ORDER = gql`
+  mutation UpdateOrder($liquorId: String!, $quantity: Float!) {
+    updateOrder(
       productInfo: {
         liquor: $liquorId
         quantity: $quantity
