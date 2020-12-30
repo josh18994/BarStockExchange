@@ -50,9 +50,15 @@ export class AppComponent implements OnInit {
   }
 
   openCheckoutModal() {
-    const dialogRef = this.dialog.open(CheckoutComponent, {
-      height: '70vh',
-      width: '80vw'
+    let height = '615px';
+    let width = '1320px';
+    if (window.innerWidth < 1680 && window.innerHeight < 914) {
+      height = '70vh';
+      width = '80vw';
+    }
+    this.dialog.open(CheckoutComponent, {
+      height,
+      width
     });
   }
 
