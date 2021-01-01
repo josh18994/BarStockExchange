@@ -1,4 +1,54 @@
-<div *ngIf="!(authState | async).loading" class="body">
+<div class="header">
+  <div class="arc-top">
+    <div class="name">
+      <div class="logo">
+        <button mat-mini-fab color="primary">
+          <mat-icon>stars</mat-icon>
+        </button>
+      </div>
+      <div class="title">
+        BSX
+      </div>
+    </div>
+    <div class="links">
+      <ul>
+        <li>Home</li>
+        <li>Shop</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+    <div class="cart">
+      <div class="total">{{calculateCartTotal()}}</div>
+      <div class="cart-icon">
+        <button mat-mini-fab color="primary">
+          <mat-icon>shop</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fixed-static-pane">
+  <div class="fixed-static-pane-top">
+    <div class="pane-info">
+      <div class="box box--1"><span>Home/Products</span></div>
+      <div class="box box--2"><span>Shop</span></div>
+      <div class="box box--3">
+        <span>Showing 1-12 of 34 results</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+  <div class="bottom-arc">
+    <div class="solid-static-pane"></div>
+    <router-outlet *ngIf="!(authState | async).loading"></router-outlet>
+  </div>
+</div>
+
+
+<!-- <div *ngIf="!(authState | async).loading" class="body">
   <div class="header">
     <div class="logo">Bar Stock Exchange</div>
     <nav>
@@ -18,7 +68,9 @@
   </div>
 </div>
 
-<router-outlet *ngIf="!(authState | async).loading"></router-outlet>
+<router-outlet *ngIf="!(authState | async).loading"></router-outlet> -->
+
+
 
 <!-- <app-checkout></app-checkout> -->
 
