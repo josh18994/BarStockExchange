@@ -20,7 +20,7 @@
     <div class="cart">
       <div class="total">{{calculateCartTotal()}}</div>
       <div class="cart-icon">
-        <button mat-mini-fab color="primary">
+        <button (click)="openCheckoutModal()" mat-mini-fab color="primary">
           <mat-icon>shop</mat-icon>
         </button>
       </div>
@@ -34,7 +34,12 @@
       <div class="box box--1"><span>Home/Products</span></div>
       <div class="box box--2"><span>Shop</span></div>
       <div class="box box--3">
-        <span>Showing 1-12 of 34 results</span>
+        <span style="margin-right: 10px;">Showing 1-12 of 34 results</span>
+        <button mat-button [matMenuTriggerFor]="menu"> <div>Sort</div> <mat-icon>arrow_drop_down</mat-icon> </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Item 1</button>
+          <button mat-menu-item>Item 2</button>
+        </mat-menu>
       </div>
     </div>
   </div>
