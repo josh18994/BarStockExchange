@@ -12,7 +12,7 @@ import { CartEffects } from './cart/cart.effects';
 export interface IAppState {
   app: ILiquorAppState;
   auth: IAuthState;
-  cart: ICartState
+  cart: ICartState;
 }
 
 export const reducers: ActionReducerMap<IAppState> = {

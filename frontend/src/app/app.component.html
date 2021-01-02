@@ -1,4 +1,4 @@
-<div class="background">
+<div *ngIf="!(authState | async).loading" class="background">
   <div class="header">
     <div class="arc-top">
       <div class="name">
@@ -12,16 +12,20 @@
         </div>
       </div>
       <div class="links">
-        <ul>
+        <ul *ngIf="!!(authState | async).user.firstName">
           <li>Home</li>
           <li>Shop</li>
           <li>Contact</li>
+        </ul>
+        <ul *ngIf="!(authState | async).user.firstName">
+          <li><a routerLinkActive="active" [routerLink]="['/login']">Login</a> </li>
+          <li><a routerLinkActive="active" [routerLink]="['/signup']">Signup</a></li>
         </ul>
       </div>
       <div class="cart">
         <div class="total">{{calculateCartTotal()}}</div>
         <div class="cart-icon">
-          <button (click)="openCheckoutModal()" mat-mini-fab color="primary">
+          <button *ngIf="!!(authState | async).user.firstName" (click)="openCheckoutModal()" mat-mini-fab color="primary">
             <mat-icon>shop</mat-icon>
           </button>
         </div>
@@ -32,9 +36,9 @@
   <div class="fixed-static-pane">
     <div class="fixed-static-pane-top">
       <div class="pane-info">
-        <div class="box box--1"><span>Home/Products</span></div>
-        <div class="box box--2"><span>Shop</span></div>
-        <div class="box box--3">
+        <div *ngIf="!!(authState | async).user.firstName" class="box box--1"><span>Home/Products</span></div>
+        <div class="box box--2"><span>{{title}}</span></div>
+        <div *ngIf="!!(authState | async).user.firstName" class="box box--3">
           <span style="margin-right: 10px;">Showing 1-12 of 34 results</span>
           <button mat-button [matMenuTriggerFor]="menu"> <div>Sort</div> <mat-icon>arrow_drop_down</mat-icon> </button>
           <mat-menu #menu="matMenu">
@@ -53,7 +57,6 @@
     </div>
   </div>
 </div>
-
 
 <!-- <div *ngIf="!(authState | async).loading" class="body">
   <div class="header">

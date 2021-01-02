@@ -24,11 +24,8 @@ export class LayoutComponent implements OnInit {
         if (!val.loading && val.user.username) {
           this.router.navigate(['/liquor']);
         } else {
-          if (this.router.url.includes('account')) {
-            this.router.navigate(['/login']);
-          // tslint:disable-next-line: curly
-          } else
-            this.router.navigate([this.router.url]);
+          if (this.router.url.includes('account')) this.router.navigate(['/signup']);
+          else this.router.navigate([this.router.url]);
         }
       });
 

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ILiquor } from 'src/app/models/ILiquor';
 import { IAppState } from 'src/app/state';
+import { SetTitle } from 'src/app/state/app/app.actions';
 import { UpdateCart } from 'src/app/state/cart/cart.actions';
 
 
@@ -20,10 +21,13 @@ export class LiquorTileComponent implements OnInit {
   @Input() public liquorItem: ILiquor;
 
 
-  constructor(private store: Store<IAppState>) { }
+  constructor(private store: Store<IAppState>) {
+    this.store.dispatch(new SetTitle('Shop'));
+  }
 
 
   ngOnInit(): void {
+
 
     this.store.select(state => state.auth).subscribe(val => {
       this.authenticatedUser = val.user.username;

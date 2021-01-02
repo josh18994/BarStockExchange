@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AlertService } from 'src/app/services/alert.service';
 import { IAppState } from 'src/app/state';
+import { SetTitle } from 'src/app/state/app/app.actions';
 import { CreateUser } from 'src/app/state/auth/auth.actions';
 
 @Component({
@@ -22,11 +23,14 @@ export class SignupComponent implements OnInit {
     private store: Store<IAppState>,
     private router: Router,
     private alertService: AlertService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder) {
+    this.store.dispatch(new SetTitle('Signup'));
+  }
 
   get f() { return this.form.controls; }
 
   ngOnInit(): void {
+
 
     this.form = this.formBuilder.group({
       firstName: ['', Validators.required],

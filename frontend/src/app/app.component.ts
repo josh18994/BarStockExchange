@@ -11,6 +11,7 @@ import { ILiquorAppState } from './state/app/app.state';
 import { ILiquor, LiquorInfo } from './models/ILiquor';
 import { MatDialog } from '@angular/material/dialog';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -27,15 +28,19 @@ export class AppComponent implements OnInit {
   public liquorList: Array<ILiquor>;
   public userCart: Array<LiquorInfo>;
 
+  public title: string;
+
   constructor(
     private cookieService: CookieService,
     private store: Store<IAppState>,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private router: Router) { }
 
   ngOnInit() {
     this.authState = this.store.select(state => state.auth);
 
     this.store.select(state => state.app).subscribe(app => {
+      this.title = app.title;
       this.liquorList = app.data;
     });
 

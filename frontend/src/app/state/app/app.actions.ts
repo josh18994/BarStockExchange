@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 
 export enum ActionTypes {
+  SetTitle = 'SetTitle',
   TestLiquorApp = '[LIQUOR-APP] TestLiquorApp',
   TestLiquorAppSuccess = '[LIQUOR-APP] TestLiquorAppSuccess',
   StartConnection = '[LIQUOR-APP] StartConnection',
@@ -9,6 +10,11 @@ export enum ActionTypes {
   GetLiquorById = '[LIQUOR-APP] GetLiquorById',
   GetLiquorByIdSuccess = '[LIQUOR-APP] GetLiquorByIdSuccess',
   Failure = '[LIQUOR-APP] Failure',
+}
+
+export class SetTitle implements Action {
+  public readonly type = ActionTypes.SetTitle;
+  constructor(public title: string) { }
 }
 
 export class TestLiquorApp implements Action {
@@ -43,7 +49,8 @@ export class Failure implements Action {
   constructor(public error: any) { }
 }
 
-export type Actions = TestLiquorApp |
+export type Actions = SetTitle |
+  TestLiquorApp |
   TestLiquorAppSuccess |
   StartConnection |
   UpdateRecieved |
