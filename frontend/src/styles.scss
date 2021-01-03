@@ -29,6 +29,21 @@ body {
   // background-size: cover;
 }
 
+footer {
+  position: sticky;
+  position: -webkit-sticky;
+  bottom: 0;
+  z-index: -1;
+  height: 50px;
+  background-color: #051622;
+  color: white;
+  text-shadow: 2px 2px black;
+  padding: 5px 0;
+  text-align: center;
+}
+
+
+
 
 
 .backdropBackground {

@@ -1,9 +1,10 @@
 .layout-container {
-  height: calc(100vh - 15rem);
+  height: calc(100vh - 16.5rem);
   margin-top: 13rem;
   overflow-y: hidden;
   display: flex;
   justify-content: space-evenly;
+  padding-top: 70px;
   width: 77vw;
   transform: translateX(13%);
   position: relative;
