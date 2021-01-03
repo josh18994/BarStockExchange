@@ -28,3 +28,11 @@ body {
   // background-attachment: fixed;
   // background-size: cover;
 }
+
+
+
+.backdropBackground {
+  filter: blur(20px);
+  background-color: #051622;
+  opacity: 0.7 !important;
+}

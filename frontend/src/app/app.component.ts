@@ -63,7 +63,8 @@ export class AppComponent implements OnInit {
     }
     this.dialog.open(CheckoutComponent, {
       height,
-      width
+      width,
+      backdropClass: 'backdropBackground'
     });
   }
 
