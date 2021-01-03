@@ -94,6 +94,15 @@
   }
 }
 
+
+.circular {
+  border-radius: 50px;
+}
+
+.continue {
+  border-radius: 50px 50px 0 0;
+}
+
 .fixed-static-pane {
   top: 133px;
   width: 88vw;
@@ -102,14 +111,13 @@
   background: #051622;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 50px 50px 0 0;
+  // border-radius: 50px 50px 0 0;
   z-index: 9;
 
   &-top {
     width: 100%;
     z-index: 99;
     height: 105px;
-    border-radius: 50px 50px 0 0;
     display: flex;
     align-items: center;
   }
@@ -181,17 +189,17 @@
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(50px);
 
-    .solid-static-pane {
-      position: fixed;
-      top: 133px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 88vw;
-      height: 40vh;
-      max-height: 400px;
-      background: #051622;
-      border-radius: 50px;
-    }
+    // .solid-static-pane {
+    //   position: fixed;
+    //   top: 133px;
+    //   left: 50%;
+    //   transform: translateX(-50%);
+    //   width: 88vw;
+    //   height: 40vh;
+    //   max-height: 400px;
+    //   background: #051622;
+    //   border-radius: 50px;
+    // }
   }
 }
 

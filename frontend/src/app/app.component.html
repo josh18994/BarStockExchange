@@ -14,7 +14,7 @@
       <div class="links">
         <ul *ngIf="!!(authState | async).user.firstName">
           <li>Home</li>
-          <li>Shop</li>
+          <li><a routerLinkActive="active" [routerLink]="['/liquor']">Shop</a></li>
           <li>Contact</li>
         </ul>
         <ul *ngIf="!(authState | async).user.firstName">
@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <div class="fixed-static-pane">
+  <div [ngClass]="{'continue' : !!(authState | async).user.firstName}" class="fixed-static-pane circular">
     <div class="fixed-static-pane-top">
       <div class="pane-info">
         <div *ngIf="!!(authState | async).user.firstName" class="box box--1"><span>Home/Products</span></div>
@@ -52,7 +52,7 @@
 
   <div class="body">
     <div class="bottom-arc">
-      <div class="solid-static-pane"></div>
+      <!-- <div class="solid-static-pane"></div> -->
       <router-outlet *ngIf="!(authState | async).loading"></router-outlet>
     </div>
   </div>

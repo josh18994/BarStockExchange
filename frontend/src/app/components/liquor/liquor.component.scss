@@ -1,9 +1,25 @@
+.test {
+
+  min-height: 100vh;
+  margin-top: 186px;
+
+  .sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    background: #051622;
+    width: 88vw;
+    left: 6%;
+    top: 233px;
+    border-radius: 0 0 50px 50px;
+    height: 300px;
+  }
+}
+
 .liquor-body {
   display: flex;
   justify-content: center;
   align-self: center;
-  min-height: 100vh;
-  margin-top: 186px;
+  transform: translateY(-300px);
 }
 
 .container {
@@ -16,3 +32,6 @@
   width: 88vw;
   transform-style: preserve-3d;
 }
+
+
+
