@@ -52,36 +52,7 @@
 
   <div class="body">
     <div class="bottom-arc">
-      <!-- <div class="solid-static-pane"></div> -->
       <router-outlet *ngIf="!(authState | async).loading"></router-outlet>
     </div>
   </div>
 </div>
-
-<!-- <div *ngIf="!(authState | async).loading" class="body">
-  <div class="header">
-    <div class="logo">Bar Stock Exchange</div>
-    <nav>
-      <ul *ngIf="!!(authState | async).user.firstName">
-        <span>Welcome {{(authState | async).user?.firstName.toUpperCase()}}</span>
-        <button (click)="openCheckoutModal()" style="margin: 3px -20px 0 0" mat-icon-button color="accent">
-          <mat-icon>add_shopping_cart</mat-icon>
-        </button>
-        <span>{{calculateCartTotal()}}</span>
-        <li (click)="logout()"><a href="">Logout</a></li>
-      </ul>
-      <ul *ngIf="!(authState | async).user.firstName">
-        <li><a routerLink="/login">Login</a> </li>
-        <li><a routerLink="/signup">Signup</a></li>
-      </ul>
-    </nav>
-  </div>
-</div>
-
-<router-outlet *ngIf="!(authState | async).loading"></router-outlet> -->
-
-
-
-<!-- <app-checkout></app-checkout> -->
-
-<!-- <app-loader *ngIf="(authState | async).loading"></app-loader> DO NOT UNCOMMENT -->
