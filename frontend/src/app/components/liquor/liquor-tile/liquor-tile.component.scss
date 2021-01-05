@@ -1,82 +1,101 @@
-.card-width {
-  width: 350px;
-  margin: 50px;
-  border-radius: 42px;
-  box-shadow: 2px 2px 22px rgba(0, 0, 0, 0.2);
-  transition: .3s box-shadow, .3s margin-top ease-in-out;
-}
-.card-width:hover {
-  box-shadow: 2px 12px 32px rgba(0, 0, 0, 0.5);
-  margin-top: 30px;
-  cursor: pointer;
-}
-.img-one {
-  width: 350px;
-  height: 300px;
-  border-radius: 42px;
-}
-.card-one {
-  position: relative;
-  height: 500px;
-  background-color: #FFE697;
-}
-.name {
+@import "../../../sass/variables";
+@import "../../../sass/functions";
+@import "../../../sass/mixins";
+
+.tile-container {
+  margin: 2rem;
+  background-color: white;
+  border-radius: 20px;
+  width: 250px;
+  height: 230px;
   display: flex;
-  width: 260px;
-  height: 50px;
-  border-radius: 50px;
-  margin: 0 auto;
-  margin-top: -25px;
-  font-size: 30px;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  background-color: #FF8A8A;
+  flex-direction: column;
+  box-shadow: 6px 10px 24px 7px rgba(5, 22, 34, 0.7);
+  overflow: hidden;
 }
 
-.content {
+.title-container {
+  flex: 1;
   display: flex;
-  margin: 0 auto;
-  justify-content: center;
-  margin-top: 4rem;
-  font-size: x-large;
+  justify-content: flex-start;
+  margin-left: 20px;
+
+  .image {
+    align-self: center;
+
+    .image-cropper {
+      width: 50px;
+      height: 50px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 50%;
+
+      img {
+        display: inline;
+        margin: 0 auto;
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
+
+
+  .title-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .title {
+      font-size: $font-size-medium;
+      font-weight: bold;
+      flex: 0 0 100%;
+      align-self: flex-end;
+    }
+
+    .info {
+      font-size: $font-size-small;
+      align-self: flex-start;
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
 }
 
-@media (max-width: 1314px) {
-  .card-container {
-    flex-direction: column;
+
+
+.price-contianer {
+  flex: 1;
+
+  .container--1 {
+    display: flex;
     justify-content: center;
-    margin: 0 auto;
+    align-items: flex-start;
+
+    .current-price {
+      font-size: 32px;
+    }
+
+    .difference-percent {
+      font-size: 12px;
+      align-self: flex-start;
+      color: #02c70a;
+      font-weight: bold;
+    }
   }
-  .card-width {
-    margin: 0 auto;
-    margin-top: 25px;
-  }
-  .card-width:hover {
-    box-shadow: 2px 12px 32px rgba(0, 0, 0, 0.5);
-    cursor: pointer;
+
+  .original-price {
+    display: flex;
+    justify-content: center;
+    text-decoration: line-through;
+    text-decoration-color: red;
+    text-decoration-thickness: 3px;
   }
 }
 
-.floating-button {
-  width: 25px;
-  height: 25px;
-  background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 20px;
-  position: fixed;
-  transition: background 0.25s;
-
-  outline: blue;
-  border: none;
-  cursor: pointer;
-}
-
-.floating-button:active {
-  background: grey;
+.chart-container {
+  height: 70px;
+  width: 250px;
+  transform: scale(1.1) translateX(-10px);
 }

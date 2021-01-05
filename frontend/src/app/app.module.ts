@@ -23,6 +23,8 @@ import { DiscountComponent } from './components/checkout/discount/discount.compo
 import { TotalComponent } from './components/checkout/total/total.component';
 import { SummaryComponent } from './components/checkout/summary/summary.component';
 import { LiquorSummaryInfoComponent } from './components/checkout/summary/liquor-summary-info/liquor-summary-info.component';
+import { ChartsModule } from 'ng2-charts';
+import { ChartComponent } from './components/liquor/liquor-tile/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { LiquorSummaryInfoComponent } from './components/checkout/summary/liquor
     DiscountComponent,
     TotalComponent,
     SummaryComponent,
-    LiquorSummaryInfoComponent
+    LiquorSummaryInfoComponent,
+    ChartComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -58,6 +61,7 @@ import { LiquorSummaryInfoComponent } from './components/checkout/summary/liquor
     HttpClientModule,
     AccountDashboardModule,
     BrowserAnimationsModule,
+    ChartsModule
   ],
   providers: [CookieService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}, JwtHelperService],
   bootstrap: [AppComponent],

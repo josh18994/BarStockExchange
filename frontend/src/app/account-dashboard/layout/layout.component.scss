@@ -1,3 +1,28 @@
-.container {
-  margin-top: 10rem;
+.layout-container {
+  height: calc(100vh - 16.5rem);
+  margin-top: 13rem;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 70px;
+  width: 77vw;
+  transform: translateX(13%);
+  position: relative;
+}
+
+
+.site-info {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  color: #1BA098;
+}
+
+.r-outlet {
+  min-width: 431px;
+  width: 50%;
+  max-width: 800px;
 }

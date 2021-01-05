@@ -1,4 +1,31 @@
-<div class="card-one card-width">
+<div class="tile-container">
+  <div class="title-container">
+    <div class="image">
+      <div class="image-cropper">
+        <img src="../../../../assets/test/jim-bean.png" alt="">
+      </div>
+    </div>
+    <div class="title-info">
+      <div class="title">{{liquorItem.info.name}}</div>
+      <div class="info">{{liquorItem.category.categoryType}}</div>
+    </div>
+  </div>
+  <div class="price-contianer">
+    <div class="container--1">
+      <div class="current-price">${{liquorItem.price.currentPrice}}</div>
+      <div class="difference-percent">+17%</div>
+    </div>
+    <div class="original-price">$6.37</div>
+  </div>
+  <div class="chart-container">
+    <app-chart></app-chart>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="card-one card-width">
   <button (click)="updateCart(liquorItem)" class="floating-button">+</button>
   <div class="img-one" [ngStyle]="generateStyle(liquorItem.category.categoryType)">
 
@@ -11,4 +38,4 @@
      ${{liquorItem.price.currentPrice}}
     </p>
   </div>
-</div>
+</div> -->

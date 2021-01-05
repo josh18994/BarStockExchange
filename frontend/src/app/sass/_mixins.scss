@@ -1,0 +1,31 @@
+@mixin static-center-horizontal {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin pill-box {
+  border-radius: 50px;
+}
+
+@mixin half-pill-box-top {
+  border-radius: 50px 50px 0 0;
+}
+
+@mixin transparent-background {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@mixin mat-button-transparent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  @include transparent-background;
+  font-size: 10px;
+}
+
+@mixin thin-border {
+  border: 1px solid white;
+}
+
+

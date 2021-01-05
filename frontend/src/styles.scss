@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic");
-// @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
 //font-family: 'Source Sans Pro', sans-serif;
 
 * {
@@ -8,5 +8,31 @@
   font-family: 'Poppins', sans-serif;
 }
 
-html, body { height: 100%; width: 100%;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #051622;
+
+  margin: 0;
+  font-family: 'Source Sans Pro', Roboto, "Helvetica Neue", sans-serif;
+}
+
+footer {
+  position: sticky;
+  position: -webkit-sticky;
+  bottom: 0;
+  z-index: -1;
+  height: 50px;
+  background-color: #051622;
+  color: white;
+  text-shadow: 2px 2px black;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.backdropBackground {
+  filter: blur(20px);
+  background-color: #051622;
+  opacity: 0.7 !important;
+}
