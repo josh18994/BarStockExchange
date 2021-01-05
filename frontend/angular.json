@@ -23,6 +23,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "allowedCommonJsDependencies": [
+              "chart.js",
+              "graphql-tag",
+              "zen-observable",
+              "subscriptions-transport-ws"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
