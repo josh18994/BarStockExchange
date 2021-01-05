@@ -1,5 +1,8 @@
-.test {
+@import "../../sass/variables";
+@import "../../sass/functions";
+@import "../../sass/mixins";
 
+.test {
   min-height: 100vh;
   margin-top: 186px;
 
@@ -23,7 +26,6 @@
 }
 
 .container {
-  // border: 1px solid white;
   position: relative;
   display: flex;
   justify-content: space-evenly;
