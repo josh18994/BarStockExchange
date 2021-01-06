@@ -44,6 +44,7 @@ export const GET_LIQUOR_BY_ID = gql`
 query GetLiquorById($id: String!){
   getLiquorById(id: $id) {
     id
+    img
     category {
       categoryId
       categoryType

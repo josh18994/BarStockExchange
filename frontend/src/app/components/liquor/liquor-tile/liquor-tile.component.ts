@@ -45,6 +45,10 @@ export class LiquorTileComponent implements OnInit {
     this.store.dispatch(new UpdateCart(item._id, !!quantity ? quantity + 1 : 1));
   }
 
+  getQuantity(id: string) {
+    return this.cart.filter(x => x.liquorId === id)[0]?.quantity || '';
+  }
+
 
   generateStyle(category): object {
     switch (category) {

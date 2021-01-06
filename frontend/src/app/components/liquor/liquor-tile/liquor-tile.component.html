@@ -1,8 +1,10 @@
-<div class="tile-container">
+<div (click)="updateCart(liquorItem)" [matBadge]="getQuantity(liquorItem._id)" matBadgeColor="accent" matRipple
+  class="tile-container">
+  <a href=""></a>
   <div class="title-container">
     <div class="image">
       <div class="image-cropper">
-        <img src="../../../../assets/test/jim-bean.png" alt="">
+        <img [src]="liquorItem.img" alt="">
       </div>
     </div>
     <div class="title-info">
