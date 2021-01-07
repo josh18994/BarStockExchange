@@ -25,6 +25,7 @@ type Price {
 type Info {
   name: String!
   year: String
+  abv: String
 }
 
 type Liquor {
@@ -101,6 +102,7 @@ input PriceHistoryType {
 input InfoType {
   name: String!
   year: String
+  abv: String
 }
 
 input CreateUserInput {

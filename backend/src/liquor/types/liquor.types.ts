@@ -41,4 +41,7 @@ export class Info {
     @Field({nullable: true})
     year: string;
 
+    @Field({nullable: true})
+    abv: string;
+
 }
