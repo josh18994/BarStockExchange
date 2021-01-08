@@ -75,8 +75,8 @@ type Query {
 }
 
 input LiquorQueriesInput {
-  pageSize: String
-  pageNum: String
+  pageSize: String!
+  pageNum: String!
   search: String
   filter: String
 }

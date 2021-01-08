@@ -51,28 +51,36 @@ export class LiquorService {
         return this.liquorModel.findOne({ id });
     }
 
-    async getAllLiquor({ pageSize = "8", pageNum = "1", search = "", filter = "" }: LiquorQueriesInput): Promise<GetAllLiquorReturnData> {
+    async getAllLiquor({ pageSize, pageNum, search = "", filter = "" }: LiquorQueriesInput): Promise<GetAllLiquorReturnData> {
 
-        console.log('pageSize = ' + pageSize, 'pageNum = ' + pageNum);
-
+        if(!pageSize.length) pageSize = '8';
+        if(!pageNum.length) pageNum = '1';
         const skip = +pageSize * (+pageNum - 1);
-        console.log(skip);
 
-        // TODO: Cache totalCount
-        const total = await (await this.liquorModel.count()).toString();
-
-
-        const data = await this.liquorModel
-            .find({
-                'info.name': {
-                    $regex: search, $options: "i"
+        const aggregatedData = await this.liquorModel.aggregate(
+            [
+                {
+                    $match: {
+                        'info.name': {
+                            $regex: search, $options: "i"
+                        },
+                        'category.categoryId': {
+                            $regex: filter
+                        }
+                    }
                 },
-                'category.categoryId': {
-                    $regex: filter
+                {
+                    $facet: {
+                        count: [{ $count: "count" }],
+                        sample: [{ $skip: skip }, { $limit: +pageSize }],
+                        pageInfo: [{ $group: { _id: null, count: { $sum: 1 } } },]
+                    }
                 }
-            })
-            .skip(skip)
-            .limit(+pageSize);
+            ]
+        )
+
+        const total = aggregatedData[0]?.count.length ? aggregatedData[0]?.count[0]?.count : '0';
+        const data = aggregatedData[0].sample;
 
 
         return { data, total }

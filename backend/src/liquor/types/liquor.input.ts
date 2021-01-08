@@ -75,10 +75,10 @@ export class LiquorInput {
 @InputType()
 export class LiquorQueriesInput {
 
-    @Field({ nullable: true })
+    @Field()
     pageSize: string;
 
-    @Field({ nullable: true })
+    @Field()
     pageNum: string;
 
     @Field({ nullable: true })
