@@ -59,10 +59,7 @@ export class LiquorResolver {
     async getAllLiquor(
         @Args('options', ValidationPipe) options: LiquorQueriesInput,
     ): Promise<GetAllLiquorReturnData> {
-        const result = await this.liquorService.getAllLiquor(options);
-        console.log(result);
-        
-        return result;
+        return this.liquorService.getAllLiquor(options);
     }
 
     @Query(() => Liquor)
