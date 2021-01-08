@@ -1,4 +1,5 @@
 import { ObjectType, Field } from "@nestjs/graphql";
+import { Liquor } from "../liquor.schema";
 
 @ObjectType()
 export class Category{
@@ -45,3 +46,15 @@ export class Info {
     abv: string;
 
 }
+
+
+@ObjectType()
+export class GetAllLiquorReturnData {
+
+    @Field(() => [Liquor], {nullable: true})
+    data: Liquor[] | [];
+
+    @Field()
+    total: string;
+}
+

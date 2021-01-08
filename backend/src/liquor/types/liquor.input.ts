@@ -71,3 +71,20 @@ export class LiquorInput {
     info: InfoType
 
 }
+
+@InputType()
+export class LiquorQueriesInput {
+
+    @Field({ nullable: true })
+    pageSize: string;
+
+    @Field({ nullable: true })
+    pageNum: string;
+
+    @Field({ nullable: true })
+    search: string;
+
+    @Field({ nullable: true })
+    filter: string;
+
+}

@@ -4,7 +4,8 @@ import { Model } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { Liquor, LiquorDocument } from './liquor.schema';
 import { LiquorCategories } from './types/liquor.category';
-import { LiquorInput } from './types/liquor.input';
+import { LiquorInput, LiquorQueriesInput } from './types/liquor.input';
+import { GetAllLiquorReturnData } from './types/liquor.types';
 
 @Injectable()
 export class LiquorService {
@@ -40,7 +41,7 @@ export class LiquorService {
         if (updatedData.nModified <= 0) {
             return null;
         }
-        
+
         return {
             id, img, category, price, info, _id: found._id
         } as Liquor
@@ -50,8 +51,32 @@ export class LiquorService {
         return this.liquorModel.findOne({ id });
     }
 
-    async getAllLiquor(): Promise<Liquor[]> {
-        return this.liquorModel.find();
+    async getAllLiquor({ pageSize = "8", pageNum = "1", search = "", filter = "" }: LiquorQueriesInput): Promise<GetAllLiquorReturnData> {
+
+        console.log('pageSize = ' + pageSize, 'pageNum = ' + pageNum);
+
+        const skip = +pageSize * (+pageNum - 1);
+        console.log(skip);
+
+        // TODO: Cache totalCount
+        const total = await (await this.liquorModel.count()).toString();
+
+
+        const data = await this.liquorModel
+            .find({
+                'info.name': {
+                    $regex: search, $options: "i"
+                },
+                'category.categoryId': {
+                    $regex: filter
+                }
+            })
+            .skip(skip)
+            .limit(+pageSize);
+
+
+        return { data, total }
+
     }
 }
 

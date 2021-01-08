@@ -28,6 +28,11 @@ type Info {
   abv: String
 }
 
+type GetAllLiquorReturnData {
+  data: [Liquor!]
+  total: String!
+}
+
 type Liquor {
   id: String!
   img: String
@@ -61,12 +66,19 @@ type Order {
 }
 
 type Query {
-  getAllLiquor: [Liquor!]!
+  getAllLiquor(options: LiquorQueriesInput!): GetAllLiquorReturnData!
   getLiquorById(id: String!): Liquor!
   getAllUsers: [User!]!
   authenticateCookie: User
   checkUserExists(username: String!): Boolean!
   getOrderByUser: Order
+}
+
+input LiquorQueriesInput {
+  pageSize: String
+  pageNum: String
+  search: String
+  filter: String
 }
 
 type Mutation {
