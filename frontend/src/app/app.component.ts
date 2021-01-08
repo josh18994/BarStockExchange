@@ -77,8 +77,10 @@ export class AppComponent implements OnInit {
     let total = 0;
     this.userCart
       .filter((elem) => {
-        const find = this.liquorList.find(({ _id }) => elem.liquorId === _id)
-        total += +find.price.currentPrice * +elem.quantity;
+        const find = this.liquorList.find(({ _id }) => elem.liquorId === _id);
+        if (find?.price) {
+          total += +find.price.currentPrice * +elem.quantity;
+        }
         return find;
 
       });

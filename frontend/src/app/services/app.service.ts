@@ -13,7 +13,15 @@ export class AppService {
   constructor(private apollo: Apollo, private http: HttpClient) { }
 
   public getLiquorList(): Observable<any> {
-    return this.apollo.query({ query: GET_LIQUOR });
+    return this.apollo.query({
+      query: GET_LIQUOR,
+      variables: {
+        pageSize: '8',
+        pageNum: '1',
+        search: '',
+        filter: ''
+      }
+     });
   }
 
   public startConnection(): Observable<any> {

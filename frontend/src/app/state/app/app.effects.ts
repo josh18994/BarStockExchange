@@ -24,9 +24,10 @@ export class AppEffects {
       .pipe(
         map((response: any) => {
           const payload = {
-            result: response.data.getAllLiquor,
+            result: response.data.getAllLiquor.data,
             loading: response.loading,
-            networkStatus: response.networkStatus
+            networkStatus: response.networkStatus,
+            totalCount: response.data.getAllLiquor.total
           };
           return new TestLiquorAppSuccess(payload);
         })
