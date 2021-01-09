@@ -3,8 +3,7 @@
 @import "../../sass/mixins";
 
 .test {
-  min-height: 100vh;
-  margin-top: 186px;
+  padding-top: 186px;
 
   .sticky {
     position: sticky;
@@ -35,5 +34,18 @@
   transform-style: preserve-3d;
 }
 
+mat-paginator {
+  background: rgba(255, 255, 255, 0.5);
+  color: $color-primary;
+  border-radius: 0 0 50px 50px;
+  display: flex;
+  justify-content: center;
+}
 
+::ng-deep .mat-select-value {
+  color: $color-primary;
+}
 
+::ng-deep .mat-select-arrow {
+  color: $color-primary;
+}

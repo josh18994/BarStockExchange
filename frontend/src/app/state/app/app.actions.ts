@@ -17,11 +17,12 @@ export class SetTitle implements Action {
   constructor(public title: string) { }
 }
 
-export class TestLiquorApp implements Action {
+export class GetLiquorList implements Action {
   public readonly type = ActionTypes.TestLiquorApp;
+  constructor(public pageSize: string, public pageNum: string, public search: string, public filter: string) { }
 }
 
-export class TestLiquorAppSuccess implements Action {
+export class GetLiquorListSuccess implements Action {
   public readonly type = ActionTypes.TestLiquorAppSuccess;
   constructor(public payload: any) { }
 }
@@ -50,8 +51,8 @@ export class Failure implements Action {
 }
 
 export type Actions = SetTitle |
-  TestLiquorApp |
-  TestLiquorAppSuccess |
+  GetLiquorList |
+  GetLiquorListSuccess |
   StartConnection |
   UpdateRecieved |
   GetLiquorById |

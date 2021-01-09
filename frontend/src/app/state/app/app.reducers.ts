@@ -5,6 +5,7 @@ import { ILiquorAppState } from './app.state';
 export const initialState: ILiquorAppState = {
   title: '',
   data: [],
+  inventoryTotal: ''
 };
 
 
@@ -21,7 +22,8 @@ export function reducer(state: ILiquorAppState = initialState, action: Actions):
     case ActionTypes.TestLiquorAppSuccess:
       return {
         ...state,
-        data: action.payload.result
+        data: action.payload.result,
+        inventoryTotal: action.payload.totalCount
       };
 
     case ActionTypes.UpdateRecieved:

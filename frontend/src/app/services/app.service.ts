@@ -12,14 +12,14 @@ export class AppService {
 
   constructor(private apollo: Apollo, private http: HttpClient) { }
 
-  public getLiquorList(): Observable<any> {
+  public getLiquorList(pageSize: string, pageNum: string, search: string, filter: string): Observable<any> {
     return this.apollo.query({
       query: GET_LIQUOR,
       variables: {
-        pageSize: '8',
-        pageNum: '1',
-        search: '',
-        filter: ''
+        pageSize,
+        pageNum,
+        search,
+        filter
       }
      });
   }
