@@ -44,8 +44,6 @@ export class CartEffects {
     mergeMap((action: CalculateTotal) => this.cartService.calculateTotal()
       .pipe(
         map((response: any) => {
-          console.log('CT success response' + response.data.calculateTotal.total);
-
           return new CalculateTotalSuccessful(response.data.calculateTotal.total);
         }),
         catchError(error => {
@@ -56,6 +54,6 @@ export class CartEffects {
   );
 
   public CartReducerDTO(payload) {
-    return payload.map(({ liquor, quantity }) => ({ liquorId: liquor, quantity }));
+    return payload.map(({ liquor, quantity }) => ({ liquor, quantity }));
   }
 }

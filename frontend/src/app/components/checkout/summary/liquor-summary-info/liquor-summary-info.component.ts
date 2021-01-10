@@ -17,9 +17,12 @@ export class LiquorSummaryInfoComponent implements OnInit {
   set setLiquor(liquorItem: LiquorInfo) {
 
     this.quantity = liquorItem.quantity;
-    this.store.select(getLiquorInfoById, { id: liquorItem.liquorId }).subscribe(val => {
-      this.liquor = val;
-    });
+    this.liquor = liquorItem.liquor;
+    // this.store.select(getLiquorInfoById, { id: liquorItem.liquor._id }).subscribe(val => {
+    //   console.log(val);
+
+    //   this.liquor = val;
+    // });
   }
 
   public liquor;

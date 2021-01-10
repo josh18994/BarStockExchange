@@ -1,7 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { UserService } from 'src/user/user.service';
 import { Order, OrderDocument, Product } from './order.schema';
 import { UpdateOrderInput } from './types/order.input';
 import { Total } from './types/order.types';
@@ -12,8 +11,7 @@ export class OrderService {
 
     constructor(
         @InjectModel(Order.name)
-        private orderModel: Model<OrderDocument>,
-        private userService: UserService
+        private orderModel: Model<OrderDocument>
     ) { }
 
 
@@ -36,7 +34,8 @@ export class OrderService {
                     quantity
                 } as Product)
             }
-            return order.save();
+            await order.save();
+            
         }
         else {
             const newOrder = new this.orderModel(
@@ -49,26 +48,23 @@ export class OrderService {
                         }
                     ]
                 });
-            return newOrder.save();
+            await newOrder.save();
 
         }
+
+        return this.getOrderByUser(ctx.req.user._id);
 
     }
 
 
-    async getOrderByUser(username: string): Promise<Order | NotFoundException> {
-        const user = await this.userService.getUserByUsername(username);
-        if (!user) {
-            return new NotFoundException('User Not Found');
-        }
-
-        return this.orderModel.findOne({ user_Id: user._id.toString() });
+    async getOrderByUser(_id) {
+        return this.orderModel
+            .findOne({ user_Id: _id.toString() })
+            .populate('products.liquor');
     }
 
     async calculateTotal(ctx: any): Promise<Total> {
-        const userOrderInfo = await this.orderModel
-            .findOne({ user_Id: ctx.req.user._id.toString() })
-            .populate('products.liquor', 'price.currentPrice -_id');
+        const userOrderInfo = await this.getOrderByUser(ctx.req.user._id);
         const total = userOrderInfo.products.reduce((accumulator, x) => {
             // console.table(
             //     'current price: ' + +x.liquor['price'].currentPrice + 

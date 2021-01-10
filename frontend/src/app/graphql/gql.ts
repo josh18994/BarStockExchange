@@ -131,15 +131,21 @@ export const CHECK_USER_EXISTS = gql`
 
 
 export const GET_ORDER_INFO = gql`
-{
-  getOrderByUser{
-    user_Id
-    products{
-      quantity
-      liquor
+  query GetOrderByUser {
+    getOrderByUser {
+      user_Id
+      products {
+        quantity
+        liquor {
+          img
+          info {
+            name
+          }
+          _id
+        }
+      }
     }
   }
-}
 `;
 
 export const UPDATE_ORDER = gql`
@@ -151,8 +157,14 @@ export const UPDATE_ORDER = gql`
       }
     ) {
       products {
-        liquor
         quantity
+        liquor {
+          img
+          info {
+            name
+          }
+          _id
+        }
       }
     }
   }

@@ -16,3 +16,12 @@ export class Total {
     @Field()
     total: String;
 }
+
+@ObjectType()
+export class OrderReturnType {
+    @Field()
+    user_Id: string;
+
+    @Field(() => [ProductPayload])
+    products: ProductPayload[];
+}

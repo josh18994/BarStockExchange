@@ -4,14 +4,14 @@
   <div *ngFor="let cartItem of (cartState | async).liquor" class="order-container">
     <div class="split-container">
       <div class="img">
-        <img src="../../../../assets/test/tequila.jpeg" class="img-thumbnail">
+        <img [src]="cartItem.liquor.img" class="img-thumbnail">
       </div>
       <div class="middle-info">
         <app-liquor-summary-info [liquorInfo]="cartItem"></app-liquor-summary-info>
       </div>
     </div>
     <div class="delete-button">
-      <button (click)="deleteItem(cartItem.liquorId)" mat-mini-fab class="small" color="warn" aria-label="Example icon button with a delete icon">
+      <button (click)="deleteItem(cartItem.liquor._id)" mat-mini-fab class="small" color="warn" aria-label="Example icon button with a delete icon">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

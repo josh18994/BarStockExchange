@@ -24,6 +24,7 @@ export class TotalComponent implements OnInit {
     });
 
     this.store.select(state => state.cart).subscribe(cart => {
+      this.subTotal = +cart.total;
       this.userCart = cart.liquor;
     });
   }
