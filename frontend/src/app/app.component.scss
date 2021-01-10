@@ -152,12 +152,19 @@
         display: flex;
         align-items: center;
 
-        ::ng-deep .mat-button {
-          height: 21px;
-        }
-
-        .mat-button {
-          @include mat-button-transparent;
+        .search-input {
+          border:none;
+          background-image:none;
+          background-color:transparent;
+          outline: none;
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none;
+          box-shadow: none;
+          color: $color-secondary;
+          @include transparent-background;
+          border-radius: 7px;
+          padding: 1px 0 0 5px;
+          height: 25px;
         }
       }
     }

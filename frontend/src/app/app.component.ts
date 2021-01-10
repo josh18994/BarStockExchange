@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { AUTHENTICATION_COOKIE_NAME } from './common/constants';
-import { AuthenticateCookie } from './state/auth/auth.actions';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ILiquor, LiquorInfo } from './models/ILiquor';
 import { IAppState } from './state';
+import { GetLiquorList } from './state/app/app.actions';
+import { ILiquorAppState } from './state/app/app.state';
+import { AuthenticateCookie } from './state/auth/auth.actions';
 import { IAuthState } from './state/auth/auth.state';
 import { ICartState } from './state/cart/cart.state';
-import { ILiquorAppState } from './state/app/app.state';
-import { ILiquor, LiquorInfo } from './models/ILiquor';
-import { MatDialog } from '@angular/material/dialog';
-import { CheckoutComponent } from './components/checkout/checkout.component';
-import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   public authState: Observable<IAuthState>;
   public appState: Observable<ILiquorAppState>;
   public cartState: Observable<ICartState>;
-
+  public form: FormGroup;
   public liquorList: Array<ILiquor>;
   public userCart: Array<LiquorInfo>;
 
@@ -34,9 +35,14 @@ export class AppComponent implements OnInit {
     private cookieService: CookieService,
     private store: Store<IAppState>,
     private dialog: MatDialog,
-    private router: Router) { }
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
+    this.form = this.formBuilder.group({
+      search: [''],
+    });
+
     this.authState = this.store.select(state => state.auth);
 
     this.store.select(state => state.app).subscribe(app => {
@@ -87,6 +93,10 @@ export class AppComponent implements OnInit {
     if (total === 0) return '   ';
     return '$' + total.toString();
 
+  }
+
+  search() {
+    this.store.dispatch(new GetLiquorList('8', '1', this.form.get('search').value, ''));
   }
 }
 // TODO: 4. Show Errors on Forms

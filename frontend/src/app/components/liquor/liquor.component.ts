@@ -46,7 +46,7 @@ export class LiquorComponent implements OnInit, AfterViewInit {
       .subscribe((val) => {
         if (val.data.length) {
           this.liquorList = val.data;
-          this.total = val.inventoryTotal;
+          this.total = val.search.total;
         }
       });
 
@@ -54,7 +54,7 @@ export class LiquorComponent implements OnInit, AfterViewInit {
     this.store.dispatch(new GetLiquorList('8', '1', '', ''));
   }
 
-  onPageChange({previousPageIndex, pageIndex, pageSize, length}) {
+  onPageChange({pageIndex, pageSize}) {
     pageIndex += 1;
     this.store.dispatch(new GetLiquorList(pageSize.toString(), pageIndex.toString(), '', ''));
   }
