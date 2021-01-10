@@ -1,20 +1,10 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Context, Field, Mutation, ObjectType, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/auth.guard';
-import { Liquor } from 'src/liquor/liquor.schema';
 import { Order } from './order.schema';
 import { OrderService } from './order.service';
 import { UpdateOrderInput } from './types/order.input';
-
-@ObjectType()
-export class ProductPayload {
-    @Field()
-    quantity: Number;
-
-    @Field(() => Liquor)
-    liquor: Liquor
-}
-
+import { Total } from './types/order.types';
 
 @Resolver()
 export class OrderResolver {
@@ -35,5 +25,13 @@ export class OrderResolver {
         @Context() ctx
     ) {
         return this.orderService.getOrderByUser(ctx.req.user.username);
+    }
+
+    @UseGuards(GqlAuthGuard)
+    @Query(() => Total)
+    async calculateTotal(
+        @Context() ctx
+    ) {
+        return this.orderService.calculateTotal(ctx);
     }
 }

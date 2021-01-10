@@ -65,6 +65,10 @@ type Order {
   products: [Product!]!
 }
 
+type Total {
+  total: String!
+}
+
 type Query {
   getAllLiquor(options: LiquorQueriesInput!): GetAllLiquorReturnData!
   getLiquorById(id: String!): Liquor!
@@ -72,6 +76,7 @@ type Query {
   authenticateCookie: User
   checkUserExists(username: String!): Boolean!
   getOrderByUser: Order
+  calculateTotal: Total!
 }
 
 input LiquorQueriesInput {
