@@ -23,7 +23,7 @@
         </ul>
       </div>
       <div class="cart">
-        <div class="total">{{calculateCartTotal()}}</div>
+        <div class="total"><app-grandtotal [liquor]="liquorList" [cart]="userCart"></app-grandtotal></div>
         <div class="cart-icon">
           <button *ngIf="!!(authState | async).user.firstName" (click)="openCheckoutModal()" mat-mini-fab
             color="primary">

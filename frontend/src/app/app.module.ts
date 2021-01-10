@@ -25,6 +25,7 @@ import { SummaryComponent } from './components/checkout/summary/summary.componen
 import { LiquorSummaryInfoComponent } from './components/checkout/summary/liquor-summary-info/liquor-summary-info.component';
 import { ChartsModule } from 'ng2-charts';
 import { ChartComponent } from './components/liquor/liquor-tile/chart/chart.component';
+import { GrandtotalComponent } from './components/grandtotal/grandtotal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ChartComponent } from './components/liquor/liquor-tile/chart/chart.comp
     TotalComponent,
     SummaryComponent,
     LiquorSummaryInfoComponent,
-    ChartComponent
+    ChartComponent,
+    GrandtotalComponent
   ],
   imports: [
     ReactiveFormsModule,

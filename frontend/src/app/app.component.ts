@@ -78,23 +78,6 @@ export class AppComponent implements OnInit {
     this.cookieService.delete(AUTHENTICATION_COOKIE_NAME);
   }
 
-  calculateCartTotal() {
-
-    let total = 0;
-    this.userCart
-      .filter((elem) => {
-        const find = this.liquorList.find(({ _id }) => elem.liquorId === _id);
-        if (find?.price) {
-          total += +find.price.currentPrice * +elem.quantity;
-        }
-        return find;
-
-      });
-    if (total === 0) return '   ';
-    return '$' + total.toString();
-
-  }
-
   search() {
     this.store.dispatch(new GetLiquorList('8', '1', this.form.get('search').value, ''));
   }

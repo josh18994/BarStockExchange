@@ -76,7 +76,6 @@ type Query {
   authenticateCookie: User
   checkUserExists(username: String!): Boolean!
   getOrderByUser: Order
-  calculateTotal: Total!
 }
 
 input LiquorQueriesInput {
@@ -92,6 +91,7 @@ type Mutation {
   createUser(inputCredentials: CreateUserInput!): User!
   login(inputCredentials: LoginInput!): AuthType!
   updateOrder(productInfo: UpdateOrderInput!): Order!
+  calculateTotal: Total!
 }
 
 input LiquorInput {

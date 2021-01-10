@@ -20,7 +20,7 @@ export class LiquorTileComponent implements OnInit {
 
   @Input() public liquorItem: ILiquor;
 
-
+  // TODO: Try binding to {{title}}
   constructor(private store: Store<IAppState>) {
     this.store.dispatch(new SetTitle('Shop'));
   }

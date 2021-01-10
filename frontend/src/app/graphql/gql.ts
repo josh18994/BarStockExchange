@@ -158,3 +158,11 @@ export const UPDATE_ORDER = gql`
   }
 `;
 
+export const CALCULATE_TOTAL = gql`
+  mutation CalculateTotal{
+    calculateTotal{
+      total
+    }
+  }
+`;
+

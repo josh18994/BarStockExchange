@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
-import { ActionTypes, UpdateCart, UpdateCartSuccessful, Failure, GetCart, GetCartSuccessful } from './cart.actions';
+import { ActionTypes, CalculateTotal, CalculateTotalSuccessful, Failure, GetCart, GetCartSuccessful, UpdateCart, UpdateCartSuccessful } from './cart.actions';
 
 
 @Injectable()
@@ -38,7 +38,24 @@ export class CartEffects {
   );
 
 
+  @Effect()
+  public calculateTotal$ = this.actions$.pipe(
+    ofType<CalculateTotal>(ActionTypes.CalculateTotal),
+    mergeMap((action: CalculateTotal) => this.cartService.calculateTotal()
+      .pipe(
+        map((response: any) => {
+          console.log('CT success response' + response.data.calculateTotal.total);
+
+          return new CalculateTotalSuccessful(response.data.calculateTotal.total);
+        }),
+        catchError(error => {
+          return of(new Failure(error));
+        })
+      )
+    )
+  );
+
   public CartReducerDTO(payload) {
-    return payload.map(({liquor, quantity}) => ({liquorId: liquor, quantity}));
+    return payload.map(({ liquor, quantity }) => ({ liquorId: liquor, quantity }));
   }
 }

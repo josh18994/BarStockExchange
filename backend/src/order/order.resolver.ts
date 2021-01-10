@@ -28,7 +28,7 @@ export class OrderResolver {
     }
 
     @UseGuards(GqlAuthGuard)
-    @Query(() => Total)
+    @Mutation(() => Total)
     async calculateTotal(
         @Context() ctx
     ) {
