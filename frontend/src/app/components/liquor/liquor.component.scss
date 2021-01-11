@@ -6,8 +6,8 @@
   padding-top: 186px;
 
   .sticky {
-    position: sticky;
-    position: -webkit-sticky;
+    position: fixed;
+    //position: -webkit-sticky;
     background: #051622;
     width: 88vw;
     left: 6%;
@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   align-self: center;
-  transform: translateY(-300px);
+  //transform: translateY(-300px);
 }
 
 .container {
@@ -32,6 +32,7 @@
   flex-wrap: wrap;
   width: 88vw;
   transform-style: preserve-3d;
+  min-height: 66vh;
 }
 
 mat-paginator {
