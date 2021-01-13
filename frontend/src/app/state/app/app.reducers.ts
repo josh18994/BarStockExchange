@@ -1,16 +1,18 @@
 import { ILiquor } from 'src/app/models/ILiquor';
+import { ISearch } from 'src/app/models/ISearch';
 import { Actions, ActionTypes } from './app.actions';
 import { ILiquorAppState } from './app.state';
 
 export const initialState: ILiquorAppState = {
-  title: '',
   data: [],
-};
+  search: {} as ISearch,
+  title: ''
+}
+;
 
 
 export function reducer(state: ILiquorAppState = initialState, action: Actions): ILiquorAppState {
   switch (action.type) {
-
 
     case ActionTypes.SetTitle:
       return {
@@ -19,9 +21,14 @@ export function reducer(state: ILiquorAppState = initialState, action: Actions):
       };
 
     case ActionTypes.TestLiquorAppSuccess:
+
       return {
         ...state,
-        data: action.payload.result
+        data: action.payload.result,
+        search: {
+          ...state.search,
+          total: action.payload.totalCount
+        }
       };
 
     case ActionTypes.UpdateRecieved:

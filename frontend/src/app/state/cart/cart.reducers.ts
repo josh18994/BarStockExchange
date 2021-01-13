@@ -3,7 +3,8 @@ import { ICartState } from "./cart.state";
 
 
 export const initialState: ICartState = {
-  liquor: []
+  liquor: [],
+  total: ''
 }
 
 export function reducer(state: ICartState = initialState, action: Actions): ICartState {
@@ -16,10 +17,16 @@ export function reducer(state: ICartState = initialState, action: Actions): ICar
         liquor: action.response
       }
 
-    case ActionTypes.AddToCartSuccessful:
+    case ActionTypes.UpdateCartSuccessful:
       return {
         ...state,
         liquor: action.response
+      }
+
+    case ActionTypes.CalculateTotalSuccessful:
+      return {
+        ...state,
+        total: action.response
       }
 
     default:

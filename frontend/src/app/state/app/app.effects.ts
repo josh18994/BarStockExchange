@@ -7,8 +7,8 @@ import {
   GetLiquorById,
   GetLiquorByIdSuccess,
   StartConnection,
-  TestLiquorApp,
-  TestLiquorAppSuccess,
+  GetLiquorList,
+  GetLiquorListSuccess,
   UpdateRecieved
 } from './app.actions';
 
@@ -19,16 +19,17 @@ export class AppEffects {
 
   @Effect()
   public getLiquorList$ = this.actions$.pipe(
-    ofType<TestLiquorApp>(ActionTypes.TestLiquorApp),
-    mergeMap((action: TestLiquorApp) => this.appService.getLiquorList()
+    ofType<GetLiquorList>(ActionTypes.TestLiquorApp),
+    mergeMap((action: GetLiquorList) => this.appService.getLiquorList(action.pageSize, action.pageNum, action.search, action.filter)
       .pipe(
         map((response: any) => {
           const payload = {
-            result: response.data.getAllLiquor,
+            result: response.data.getAllLiquor.data,
             loading: response.loading,
-            networkStatus: response.networkStatus
+            networkStatus: response.networkStatus,
+            totalCount: response.data.getAllLiquor.total
           };
-          return new TestLiquorAppSuccess(payload);
+          return new GetLiquorListSuccess(payload);
         })
       )
     )

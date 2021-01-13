@@ -21,24 +21,40 @@ subscription{
 }`;
 
 export const GET_LIQUOR = gql`
-{
-  getAllLiquor{
-    _id
-    id
-    img
-    category{
-      categoryId
-      categoryType
+query GetAllLiquor(
+  $pageSize: String!
+  $pageNum: String!
+  $search: String
+  $filter: String
+) {
+  getAllLiquor(
+    options: {
+      pageSize: $pageSize
+      pageNum: $pageNum
+      search: $search
+      filter: $filter
     }
-    price{
-      currentPrice
+  ) {
+    data {
+      id
+      _id
+      img
+      category {
+        categoryId
+        categoryType
+      }
+      price {
+        currentPrice
+      }
+      info {
+        name
+        year
+      }
     }
-    info{
-      name
-      year
-    }
+    total
   }
-}`;
+}
+`;
 
 export const GET_LIQUOR_BY_ID = gql`
 query GetLiquorById($id: String!){
@@ -115,15 +131,21 @@ export const CHECK_USER_EXISTS = gql`
 
 
 export const GET_ORDER_INFO = gql`
-{
-  getOrderByUser{
-    user_Id
-    products{
-      quantity
-      liquor
+  query GetOrderByUser {
+    getOrderByUser {
+      user_Id
+      products {
+        quantity
+        liquor {
+          img
+          info {
+            name
+          }
+          _id
+        }
+      }
     }
   }
-}
 `;
 
 export const UPDATE_ORDER = gql`
@@ -135,9 +157,23 @@ export const UPDATE_ORDER = gql`
       }
     ) {
       products {
-        liquor
         quantity
+        liquor {
+          img
+          info {
+            name
+          }
+          _id
+        }
       }
+    }
+  }
+`;
+
+export const CALCULATE_TOTAL = gql`
+  mutation CalculateTotal{
+    calculateTotal{
+      total
     }
   }
 `;

@@ -23,9 +23,10 @@
         </ul>
       </div>
       <div class="cart">
-        <div class="total">{{calculateCartTotal()}}</div>
+        <div class="total"><app-grandtotal [liquor]="liquorList" [cart]="userCart"></app-grandtotal></div>
         <div class="cart-icon">
-          <button *ngIf="!!(authState | async).user.firstName" (click)="openCheckoutModal()" mat-mini-fab color="primary">
+          <button *ngIf="!!(authState | async).user.firstName" (click)="openCheckoutModal()" mat-mini-fab
+            color="primary">
             <mat-icon>shop</mat-icon>
           </button>
         </div>
@@ -39,12 +40,9 @@
         <div *ngIf="!!(authState | async).user.firstName" class="box box--1"><span>Home/Products</span></div>
         <div class="box box--2"><span>{{title}}</span></div>
         <div *ngIf="!!(authState | async).user.firstName" class="box box--3">
-          <span style="margin-right: 10px;">Showing 1-12 of 34 results</span>
-          <button mat-button [matMenuTriggerFor]="menu"> <div>Sort</div> <mat-icon>arrow_drop_down</mat-icon> </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-          </mat-menu>
+          <form [formGroup]="form">
+            <input formControlName="search" (keyup)="search()" class="search-input" placeholder="Search">
+          </form>
         </div>
       </div>
     </div>

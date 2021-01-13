@@ -29,7 +29,7 @@ export interface Info {
 }
 
 export interface LiquorInfo {
-  liquorId: string;
+  liquor: ILiquor;
   quantity: number;
 }
 

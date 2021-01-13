@@ -24,22 +24,23 @@ export class TotalComponent implements OnInit {
     });
 
     this.store.select(state => state.cart).subscribe(cart => {
+      this.subTotal = +cart.total;
       this.userCart = cart.liquor;
     });
   }
 
   calculateCartTotal() {
-    this.subTotal = 0;
+    // this.subTotal = 0;
 
-    this.userCart
-      .filter((elem) => {
-        const find = this.liquorList.find(({ _id }) => elem.liquorId === _id)
-        this.subTotal += +find.price.currentPrice * +elem.quantity;
-        return find;
+    // this.userCart
+    //   .filter((elem) => {
+    //     const find = this.liquorList.find(({ _id }) => elem.liquorId === _id)
+    //     this.subTotal += +find.price.currentPrice * +elem.quantity;
+    //     return find;
 
-      });
-    if (this.subTotal === 0) return '   ';
-    return '$' + this.subTotal.toString();
+    //   });
+    // if (this.subTotal === 0) return '   ';
+    // return '$' + this.subTotal.toString();
 
   }
 

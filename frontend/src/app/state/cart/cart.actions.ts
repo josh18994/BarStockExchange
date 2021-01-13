@@ -2,9 +2,11 @@ import { Action } from '@ngrx/store';
 
 export enum ActionTypes {
   UpdateCart = '[CART-APP] UpdateCart',
-  AddToCartSuccessful = '[CART-APP] AddToCartSuccessful',
+  UpdateCartSuccessful = '[CART-APP] UpdateCartSuccessful',
   GetCart = '[CART-APP] GetCart',
   GetCartSuccessful = '[CART-APP] GetCartSuccessful',
+  CalculateTotal = '[CART-APP] CalculateTotal',
+  CalculateTotalSuccessful = '[CART-APP] CalculateTotalSuccessful',
   Failure = '[CART-APP] Failure',
 }
 
@@ -14,7 +16,7 @@ export class UpdateCart implements Action {
 }
 
 export class UpdateCartSuccessful implements Action {
-  public readonly type = ActionTypes.AddToCartSuccessful;
+  public readonly type = ActionTypes.UpdateCartSuccessful;
   constructor(public response: any) { }
 }
 
@@ -27,6 +29,15 @@ export class GetCartSuccessful implements Action {
   constructor(public response: any) { }
 }
 
+export class CalculateTotal implements Action {
+  public readonly type = ActionTypes.CalculateTotal;
+}
+
+export class CalculateTotalSuccessful implements Action {
+  public readonly type = ActionTypes.CalculateTotalSuccessful;
+  constructor(public response: any) { }
+}
+
 export class Failure implements Action {
   public readonly type = ActionTypes.Failure;
   constructor(public error: any) { }
@@ -36,4 +47,6 @@ export type Actions = UpdateCart |
   UpdateCartSuccessful |
   GetCart |
   GetCartSuccessful |
+  CalculateTotal |
+  CalculateTotalSuccessful |
   Failure;

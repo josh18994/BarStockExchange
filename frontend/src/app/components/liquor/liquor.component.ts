@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { Store } from '@ngrx/store';
 import { Chart } from 'chart.js';
 import { IAppState } from 'src/app/state';
-import { StartConnection, TestLiquorApp } from 'src/app/state/app/app.actions';
+import { StartConnection, GetLiquorList } from 'src/app/state/app/app.actions';
 
 
 @Component({
@@ -14,6 +14,7 @@ export class LiquorComponent implements OnInit, AfterViewInit {
 
 
   public liquorList;
+  public total;
 
   constructor(private store: Store<IAppState>) { }
 
@@ -27,7 +28,7 @@ export class LiquorComponent implements OnInit, AfterViewInit {
         draw.apply(this, arguments);
         const ctx = this.chart.chart.ctx;
         const jStroke = ctx.stroke;
-        ctx.stroke = function() {
+        ctx.stroke = function () {
           ctx.save();
           ctx.shadowColor = '#000';
           ctx.shadowBlur = 25;
@@ -45,11 +46,17 @@ export class LiquorComponent implements OnInit, AfterViewInit {
       .subscribe((val) => {
         if (val.data.length) {
           this.liquorList = val.data;
+          this.total = val.search.total;
         }
       });
 
     this.store.dispatch(new StartConnection());
-    this.store.dispatch(new TestLiquorApp());
+    this.store.dispatch(new GetLiquorList('8', '1', '', ''));
+  }
+
+  onPageChange({pageIndex, pageSize}) {
+    pageIndex += 1;
+    this.store.dispatch(new GetLiquorList(pageSize.toString(), pageIndex.toString(), '', ''));
   }
 }
 
