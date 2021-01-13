@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { UPDATE_ORDER, GET_ORDER_INFO, CALCULATE_TOTAL } from '../graphql/gql';
+import { UPDATE_ORDER, GET_CART_INFO, CALCULATE_TOTAL } from '../graphql/gql';
 
 
 @Injectable({
@@ -22,8 +22,8 @@ export class CartService {
     })
   }
 
-  public getOrderInfo() {
-    return this.apollo.query({query: GET_ORDER_INFO});
+  public getCartInfo() {
+    return this.apollo.query({query: GET_CART_INFO});
   }
 
   public calculateTotal() {

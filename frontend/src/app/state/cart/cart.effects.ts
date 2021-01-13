@@ -16,7 +16,7 @@ export class CartEffects {
     mergeMap((action: UpdateCart) => this.cartService.updateCart(action.itemId, action.quantity)
       .pipe(
         map((response: any) => {
-          return new UpdateCartSuccessful(this.CartReducerDTO(response.data.updateOrder.products));
+          return new UpdateCartSuccessful(this.CartReducerDTO(response.data.updateCart.products));
         })
       )
     )
@@ -25,10 +25,10 @@ export class CartEffects {
   @Effect()
   public getCart$ = this.actions$.pipe(
     ofType<GetCart>(ActionTypes.GetCart),
-    mergeMap((action: GetCart) => this.cartService.getOrderInfo()
+    mergeMap((action: GetCart) => this.cartService.getCartInfo()
       .pipe(
         map((response: any) => {
-          return new GetCartSuccessful(this.CartReducerDTO(response.data.getOrderByUser.products));
+          return new GetCartSuccessful(this.CartReducerDTO(response.data.getCartByUser.products));
         }),
         catchError(error => {
           return of(new Failure(error));
