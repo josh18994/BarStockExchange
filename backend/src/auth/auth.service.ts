@@ -14,13 +14,13 @@ export class AuthService {
     async validateUser(data: LoginInput, ctx: any): Promise<AuthType | NotFoundException> {
         const user = await this.userService.getUserByUsername(data.username);
         if (!user) {
-            return new NotFoundException('User not found');
+            throw new NotFoundException('User not found');
         }
 
         const validatePassword = await bcrypt.compareSync(data.password, user.password);
 
         if (!validatePassword) {
-            return new UnauthorizedException('Invalid Passwprd');
+            throw new UnauthorizedException('Invalid Password');
         }
 
         const token = await this.jwtToken(user);

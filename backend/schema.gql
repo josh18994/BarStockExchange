@@ -74,6 +74,12 @@ type CartReturnType {
   products: [ProductPayload!]!
 }
 
+type ProductInfo {
+  quantity: Float!
+  liquor: ID!
+  price: String!
+}
+
 type Query {
   getAllLiquor(options: LiquorQueriesInput!): GetAllLiquorReturnData!
   getLiquorById(id: String!): Liquor!
@@ -97,6 +103,7 @@ type Mutation {
   login(inputCredentials: LoginInput!): AuthType!
   updateCart(productInfo: UpdateCartInput!): CartReturnType!
   calculateTotal: Total!
+  checkoutUserCart(products: [ProductInfoInput!]!): String!
 }
 
 input LiquorInput {
@@ -143,6 +150,12 @@ input LoginInput {
 input UpdateCartInput {
   liquor: String!
   quantity: Float!
+}
+
+input ProductInfoInput {
+  quantity: String!
+  liquor: String!
+  price: String!
 }
 
 type Subscription {

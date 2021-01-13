@@ -76,4 +76,8 @@ export class CartService {
         }
         return { total };
     }
+
+    async emptyCart(_id): Promise<void> {
+        await this.cartModel.updateOne({user_Id: _id.toString()}, { $set: {products: []}});
+    }
 }
