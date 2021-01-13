@@ -69,7 +69,7 @@ type Total {
   total: String!
 }
 
-type OrderReturnType {
+type CartReturnType {
   user_Id: String!
   products: [ProductPayload!]!
 }
@@ -80,7 +80,7 @@ type Query {
   getAllUsers: [User!]!
   authenticateCookie: User
   checkUserExists(username: String!): Boolean!
-  getOrderByUser: OrderReturnType
+  getCartByUser: CartReturnType
 }
 
 input LiquorQueriesInput {
@@ -95,7 +95,7 @@ type Mutation {
   updateLiquor(id: String!, options: LiquorInput!): Liquor
   createUser(inputCredentials: CreateUserInput!): User!
   login(inputCredentials: LoginInput!): AuthType!
-  updateOrder(productInfo: UpdateOrderInput!): OrderReturnType!
+  updateCart(productInfo: UpdateCartInput!): CartReturnType!
   calculateTotal: Total!
 }
 
@@ -140,7 +140,7 @@ input LoginInput {
   password: String!
 }
 
-input UpdateOrderInput {
+input UpdateCartInput {
   liquor: String!
   quantity: Float!
 }

@@ -29,11 +29,11 @@ export class ModelFeautres {
     _doc: any
 }
 
-export type OrderDocument = Order & Document & ModelFeautres;
+export type CartDocument = Cart & Document & ModelFeautres;
 
 @ObjectType()
 @Schema()
-export class Order {
+export class Cart {
 
     @Field()
     @Prop({ type: Types.ObjectId })
@@ -46,4 +46,4 @@ export class Order {
 }
 
 
-export const OrderSchema = SchemaFactory.createForClass(Order);
+export const CartSchema = SchemaFactory.createForClass(Cart);

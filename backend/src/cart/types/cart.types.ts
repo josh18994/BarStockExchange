@@ -18,7 +18,7 @@ export class Total {
 }
 
 @ObjectType()
-export class OrderReturnType {
+export class CartReturnType {
     @Field()
     user_Id: string;
 
