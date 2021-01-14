@@ -142,6 +142,7 @@ export const GET_CART_INFO = gql`
             name
           }
           _id
+          id
         }
       }
     }
@@ -177,4 +178,12 @@ export const CALCULATE_TOTAL = gql`
     }
   }
 `;
+
+export const CHECKOUT_USER_CART = gql`
+  mutation CheckoutUserCart($products: [ProductInfoInput!]!) {
+    checkoutUserCart(products: $products)
+  }
+`;
+
+
 

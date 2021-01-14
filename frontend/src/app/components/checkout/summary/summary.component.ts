@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { LiquorInfo } from 'src/app/models/ILiquor';
+import { IProductInfo } from 'src/app/models/IProductInfo';
 import { IAppState } from 'src/app/state';
-import { ICartState } from 'src/app/state/cart/cart.state';
-import { Observable } from 'rxjs';
 import { getLiquorInfoById } from 'src/app/state/app/app.selectors';
-import { UpdateCart } from 'src/app/state/cart/cart.actions';
+import { CheckoutUserCart, UpdateCart } from 'src/app/state/cart/cart.actions';
+import { ICartState } from 'src/app/state/cart/cart.state';
 
 @Component({
   selector: 'app-summary',
@@ -16,25 +17,41 @@ import { UpdateCart } from 'src/app/state/cart/cart.actions';
 })
 export class SummaryComponent implements OnInit {
 
-  public cartState: Observable<ICartState>;
+  public cartState: ICartState;
+  public busy: boolean = false;
 
   constructor(private store: Store<IAppState>) { }
 
   ngOnInit(): void {
-
-    this.cartState = this.store.select(state => state.cart);
-
-  }
-
-  getLiquorDetails(id: string) {
-    this.store.select(getLiquorInfoById, {id}).subscribe(val => {
-      return val;
-
+    this.store.select(state => state.cart).subscribe(cart => {
+      this.cartState = cart;
+      this.busy = cart.busy;
     });
   }
 
   deleteItem(id: string) {
     this.store.dispatch(new UpdateCart(id, 0));
+  }
+
+  async checkout(cartState: ICartState) {
+    const payload = await this.createPayload(cartState.liquor);
+    this.store.dispatch(new CheckoutUserCart(payload));
+  }
+
+  async createPayload(cartLiquor: LiquorInfo[]): Promise<IProductInfo[]> {
+    let payload: IProductInfo[] = [];
+    cartLiquor.forEach(item => {
+      let liquorPrice = '';
+      this.store.select(getLiquorInfoById, { id: item.liquor._id }).subscribe(val => {
+        liquorPrice = val.price.currentPrice;
+      });
+      payload.push({
+        liquor: item.liquor._id,
+        price: liquorPrice,
+        quantity: item.quantity.toString()
+      } as IProductInfo);
+    })
+    return payload;
   }
 
 }

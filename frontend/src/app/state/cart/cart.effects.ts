@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
-import { ActionTypes, CalculateTotal, CalculateTotalSuccessful, Failure, GetCart, GetCartSuccessful, UpdateCart, UpdateCartSuccessful } from './cart.actions';
+import { ActionTypes, CalculateTotal, CalculateTotalSuccessful, CheckoutUserCart, CheckoutUserCartSuccessful, Failure, GetCart, GetCartSuccessful, UpdateCart, UpdateCartSuccessful } from './cart.actions';
 
 
 @Injectable()
@@ -45,6 +45,21 @@ export class CartEffects {
       .pipe(
         map((response: any) => {
           return new CalculateTotalSuccessful(response.data.calculateTotal.total);
+        }),
+        catchError(error => {
+          return of(new Failure(error));
+        })
+      )
+    )
+  );
+
+  @Effect()
+  public checkoutUserCart$ = this.actions$.pipe(
+    ofType<CheckoutUserCart>(ActionTypes.CheckoutUserCart),
+    mergeMap((action: CheckoutUserCart) => this.cartService.checkoutUserCart(action.payload)
+      .pipe(
+        map((response: any) => {
+          return new CheckoutUserCartSuccessful(response.data.checkoutUserCart);
         }),
         catchError(error => {
           return of(new Failure(error));

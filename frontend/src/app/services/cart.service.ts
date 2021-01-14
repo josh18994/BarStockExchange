@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { UPDATE_ORDER, GET_CART_INFO, CALCULATE_TOTAL } from '../graphql/gql';
+import { CALCULATE_TOTAL, CHECKOUT_USER_CART, GET_CART_INFO, UPDATE_ORDER } from '../graphql/gql';
+import { IProductInfo } from '../models/IProductInfo';
 
 
 @Injectable({
@@ -23,11 +24,20 @@ export class CartService {
   }
 
   public getCartInfo() {
-    return this.apollo.query({query: GET_CART_INFO});
+    return this.apollo.query({ query: GET_CART_INFO });
   }
 
   public calculateTotal() {
-    return this.apollo.mutate({mutation: CALCULATE_TOTAL});
+    return this.apollo.mutate({ mutation: CALCULATE_TOTAL });
+  }
+
+  public checkoutUserCart(products: IProductInfo[]) {
+    return this.apollo.mutate({
+      mutation: CHECKOUT_USER_CART,
+      variables: {
+        products
+      }
+    });
   }
 
 }
