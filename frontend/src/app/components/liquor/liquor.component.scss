@@ -18,10 +18,10 @@
 }
 
 .liquor-body {
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-self: center;
-  //transform: translateY(-300px);
 }
 
 .container {
