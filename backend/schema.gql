@@ -40,6 +40,7 @@ type Liquor {
   price: Price!
   info: Info!
   _id: ID!
+  frequency: Float
 }
 
 type User {
@@ -108,9 +109,10 @@ type Mutation {
 
 input LiquorInput {
   img: String
-  category: CategoryType!
+  category: CategoryType
   price: PriceType
-  info: InfoType!
+  info: InfoType
+  frequency: Float
 }
 
 input CategoryType {
@@ -129,7 +131,7 @@ input PriceHistoryType {
 }
 
 input InfoType {
-  name: String!
+  name: String
   year: String
   abv: String
 }

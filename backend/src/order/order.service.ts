@@ -16,6 +16,7 @@ export class OrderService {
         private cartService: CartService
     ) { }
 
+    //TODO: Calculate total and compare with value coming from front end
     async checkoutUserCart(ctx, productInfoInput: ProductInfoInput[]) {
         const liquors = await this.liquorService.getAllLiquor({ pageSize: '50', pageNum: '1', search: '', filter: '' });
         productInfoInput.forEach(product => {
@@ -34,6 +35,7 @@ export class OrderService {
 
         if (saveOrder) {
             await this.cartService.emptyCart(ctx.req.user._id);
+            await this.liquorService.updateFrequencyForLiquors(productInfoInput);
         }
 
         return 'Checkout Success';

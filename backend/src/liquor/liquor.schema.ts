@@ -36,6 +36,10 @@ export class Liquor {
     @Field(() => ID)
     _id: ObjectId
 
+    @Field({nullable: true})
+    @Prop()
+    frequency: Number;
+
 }
 
 export const LiquorSchema = SchemaFactory.createForClass(Liquor);

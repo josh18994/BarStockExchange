@@ -4,8 +4,7 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 @InputType()
 export class InfoType {
 
-    @IsNotEmpty()
-    @Field()
+    @Field({ nullable: true })
     name: string;
 
     @Field({ nullable: true })
@@ -59,17 +58,19 @@ export class LiquorInput {
     @Field({ nullable: true })
     img: string;
 
-    @IsNotEmpty()
-    @Field(() => CategoryType)
+
+    @Field(() => CategoryType, { nullable: true })
     category: CategoryType;
 
     @Field(() => PriceType, { nullable: true })
     price: PriceType
 
 
-    @Field()
+    @Field(() => InfoType, { nullable: true })
     info: InfoType
 
+    @Field({ nullable: true })
+    frequency: Number
 }
 
 @InputType()
