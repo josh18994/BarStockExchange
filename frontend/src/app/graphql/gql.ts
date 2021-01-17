@@ -130,9 +130,9 @@ export const CHECK_USER_EXISTS = gql`
 }`;
 
 
-export const GET_ORDER_INFO = gql`
-  query GetOrderByUser {
-    getOrderByUser {
+export const GET_CART_INFO = gql`
+  query GetCartByUser {
+    getCartByUser{
       user_Id
       products {
         quantity
@@ -142,6 +142,7 @@ export const GET_ORDER_INFO = gql`
             name
           }
           _id
+          id
         }
       }
     }
@@ -149,8 +150,8 @@ export const GET_ORDER_INFO = gql`
 `;
 
 export const UPDATE_ORDER = gql`
-  mutation UpdateOrder($liquorId: String!, $quantity: Float!) {
-    updateOrder(
+  mutation UpdateCart($liquorId: String!, $quantity: Float!) {
+    updateCart(
       productInfo: {
         liquor: $liquorId
         quantity: $quantity
@@ -177,4 +178,12 @@ export const CALCULATE_TOTAL = gql`
     }
   }
 `;
+
+export const CHECKOUT_USER_CART = gql`
+  mutation CheckoutUserCart($products: [ProductInfoInput!]!) {
+    checkoutUserCart(products: $products)
+  }
+`;
+
+
 

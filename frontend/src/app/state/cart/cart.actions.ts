@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { IProductInfo } from 'src/app/models/IProductInfo';
 
 export enum ActionTypes {
   UpdateCart = '[CART-APP] UpdateCart',
@@ -7,6 +8,8 @@ export enum ActionTypes {
   GetCartSuccessful = '[CART-APP] GetCartSuccessful',
   CalculateTotal = '[CART-APP] CalculateTotal',
   CalculateTotalSuccessful = '[CART-APP] CalculateTotalSuccessful',
+  CheckoutUserCart = '[CART-APP] CheckoutUserCart',
+  CheckoutUserCartSuccessful = '[CART-APP] CheckoutUserCartSuccessful',
   Failure = '[CART-APP] Failure',
 }
 
@@ -38,6 +41,16 @@ export class CalculateTotalSuccessful implements Action {
   constructor(public response: any) { }
 }
 
+export class CheckoutUserCart implements Action {
+  public readonly type = ActionTypes.CheckoutUserCart;
+  constructor(public payload: IProductInfo[]) { }
+}
+
+export class CheckoutUserCartSuccessful implements Action {
+  public readonly type = ActionTypes.CheckoutUserCartSuccessful;
+  constructor(public response: any) { }
+}
+
 export class Failure implements Action {
   public readonly type = ActionTypes.Failure;
   constructor(public error: any) { }
@@ -49,4 +62,6 @@ export type Actions = UpdateCart |
   GetCartSuccessful |
   CalculateTotal |
   CalculateTotalSuccessful |
+  CheckoutUserCart |
+  CheckoutUserCartSuccessful |
   Failure;

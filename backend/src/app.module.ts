@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MONGO_DB_CONNECT } from './constants/personal.settings';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { CartModule } from './cart/cart.module';
 import { OrderModule } from './order/order.module';
 
 @Module({
@@ -25,6 +26,8 @@ import { OrderModule } from './order/order.module';
     MongooseModule.forRoot(MONGO_DB_CONNECT, { autoIndex: true, family: 4, useUnifiedTopology: true, keepAlive: true }),
 
     AuthModule,
+
+    CartModule,
 
     OrderModule,
   ],

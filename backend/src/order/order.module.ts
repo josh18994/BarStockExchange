@@ -1,18 +1,21 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { LiquorModule } from 'src/liquor/liquor.module';
-import { UserModule } from 'src/user/user.module';
-import { OrderResolver } from './order.resolver';
-import { Order, OrderSchema } from './order.schema';
 import { OrderService } from './order.service';
+import { OrderResolver } from './order.resolver';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Order, OrderSchema } from './order.schema';
+import { LiquorService } from 'src/liquor/liquor.service';
+import { Liquor, LiquorSchema } from 'src/liquor/liquor.schema';
+import { CartService } from 'src/cart/cart.service';
+import { Cart, CartSchema } from 'src/cart/cart.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Order.name, schema: OrderSchema }]),
-    LiquorModule,
-    UserModule
-],
-  providers: [OrderResolver, OrderService],
-  exports: [OrderService]
+    MongooseModule.forFeature([
+      { name: Order.name, schema: OrderSchema },
+      { name: Liquor.name, schema: LiquorSchema },
+      { name: Cart.name, schema: CartSchema }
+    ])
+  ],
+  providers: [OrderService, OrderResolver, LiquorService, CartService]
 })
-export class OrderModule {}
+export class OrderModule { }

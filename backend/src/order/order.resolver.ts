@@ -1,38 +1,21 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/auth.guard';
 import { OrderService } from './order.service';
-import { UpdateOrderInput } from './types/order.input';
-import { OrderReturnType, Total } from './types/order.types';
-
-
+import { ProductInfoInput } from './types/order.input';
 
 @Resolver()
 export class OrderResolver {
+
     constructor(private orderService: OrderService) { }
 
     @UseGuards(GqlAuthGuard)
-    @Mutation(() => OrderReturnType)
-    async updateOrder(
-        @Args('productInfo') updateOrderInput: UpdateOrderInput,
-        @Context() ctx
+    @Mutation(() => String)
+    async checkoutUserCart(
+        @Context() ctx,
+        @Args({ name: 'products', type: () => [ProductInfoInput] }) productInfoInput: ProductInfoInput[]
     ) {
-        return this.orderService.updateOrder(updateOrderInput, ctx);
+        return this.orderService.checkoutUserCart(ctx, productInfoInput);
     }
 
-    @UseGuards(GqlAuthGuard)
-    @Query(() => OrderReturnType, { nullable: true })
-    async getOrderByUser(
-        @Context() ctx
-    ) {
-        return this.orderService.getOrderByUser(ctx.req.user._id);
-    }
-
-    @UseGuards(GqlAuthGuard)
-    @Mutation(() => Total)
-    async calculateTotal(
-        @Context() ctx
-    ):Promise<Total> {
-        return this.orderService.calculateTotal(ctx);
-    }
 }

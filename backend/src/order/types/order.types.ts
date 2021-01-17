@@ -1,27 +1,22 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { Liquor } from 'src/liquor/liquor.schema';
+import { Field, ObjectType } from "@nestjs/graphql";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Product } from "src/cart/cart.schema";
 
-
+@Schema()
 @ObjectType()
-export class ProductPayload {
-    @Field()
-    quantity: Number;
+export class ProductInfo extends Product {
 
-    @Field(() => Liquor)
-    liquor: Liquor
+    // @Field()
+    // @Prop()
+    // quantity: Number;
+
+    // @Field(() => ID)
+    // @Prop({ type: Types.ObjectId, ref: Liquor.name })
+    // liquor: Types.ObjectId;
+
+    @Field()
+    @Prop()
+    price: string;
 }
 
-@ObjectType()
-export class Total {
-    @Field()
-    total: String;
-}
-
-@ObjectType()
-export class OrderReturnType {
-    @Field()
-    user_Id: string;
-
-    @Field(() => [ProductPayload])
-    products: ProductPayload[];
-}
+export const ProductItemSchema = SchemaFactory.createForClass(ProductInfo);

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ProductInfoInput } from 'src/order/types/order.input';
 import { v4 as uuid } from 'uuid';
 import { Liquor, LiquorDocument } from './liquor.schema';
 import { LiquorCategories } from './types/liquor.category';
@@ -25,36 +26,51 @@ export class LiquorService {
     }
 
 
-    async updateLiquor(options: LiquorInput, id: string): Promise<Liquor | void> {
-        const { img, category, price, info } = options;
-        if (category.categoryId) {
-            category.categoryType = LiquorCategories[category.categoryId];
-        }
+    async updateLiquor(options: LiquorInput, _id: string): Promise<Liquor | void> {
+        console.log(_id, options.price);
 
-        let updatedData;
+        const { price, img = '', info, frequency } = options;
 
-        const found = await this.getLiquorById(id);
+        const found = await this.getLiquorById(_id);
         if (!found) {
             return found;
         }
-        updatedData = await this.liquorModel.updateOne({ id }, { img, category, price, info });
-        if (updatedData.nModified <= 0) {
-            return null;
+        let currentPrice;
+        let history = [];
+        if(found.price?.history) {
+            history.push(...found.price.history);
         }
+        if(price?.currentPrice) {
+            currentPrice = price?.currentPrice;
+            history.push({date: new Date(), price: price.currentPrice});
+        } else currentPrice = found.price.currentPrice;
+        const updatedData = {
+            ...found._doc,
+            price: {
+                ...found.price,
+                currentPrice,
+                history,
+            },
+            img: img.length ? img : found.img,
+            info: {
+                ...found.info,
+                ...info
+            },
+            frequency: frequency ? frequency : found.frequency 
+        } as Liquor;
+        await this.liquorModel.updateOne({ _id }, updatedData);
 
-        return {
-            id, img, category, price, info, _id: found._id
-        } as Liquor
+        return updatedData;
     }
 
-    async getLiquorById(id: string): Promise<LiquorDocument> {
-        return this.liquorModel.findOne({ id });
+    async getLiquorById(_id: string): Promise<LiquorDocument> {
+        return this.liquorModel.findOne({ _id });
     }
 
     async getAllLiquor({ pageSize, pageNum, search = "", filter = "" }: LiquorQueriesInput): Promise<GetAllLiquorReturnData> {
 
-        if(!pageSize.length) pageSize = '8';
-        if(!pageNum.length) pageNum = '1';
+        if (!pageSize.length) pageSize = '8';
+        if (!pageNum.length) pageNum = '1';
         const skip = +pageSize * (+pageNum - 1);
 
         const aggregatedData = await this.liquorModel.aggregate(
@@ -86,6 +102,29 @@ export class LiquorService {
         return { data, total }
 
     }
+
+
+    async updateFrequencyForLiquors(productInfoInput: ProductInfoInput[]) {
+
+        await this.asyncForEach(productInfoInput, async (x: ProductInfoInput) => {
+            await this.liquorModel.update(
+                {
+                    _id: x.liquor
+                },
+                {
+                    $inc: {
+                        "frequency": +x.quantity
+                    }
+                });
+        });
+    }
+
+    async asyncForEach(array, callback) {
+        for (let index = 0; index < array.length; index++) {
+            await callback(array[index], index, array);
+        }
+    }
+
 }
 
 

@@ -4,7 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { AUTHENTICATION_COOKIE_NAME } from '../common/constants';
-import { AUTHENTICATE_COOKIE, CHECK_USER_EXISTS, CREATE_USER, LOGIN_USER, GET_ORDER_INFO } from '../graphql/gql';
+import { AUTHENTICATE_COOKIE, CHECK_USER_EXISTS, CREATE_USER, LOGIN_USER, GET_CART_INFO } from '../graphql/gql';
 import { IUser } from '../models/IUser';
 
 

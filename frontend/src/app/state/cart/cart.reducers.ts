@@ -4,7 +4,8 @@ import { ICartState } from "./cart.state";
 
 export const initialState: ICartState = {
   liquor: [],
-  total: ''
+  total: '',
+  busy: false
 }
 
 export function reducer(state: ICartState = initialState, action: Actions): ICartState {
@@ -27,6 +28,26 @@ export function reducer(state: ICartState = initialState, action: Actions): ICar
       return {
         ...state,
         total: action.response
+      }
+
+    case ActionTypes.CheckoutUserCart:
+      return {
+        ...state,
+        busy: true
+      }
+
+    case ActionTypes.CheckoutUserCartSuccessful:
+      return {
+        ...state,
+        liquor: [],
+        total: '',
+        busy: false
+      }
+
+    case ActionTypes.Failure:
+      return {
+        ...state,
+        busy: false
       }
 
     default:

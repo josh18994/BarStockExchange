@@ -1,12 +1,16 @@
 import { Field, InputType } from "@nestjs/graphql";
 
-@InputType()
-export class UpdateOrderInput {
 
-    @Field(() => String, {nullable: false})
+@InputType()
+export class ProductInfoInput {
+
+    @Field()
+    quantity: string;
+
+    @Field()
     liquor: string;
 
-    @Field({nullable: false})
-    quantity: Number;
+    @Field()
+    price: string;
 
 }

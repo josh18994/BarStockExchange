@@ -40,6 +40,7 @@ type Liquor {
   price: Price!
   info: Info!
   _id: ID!
+  frequency: Float
 }
 
 type User {
@@ -69,9 +70,15 @@ type Total {
   total: String!
 }
 
-type OrderReturnType {
+type CartReturnType {
   user_Id: String!
   products: [ProductPayload!]!
+}
+
+type ProductInfo {
+  quantity: Float!
+  liquor: ID!
+  price: String!
 }
 
 type Query {
@@ -80,7 +87,7 @@ type Query {
   getAllUsers: [User!]!
   authenticateCookie: User
   checkUserExists(username: String!): Boolean!
-  getOrderByUser: OrderReturnType
+  getCartByUser: CartReturnType
 }
 
 input LiquorQueriesInput {
@@ -95,15 +102,17 @@ type Mutation {
   updateLiquor(id: String!, options: LiquorInput!): Liquor
   createUser(inputCredentials: CreateUserInput!): User!
   login(inputCredentials: LoginInput!): AuthType!
-  updateOrder(productInfo: UpdateOrderInput!): OrderReturnType!
+  updateCart(productInfo: UpdateCartInput!): CartReturnType!
   calculateTotal: Total!
+  checkoutUserCart(products: [ProductInfoInput!]!): String!
 }
 
 input LiquorInput {
   img: String
-  category: CategoryType!
+  category: CategoryType
   price: PriceType
-  info: InfoType!
+  info: InfoType
+  frequency: Float
 }
 
 input CategoryType {
@@ -122,7 +131,7 @@ input PriceHistoryType {
 }
 
 input InfoType {
-  name: String!
+  name: String
   year: String
   abv: String
 }
@@ -140,9 +149,15 @@ input LoginInput {
   password: String!
 }
 
-input UpdateOrderInput {
+input UpdateCartInput {
   liquor: String!
   quantity: Float!
+}
+
+input ProductInfoInput {
+  quantity: String!
+  liquor: String!
+  price: String!
 }
 
 type Subscription {
