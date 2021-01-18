@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js';
+import { ILiquor } from 'src/app/models/ILiquor';
 
 @Component({
   selector: 'app-chart',
@@ -11,18 +12,37 @@ export class ChartComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   @ViewChild('lineChart') lineChart: ElementRef;
+  @Input() public liquor: ILiquor;
 
-  randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+
+  generateRandomData() {
+    const price = [];
+    const date = [];
+    while (price.length <= 12) {
+      const randomNumber = Math.floor(Math.random() * (22 - 17 + 1) + 17);
+      price.push(randomNumber);
+      date.push(randomNumber.toFixed(2));
+    }
+    return {price, date};
+  }
+
+  getData() {
+    if (this.liquor.price?.history?.length > 12) {
+      const price = this.liquor.price.history.map(x => +x.price);
+      const date = this.liquor.price.history.map(x => x.date);
+
+      return {price, date};
+    }
+    return this.generateRandomData();
   }
 
   ngAfterViewInit() {
 
-    const arr = [];
-    while (arr.length <= 12) {
-      const r = this.randomIntFromInterval(17, 22);
-      arr.push(r);
-    }
+    const data = this.getData();
+    const suggestedMin = Math.min(...data.price) - 2;
+    const suggestedMax = Math.max(...data.price) + 5;
+    const labels = data.date;
+    console.log(suggestedMin, suggestedMax);
 
     const ctx = this.lineChart.nativeElement.getContext('2d');
     const purpleOrangeGradient = ctx.createLinearGradient(0, 0, 0, 150);
@@ -37,11 +57,12 @@ export class ChartComponent implements OnInit, AfterViewInit {
     const lineChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '00:00'],
+        // labels: ['02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '00:00'],
+        labels,
         datasets: [
           {
             // data: [25.0, 24, 22.2, 23, 23, 22.0, 22.2, 21, 20.0, 18.4, 19.1, 17.4],
-            data: arr,
+            data: data.price,
             backgroundColor: purpleOrangeGradient,
             hoverBackgroundColor: purpleOrangeGradient,
             hoverBorderWidth: 1,
@@ -59,7 +80,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
         },
         elements: {
           point: {
-            radius: 0
+            radius: 1
           }
         },
         scales: {
@@ -69,8 +90,8 @@ export class ChartComponent implements OnInit, AfterViewInit {
                 display: false
               },
               ticks: {
-                suggestedMin: 15,
-                suggestedMax: 27,
+                suggestedMin,
+                suggestedMax,
                 display: false
               }
             }
