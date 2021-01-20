@@ -51,7 +51,7 @@ export class LiquorComponent implements OnInit, AfterViewInit {
       });
 
     this.store.dispatch(new StartConnection());
-    this.store.dispatch(new GetLiquorList('8', '1', '', ''));
+    this.store.dispatch(new GetLiquorList('16', '1', '', ''));
   }
 
   onPageChange({pageIndex, pageSize}) {

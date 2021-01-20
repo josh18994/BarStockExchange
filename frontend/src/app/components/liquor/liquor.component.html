@@ -5,6 +5,6 @@
       <app-liquor-tile [liquorItem]="liquor" *ngFor="let liquor of liquorList"></app-liquor-tile>
     </div>
   </div>
-  <mat-paginator (page)="onPageChange($event)" [length]="total" [pageSize]="8" [pageSizeOptions]="[8, 16, 24]">
+  <mat-paginator (page)="onPageChange($event)" [length]="total" [pageSize]="16" [pageSizeOptions]="[8, 16, 24]">
   </mat-paginator>
 </div>

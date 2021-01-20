@@ -13,7 +13,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
   @ViewChild('lineChart') lineChart: ElementRef;
   @Input() public liquor: ILiquor;
-
+  @Input() public difference;
 
   generateRandomData() {
     const price = [];
@@ -42,12 +42,18 @@ export class ChartComponent implements OnInit, AfterViewInit {
     const suggestedMin = Math.min(...data.price) - 2;
     const suggestedMax = Math.max(...data.price) + 5;
     const labels = data.date;
-    console.log(suggestedMin, suggestedMax);
 
     const ctx = this.lineChart.nativeElement.getContext('2d');
     const purpleOrangeGradient = ctx.createLinearGradient(0, 0, 0, 150);
-    purpleOrangeGradient.addColorStop(0, 'rgba(27, 160, 152, 0.5) ');
-    purpleOrangeGradient.addColorStop(1, 'rgba(27, 160, 152, 0) ');
+    console.log(this.difference);
+
+    if(+this.difference > 0) {
+      purpleOrangeGradient.addColorStop(0, 'rgba(255, 105, 38, 0.5) ');
+      purpleOrangeGradient.addColorStop(1, 'rgba(255, 105, 38, 0) ');
+    } {
+      purpleOrangeGradient.addColorStop(0, 'rgba(2, 199, 10, 0.5) ');
+      purpleOrangeGradient.addColorStop(1, 'rgba(2, 199, 10, 0) ');
+    }
     ctx.shadowColor = 'black';
     ctx.shadowBlur = 6;
     ctx.shadowOffsetX = 6;
@@ -68,7 +74,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
             hoverBorderWidth: 1,
             hoverBorderColor: 'purple',
             borderWidth: 2,
-            borderColor: '#1BA098',
+            borderColor: +this.difference > 0 ? '#FF6926' : '#02c70a',
             lineTension: 0
           }
         ]

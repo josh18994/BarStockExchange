@@ -104,7 +104,6 @@
     .difference-percent {
       font-size: 12px;
       align-self: flex-start;
-      color: #02c70a;
       font-weight: bold;
     }
   }
@@ -118,8 +117,16 @@
   }
 }
 
+.green {
+  color: #02c70a;
+}
+
+.red {
+  color: #FF6926;
+}
+
 .chart-container {
-  height: 70px;
+  height: 65px;
   width: 250px;
-  transform: scale(1.1) translateX(-10px);
+  transform: scale(1.1);
 }

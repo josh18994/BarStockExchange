@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
   }
 
   search() {
-    this.store.dispatch(new GetLiquorList('8', '1', this.form.get('search').value, ''));
+    this.store.dispatch(new GetLiquorList('16', '1', this.form.get('search').value, ''));
   }
 }
 // TODO: 4. Show Errors on Forms
