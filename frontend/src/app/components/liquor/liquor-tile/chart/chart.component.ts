@@ -45,7 +45,6 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
     const ctx = this.lineChart.nativeElement.getContext('2d');
     const purpleOrangeGradient = ctx.createLinearGradient(0, 0, 0, 150);
-    console.log(this.difference);
 
     if(+this.difference > 0) {
       purpleOrangeGradient.addColorStop(0, 'rgba(255, 105, 38, 0.5) ');
@@ -86,7 +85,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
         },
         elements: {
           point: {
-            radius: 1
+            radius: 0
           }
         },
         scales: {

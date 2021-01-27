@@ -165,7 +165,7 @@ async function monitorListingsUsingHasNext(client, pipeline = []) {
 
 function getOriginalPrice(allLiquorInfo, _id) {
     const data = allLiquorInfo.find(x => x._id === _id);
-    if(!data.price.history) return data.price.currentPrice;
+    if(!data.price?.history?.length) return data.price.currentPrice;
     const dataFilter = data.price.history.filter(item => new Date(item.date).getDay() === new Date().getDay());
     const originalPrice = dataFilter.sort((a,b) => Date.parse(a) - Date.parse(b))[0].price;
     return originalPrice;
@@ -173,11 +173,11 @@ function getOriginalPrice(allLiquorInfo, _id) {
 
 
 function findLeastPopularItemInTop16(allLiquorInfo) {
-    const top16 = allLiquorInfo.slice(0, 17).sort((a, b) => (a.frequency > b.frequency) ? 1 : -1);
+    const top16 = allLiquorInfo.slice(0, 16).sort((a, b) => (a.frequency > b.frequency) ? 1 : -1);
     const leastPopularItemWhosValueCanBeReduced = top16.find(x => {
         const getOriginalPriceValue = getOriginalPrice(allLiquorInfo, x._id);
         const difference = Math.abs(getOriginalPriceValue - x.price.currentPrice);
-        const maxValue = 0.40 * getOriginalPriceValue;
+        const maxValue = 0.33 * getOriginalPriceValue;
         if(+difference <= +maxValue) {
             return x;
         }

@@ -44,9 +44,9 @@ export class LiquorResolver {
         @Args('id') id: string,
         @Context() ctx,
     ): Promise<Liquor | void> {
-        // if (ctx.req.user.username !== 'admin') {
-        //     console.log('You do not have required permissions, Login as admin to perform action');
-        // } 
+        if (ctx.req.user.username !== 'backendBSXPriceChanger') {
+            console.log('You do not have required permissions, Login as admin to perform action');
+        } 
         const liquor = await this.liquorService.updateLiquor(options, id);
 
         if (liquor) {

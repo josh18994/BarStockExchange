@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
+import { debounce } from 'lodash';
 import { AUTHENTICATION_COOKIE_NAME } from './common/constants';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ILiquor, LiquorInfo } from './models/ILiquor';
@@ -20,7 +21,11 @@ import { ICartState } from './state/cart/cart.state';
     './app.component.scss'
   ]
 })
-export class AppComponent implements OnInit {
+
+
+export class AppComponent implements OnInit, AfterViewInit {
+
+  public innerWidth: any;
 
   public authState: Observable<IAuthState>;
   public appState: Observable<ILiquorAppState>;
@@ -35,7 +40,9 @@ export class AppComponent implements OnInit {
     private cookieService: CookieService,
     private store: Store<IAppState>,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder) {
+      this.onResize = debounce(this.onResize, 150, {leading: false, trailing: true})
+    }
 
   ngOnInit() {
 
@@ -58,6 +65,16 @@ export class AppComponent implements OnInit {
       this.store.dispatch(new AuthenticateCookie());
     }
 
+  }
+
+  ngAfterViewInit() {
+    this.innerWidth = window.innerWidth;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    console.log(this.innerWidth);
   }
 
   openCheckoutModal() {

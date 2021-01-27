@@ -1,4 +1,4 @@
-<div *ngIf="!(authState | async).loading" class="background">
+<div *ngIf="!(authState | async).loading && innerWidth > 525" class="background">
   <div class="header">
     <div class="arc-top">
       <div class="name">
@@ -53,4 +53,8 @@
       <router-outlet *ngIf="!(authState | async).loading"></router-outlet>
     </div>
   </div>
+</div>
+
+<div>
+  
 </div>
