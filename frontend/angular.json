@@ -39,7 +39,9 @@
             ],
             "scripts": [
               "node_modules/vanilla-tilt/dist/vanilla-tilt.js",
-              "./node_modules/hammerjs/hammer.min.js"
+              "./node_modules/hammerjs/hammer.min.js",
+              "./node_modules/@lottiefiles/lottie-player/dist/lottie-player.js",
+              "./node_modules/@lottiefiles/lottie-interactivity/dist/lottie-interactivity.min.js"
             ]
           },
           "configurations": {

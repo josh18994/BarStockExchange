@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { debounce } from 'lodash';
 import { ILiquor } from 'src/app/models/ILiquor';
 import { IAppState } from 'src/app/state';
 import { SetTitle } from 'src/app/state/app/app.actions';
@@ -31,11 +32,13 @@ export class LiquorTileComponent implements OnInit {
   public percentPriceDifference;
   public style;
   public originalPrice;
+  public innerWidth: any;
 
 
   // TODO: Try binding to {{title}}
   constructor(private store: Store<IAppState>) {
     this.store.dispatch(new SetTitle('Shop'));
+    this.onResize = debounce(this.onResize, 150, {leading: false, trailing: true});
   }
 
 
@@ -80,6 +83,11 @@ export class LiquorTileComponent implements OnInit {
 
   getQuantity(id: string) {
     return this.cart.filter(x => x.liquor._id === id)[0]?.quantity || '';
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 }
 

@@ -191,6 +191,15 @@
   }
 }
 
+.work-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  align-items: center;
+  text-align: center;
+}
+
 // .body:before {
 //   content: '';
 //   @include thin-border;

@@ -17,7 +17,7 @@
   height: 230px;
   display: flex;
   flex-direction: column;
-  box-shadow: 6px 10px 24px 7px rgba(0,0,0,0.3);
+  box-shadow: 6px 10px 24px 7px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   cursor: pointer;
 
@@ -28,11 +28,26 @@
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 6px 20px 50px rgba(0,0,0, 0.7);
+    box-shadow: 6px 20px 50px rgba(0, 0, 0, 0.7);
   }
 
   &:active {
     transform: translateY(-1px);
+  }
+
+  @media screen and (max-width: 714px) {
+    width: 75vw;
+    height: 50px;
+    border-radius: 10px;
+    flex-direction: row;
+    white-space: nowrap;
+    font-size: 12px;
+    margin: 0.5rem 2rem;
+
+    // &:first-child {
+    //   margin-top: 2rem;
+    // }
+
   }
 }
 
@@ -52,6 +67,11 @@
       overflow: hidden;
       border-radius: 50%;
       // border: 1px solid black;
+
+      @media screen and (max-width: 714px) {
+        width: 45px;
+        height: 45px;
+      }
 
       img {
         display: inline;
@@ -85,6 +105,11 @@
     }
   }
 
+  @media screen and (max-width: 714px) {
+    flex: 0;
+    min-width: 200px;
+  }
+
 }
 
 
@@ -92,10 +117,19 @@
 .price-contianer {
   flex: 1;
 
+  @media screen and (max-width: 714px) {
+    flex: 0;
+    padding-top: 8px;
+  }
+
   .container--1 {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+
+    @media screen and (max-width: 714px) {
+      align-items: center;
+    }
 
     .current-price {
       font-size: 32px;
@@ -129,4 +163,9 @@
   height: 65px;
   width: 250px;
   transform: scale(1.1);
+
+  // @media screen and (max-width: 714px) {
+  //   transform: scale(0.8);
+  // }
+
 }

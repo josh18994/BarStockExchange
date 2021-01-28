@@ -23,7 +23,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
       price.push(randomNumber);
       date.push(randomNumber.toFixed(2));
     }
-    return {price, date};
+    return { price, date };
   }
 
   getData() {
@@ -31,7 +31,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
       const price = this.liquor.price.history.map(x => +x.price);
       const date = this.liquor.price.history.map(x => x.date);
 
-      return {price, date};
+      return { price, date };
     }
     return this.generateRandomData();
   }
@@ -46,10 +46,10 @@ export class ChartComponent implements OnInit, AfterViewInit {
     const ctx = this.lineChart.nativeElement.getContext('2d');
     const purpleOrangeGradient = ctx.createLinearGradient(0, 0, 0, 150);
 
-    if(+this.difference > 0) {
+    if (+this.difference > 0) {
       purpleOrangeGradient.addColorStop(0, 'rgba(255, 105, 38, 0.5) ');
       purpleOrangeGradient.addColorStop(1, 'rgba(255, 105, 38, 0) ');
-    } {
+    } else {
       purpleOrangeGradient.addColorStop(0, 'rgba(2, 199, 10, 0.5) ');
       purpleOrangeGradient.addColorStop(1, 'rgba(2, 199, 10, 0) ');
     }
@@ -79,6 +79,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
         ]
       },
       options: {
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
           display: false
@@ -95,6 +96,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
                 display: false
               },
               ticks: {
+
                 suggestedMin,
                 suggestedMax,
                 display: false
@@ -108,6 +110,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
                 display: false
               },
               ticks: {
+                beginAtZero: true,
                 display: false
               }
             }

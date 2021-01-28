@@ -33,6 +33,16 @@
   width: 88vw;
   transform-style: preserve-3d;
   min-height: 66vh;
+
+  @media screen and (max-width: 714px) {
+    &:first-of-type {
+      margin-top: 1.5rem;
+    }
+
+    &:last-of-type {
+      margin-bottom: 2rem;
+    }
+  }
 }
 
 mat-paginator {

@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private store: Store<IAppState>,
     private dialog: MatDialog,
     private formBuilder: FormBuilder) {
-      this.onResize = debounce(this.onResize, 150, {leading: false, trailing: true})
+      this.onResize = debounce(this.onResize, 50, {leading: false, trailing: true});
     }
 
   ngOnInit() {
@@ -74,7 +74,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    console.log(this.innerWidth);
   }
 
   openCheckoutModal() {
