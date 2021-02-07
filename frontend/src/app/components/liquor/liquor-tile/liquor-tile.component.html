@@ -15,9 +15,9 @@
   <div class="price-contianer">
     <div class="container--1">
       <div class="current-price">${{liquor.price.currentPrice}}</div>
-      <div *ngIf="percentPriceDifference" [ngClass]="style" class="difference-percent">{{percentPriceDifference}}%</div>
+      <div *ngIf="percentPriceDifference > 0" [ngClass]="style" class="difference-percent">{{percentPriceDifference}}%</div>
     </div>
-    <div *ngIf="originalPrice" class="original-price">${{originalPrice}}</div>
+    <div *ngIf="originalPrice && percentPriceDifference > 0" class="original-price">${{originalPrice}}</div>
   </div>
   <div class="chart-container">
     <app-chart [difference]="percentPriceDifference" [liquor]="liquor"></app-chart>

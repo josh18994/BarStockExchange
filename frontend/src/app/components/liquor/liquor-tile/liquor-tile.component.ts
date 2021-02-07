@@ -18,7 +18,9 @@ export class LiquorTileComponent implements OnInit {
     this.liquor = liquorItem;
     if (this.liquor.price?.history) {
 
-      this.originalPrice = this.liquor.price.history.filter(x => new Date(x.date).getDay() === new Date().getDay())[0].price;
+      // this.originalPrice = this.liquor.price.history.filter(x => new Date(x.date).getDay() === new Date().getDay())[0].price;
+      const lengthOfHistoryArray = this.liquor.price.history.length;
+      this.originalPrice = this.liquor.price.history[lengthOfHistoryArray - 1].price;
       const difference = +this.liquor.price.currentPrice - +this.originalPrice;
       const percent = (difference / +this.originalPrice) * 100;
       this.style = difference > 0 ? 'red' : 'green';
@@ -57,8 +59,9 @@ export class LiquorTileComponent implements OnInit {
 
   calculateDifference() {
     if (this.liquor.price?.history) {
-
-      const originalPrice = this.liquor.price.history.filter(x => new Date(x.date).getDay() === new Date().getDay())[0].price;
+      // const originalPrice = this.liquor.price.history.filter(x => new Date(x.date).getDay() === new Date().getDay())[0].price;
+      const lengthOfHistoryArray = this.liquor.price.history.length;
+      const originalPrice = this.liquor.price.history[lengthOfHistoryArray - 1].price;
       const difference = +this.liquor.price.currentPrice - +originalPrice;
       console.log(difference);
       const percent = (difference / +originalPrice) * 100;
