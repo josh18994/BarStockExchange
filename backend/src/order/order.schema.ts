@@ -6,26 +6,6 @@ import { ProductInfo, ProductItemSchema } from './types/order.types';
 
 
 export type OrderDocument = Order & Document & ModelFeautres;
-
-
-// @Schema()
-// @ObjectType()
-// export class ProductItem extends Document {
-
-//     @Field()
-//     @Prop()
-//     quantity: Number;
-
-//     @Field(() => Liquor)
-//     @Prop({ type: Liquor })
-//     liquor: Liquor;
-
-// }
-
-// export const ProductItemSchema = SchemaFactory.createForClass(ProductItem);
-
-
-
 @ObjectType()
 @Schema()
 export class Order {

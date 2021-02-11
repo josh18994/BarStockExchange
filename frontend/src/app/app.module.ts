@@ -9,7 +9,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { AccountDashboardModule } from './account-dashboard/account-dashboard.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
 import { LiquorTileComponent } from './components/liquor/liquor-tile/liquor-tile.component';
 import { LiquorComponent } from './components/liquor/liquor.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
@@ -33,7 +32,6 @@ import { GrandtotalComponent } from './components/grandtotal/grandtotal.componen
     LiquorComponent,
     LiquorTileComponent,
     WelcomeComponent,
-    LoadingSpinnerComponent,
     CheckoutComponent,
     PaymentComponent,
     DiscountComponent,
@@ -54,9 +52,6 @@ import { GrandtotalComponent } from './components/grandtotal/grandtotal.componen
         strictStateImmutability: false
       }
     }),
-    // StoreRouterConnectingModule.forRoot({
-    //   serializer: CustomSerializer,
-    // }),
     EffectsModule.forRoot(effects),
     AppRoutingModule,
     GraphQLModule,
