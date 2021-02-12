@@ -6,6 +6,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -22,9 +23,12 @@ interface Definintion {
       provide: APOLLO_OPTIONS,
       useFactory(httpLink: HttpLink) {
 
+        console.log('api url: ' + environment.apiURL);
+        console.log('ws url: ' + environment.apiWsUrl);
+
         // Create an http link:
         const http = httpLink.create({
-          uri: 'http://localhost:4000/graphql',
+          uri: environment.apiURL,
           withCredentials: true,
           headers: new HttpHeaders({
             Authorization: 'Bearer ' + localStorage.getItem('token')
@@ -32,7 +36,7 @@ interface Definintion {
         });
 
         const ws = new WebSocketLink({
-          uri: `ws://localhost:4000/graphql`,
+          uri: environment.apiWsUrl,
           options: {
             reconnect: true,
           },

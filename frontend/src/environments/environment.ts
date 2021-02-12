@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiURL: 'http://localhost:4000/graphql',
+  apiWsUrl: 'ws://localhost:4000/graphql'
 };
 
 /*
