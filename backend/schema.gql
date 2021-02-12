@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  firstName: String!
+  lastName: String!
+  username: String!
+  email: String!
+  _id: ID!
+}
+
+type AuthType {
+  user: User!
+  token: String!
+}
+
 type Category {
   categoryId: String!
   categoryType: String!
@@ -41,19 +54,6 @@ type Liquor {
   info: Info!
   _id: ID!
   frequency: Float
-}
-
-type User {
-  firstName: String!
-  lastName: String!
-  username: String!
-  email: String!
-  _id: ID!
-}
-
-type AuthType {
-  user: User!
-  token: String!
 }
 
 type Product {
@@ -98,13 +98,18 @@ input LiquorQueriesInput {
 }
 
 type Mutation {
+  login(inputCredentials: LoginInput!): AuthType!
   createLiquor(options: LiquorInput!): Liquor!
   updateLiquor(id: String!, options: LiquorInput!): Liquor
   createUser(inputCredentials: CreateUserInput!): User!
-  login(inputCredentials: LoginInput!): AuthType!
   updateCart(productInfo: UpdateCartInput!): CartReturnType!
   calculateTotal: Total!
   checkoutUserCart(products: [ProductInfoInput!]!): String!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
 }
 
 input LiquorInput {
@@ -140,11 +145,6 @@ input CreateUserInput {
   firstName: String!
   lastName: String!
   email: String!
-  username: String!
-  password: String!
-}
-
-input LoginInput {
   username: String!
   password: String!
 }

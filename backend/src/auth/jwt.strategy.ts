@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
-import { Strategy, ExtractJwt } from 'passport-jwt';
-import { JWT_STRATEGY } from "src/constants/personal.settings";
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { User } from "src/user/user.schema";
 import { UserService } from "src/user/user.service";
 
@@ -17,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
                 const jwtTokenFromCookie = request.rawHeaders.filter((x:string) => x.startsWith('Authentication'))[0];
                 return jwtTokenFromCookie.slice(15);
               }]),
-            secretOrKey: JWT_STRATEGY
+            secretOrKey: process.env.JWT_STRATEGY
         });
     }
 
