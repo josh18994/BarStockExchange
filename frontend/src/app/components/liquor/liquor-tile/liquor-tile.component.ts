@@ -1,12 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { debounce } from 'lodash';
 import { ILiquor } from 'src/app/models/ILiquor';
 import { IAppState } from 'src/app/state';
 import { SetTitle } from 'src/app/state/app/app.actions';
 import { UpdateCart } from 'src/app/state/cart/cart.actions';
-
-
-declare var VanillaTilt: any;
 
 @Component({
   selector: 'app-liquor-tile',
@@ -15,19 +13,38 @@ declare var VanillaTilt: any;
 })
 export class LiquorTileComponent implements OnInit {
 
+  @Input('liquorItem')
+  set liquorInfo(liquorItem) {
+    this.liquor = liquorItem;
+    if (this.liquor.price?.history) {
+
+      // this.originalPrice = this.liquor.price.history.filter(x => new Date(x.date).getDay() === new Date().getDay())[0].price;
+      const lengthOfHistoryArray = this.liquor.price.history.length;
+      this.originalPrice = this.liquor.price.history[lengthOfHistoryArray - 1].price;
+      const difference = +this.liquor.price.currentPrice - +this.originalPrice;
+      const percent = (difference / +this.originalPrice) * 100;
+      this.style = difference > 0 ? 'red' : 'green';
+      this.percentPriceDifference =  percent.toFixed(2);
+    }
+  }
+
   public authenticatedUser: string;
   public cart;
+  public liquor: ILiquor;
+  public percentPriceDifference;
+  public style;
+  public originalPrice;
+  public innerWidth: any;
 
-  @Input() public liquorItem: ILiquor;
 
   // TODO: Try binding to {{title}}
   constructor(private store: Store<IAppState>) {
     this.store.dispatch(new SetTitle('Shop'));
+    this.onResize = debounce(this.onResize, 150, {leading: false, trailing: true});
   }
 
 
   ngOnInit(): void {
-
 
     this.store.select(state => state.auth).subscribe(val => {
       this.authenticatedUser = val.user.username;
@@ -40,6 +57,28 @@ export class LiquorTileComponent implements OnInit {
   }
 
 
+  calculateDifference() {
+    if (this.liquor.price?.history) {
+      // const originalPrice = this.liquor.price.history.filter(x => new Date(x.date).getDay() === new Date().getDay())[0].price;
+      const lengthOfHistoryArray = this.liquor.price.history.length;
+      const originalPrice = this.liquor.price.history[lengthOfHistoryArray - 1].price;
+      const difference = +this.liquor.price.currentPrice - +originalPrice;
+      console.log(difference);
+      const percent = (difference / +originalPrice) * 100;
+
+      return percent.toFixed(2);
+    }
+  }
+
+  getOriginalNumber() {
+    if (this.liquor.price?.history) {
+
+      return this.liquor.price.history.filter(x => new Date(x.date).getDay() === new Date().getDay())[0].price;
+
+    }
+  }
+
+
   updateCart(item: ILiquor) {
     const quantity = this.cart.filter(x => x.liquor._id === item._id)[0]?.quantity;
     this.store.dispatch(new UpdateCart(item._id, !!quantity ? quantity + 1 : 1));
@@ -47,6 +86,11 @@ export class LiquorTileComponent implements OnInit {
 
   getQuantity(id: string) {
     return this.cart.filter(x => x.liquor._id === id)[0]?.quantity || '';
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 }
 

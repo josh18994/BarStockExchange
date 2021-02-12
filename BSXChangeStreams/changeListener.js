@@ -1,8 +1,5 @@
 const { MongoClient } = require('mongodb');
-const mongoose = require('mongoose');
-const stream = require('stream');
 const fetch = require('node-fetch');
-
 
 var token = "";
 
@@ -78,6 +75,10 @@ async function monitorListingsUsingHasNext(client, pipeline = []) {
                             _id,
                             price {
                                 currentPrice
+                                history {
+                                    price
+                                    date
+                                }
                             },
                             info {
                                 name
@@ -95,16 +96,11 @@ async function monitorListingsUsingHasNext(client, pipeline = []) {
         headers: { 'Content-Type': 'application/json' }
     }).then(res => res.json())
         .then(json => {
-            const liquorInfo = [...json.data.getAllLiquor.data];
-            maxFrequency = Math.max(...liquorInfo.map(x => x.frequency));
-            allLiquorInfo = liquorInfo.map(x => {
-                const popularity = +(x.frequency / maxFrequency).toFixed(4);
-                x.popularity = popularity;
+            allLiquorInfo = [...json.data.getAllLiquor.data].map(x => {
+                x.lastUpdatedFrequency = x.frequency;
                 return x;
-            }).sort((a, b) => (a.popularity < b.popularity) ? 1 : -1);
-            formulateStrategy(allLiquorInfo);
-            // console.log(json.data.getAllLiquor.data)
-        })
+            });
+        });
 
     pipeline = [{
         $match: {
@@ -119,17 +115,30 @@ async function monitorListingsUsingHasNext(client, pipeline = []) {
     const changeStream = collection.watch(pipeline);
     while (await changeStream.hasNext()) {
         const product = await changeStream.next();
-        if (product.updateDescription.updatedFields?.frequency % 10 === 0) {
-            const reducedLiquorPriceInfo = formulateStrategy(allLiquorInfo);
+        let updateCriteria = false;
+        allLiquorInfo.map(x => {
+            if(x._id === product.documentKey._id.toString()) {
+                x.frequency = product.updateDescription.updatedFields?.frequency;
+                updateCriteria = (product.updateDescription.updatedFields?.frequency - x.lastUpdatedFrequency >= 2);
+            }
+        });
+        if (updateCriteria) {
+            const reducedLiquorPriceInfo = findLeastPopularItemInTop16(allLiquorInfo);
             const newLiquorPrice = calculateNewPrice(product.documentKey._id, allLiquorInfo);
-            const updateliquor = {
+            const updateliquor = newLiquorPrice ? {
                 "query": `
                     mutation {
-                        updateA: updateLiquor(id: \"${product.documentKey._id}\", options: { price: { currentPrice: \"${newLiquorPrice}\" }}) { _id }
-                        updateB: updateLiquor(id: \"${reducedLiquorPriceInfo._id}\", options: { price: { currentPrice: \"${reducedLiquorPriceInfo.price}\" }}) { _id }
+                        updateA: updateLiquor(id: \"${product.documentKey._id}\", options: { price: { currentPrice: \"${newLiquorPrice}\" }}) { _id, price {currentPrice}, info{name}, frequency }
+                        updateB: updateLiquor(id: \"${reducedLiquorPriceInfo._id}\", options: { price: { currentPrice: \"${reducedLiquorPriceInfo.price}\" }}) { _id, price {currentPrice}, info{name}, frequency }
                     }
                 `
-            }
+            } : {
+                "query": `
+                    mutation {
+                        updateB: updateLiquor(id: \"${reducedLiquorPriceInfo._id}\", options: { price: { currentPrice: \"${reducedLiquorPriceInfo.price}\" }}) { _id, price {currentPrice}, info{name}, frequency }
+                    }
+                `
+            };
             const headers = generateHeaders();
             fetch('http://localhost:4000/graphql', {
                 method: 'POST',
@@ -137,28 +146,57 @@ async function monitorListingsUsingHasNext(client, pipeline = []) {
                 headers
             }).then(res => res.json())
                 .then(json => {
-                    console.log(json)
+                    allLiquorInfo.forEach(x => {
+                        if (x._id === json.data.updateA?._id) {
+                            console.log('price of ' + json.data.updateA.info.name + ' changed from $' + x.price.currentPrice + ' to $' + json.data.updateA.price.currentPrice);
+                            x.price.currentPrice = json.data.updateA.price.currentPrice;
+                            x.lastUpdatedFrequency = x.frequency;
+                        }
+                        if (x._id === json.data.updateB?._id) {
+                            console.log('price of ' + json.data.updateB.info.name + ' changed from $' + x.price.currentPrice + ' to $' + json.data.updateB.price.currentPrice);
+                            x.price.currentPrice = json.data.updateB.price.currentPrice;
+                            x.lastUpdatedFrequency = x.frequency;
+                        }
+                    });
                 })
         }
     }
 }
 
+function getOriginalPrice(allLiquorInfo, _id) {
+    const data = allLiquorInfo.find(x => x._id === _id);
+    if(!data.price?.history?.length) return data.price.currentPrice;
+    const dataFilter = data.price.history.filter(item => new Date(item.date).getDay() === new Date().getDay());
+    const originalPrice = dataFilter.sort((a,b) => Date.parse(a) - Date.parse(b))[0].price;
+    return originalPrice;
+}
 
-function formulateStrategy(allLiquorInfo) {
-    const found = allLiquorInfo.find((element, index) => element.popularity === 0 && index < 5);
-    const payload = {
-        _id: found ? found._id : allLiquorInfo[0]._id,
-        price: found
-            ? (found.price.currentPrice - (0.03 * found.price.currentPrice)).toFixed(2).toString()
-            : (allLiquorInfo[0].price.currentPrice - (0.03 * allLiquorInfo[0].price.currentPrice)).toFixed(2).toString()
+
+function findLeastPopularItemInTop16(allLiquorInfo) {
+    const top16 = allLiquorInfo.slice(0, 16).sort((a, b) => (a.frequency > b.frequency) ? 1 : -1);
+    const leastPopularItemWhosValueCanBeReduced = top16.find(x => {
+        const getOriginalPriceValue = getOriginalPrice(allLiquorInfo, x._id);
+        const difference = Math.abs(getOriginalPriceValue - x.price.currentPrice);
+        const maxValue = 0.33 * getOriginalPriceValue;
+        if(+difference <= +maxValue) {
+            return x;
+        }
+    })
+    return {
+        _id: leastPopularItemWhosValueCanBeReduced._id,
+        price: (leastPopularItemWhosValueCanBeReduced.price.currentPrice - (0.02 * leastPopularItemWhosValueCanBeReduced.price.currentPrice)).toFixed(2)
     }
-
-    return payload;
 }
 
 function calculateNewPrice(_id, allLiquorInfo) {
-    currentPrice = +allLiquorInfo.filter(x => x._id === _id.toString())[0].price.currentPrice;
-    return (currentPrice + (0.05 * currentPrice)).toFixed(2).toString();
+    const currentPrice = +allLiquorInfo.filter(x => x._id === _id.toString())[0].price.currentPrice;
+    const modifiedPrice = (currentPrice + (0.03 * currentPrice))
+    const originalPrice = getOriginalPrice(allLiquorInfo, _id.toString());
+    const difference = Math.abs(modifiedPrice - +originalPrice);
+    if(difference >= (originalPrice * 0.50)) {
+        return "";
+    }
+    return (currentPrice + (0.03 * currentPrice)).toFixed(2).toString();
 }
 
 async function asyncForEach(array, callback) {
@@ -175,74 +213,3 @@ async function listDatabases(client) {
 };
 
 main().catch(console.error);
-
-// async function monitorListingsUsingEventEmitter(client, timeInMs = 60000, pipeline = []) {
-//     const collection = client.db("liquor").collection("orders");
-//     const changeStream = collection.watch(pipeline);
-//     changeStream.on('change', (next) => {
-//         console.log(next);
-//     });
-
-//     await closeChangeStream(timeInMs, changeStream);
-// }
-
-// async function monitorListingsUsingStreamAPI(client, timeInMs = 60000, pipeline = []) {
-//     const collection = client.db("liquor").collection("orders");
-//     const changeStream = collection.watch(pipeline);
-//     changeStream.pipe(
-//         new stream.Writable({
-//             objectMode: true,
-//             write: function (doc, _, cb) {
-//                 console.log(doc);
-//                 cb();
-//             }
-//         })
-//     );
-//     await closeChangeStream(timeInMs, changeStream);
-// }
-
-
-// function closeChangeStream(timeInMs = 60000, changeStream) {
-//     return new Promise((resolve) => {
-//         setTimeout(() => {
-//             console.log("Closing the change stream");
-//             changeStream.close();
-//             resolve();
-//         }, timeInMs)
-//     })
-// };
-
-
-
-
-// const MongoClient = require('mongodb').MongoClient;
-
-// // replace the uri string with your connection string.
-// const uri = "mongodb+srv://joshua:enqzElyXMVy6KYJY@cluster0.huuxj.mongodb.net/liquor?retryWrites=true&w=majority"
-// MongoClient.connect(uri, function (err, client) {
-//     if (err) {
-//         console.log('Error occurred while connecting to MongoDB Atlas...\n', err);
-//     }
-//     console.log('Connected...');
-//     const collection = client.db("liquor").collection('orders');
-//     const changeStreamCursor = collection.watch();
-
-//     changeStreamCursor.on('change', next => {
-//         // process next document
-//         console.log(next);
-//       });
-
-//     // perform actions on the collection object
-//     client.close();
-// });
-
-
-
-// conn = new Mongo('mongodb+srv://joshua:enqzElyXMVy6KYJY@cluster0.huuxj.mongodb.net/liquor?retryWrites=true&w=majority');
-
-// db = conn.getDB('liquors');
-// collection = db.sensorData;
-
-
-// const changeStreamCursor = collection.watch()
-

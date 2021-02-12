@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -9,7 +9,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { AccountDashboardModule } from './account-dashboard/account-dashboard.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
 import { LiquorTileComponent } from './components/liquor/liquor-tile/liquor-tile.component';
 import { LiquorComponent } from './components/liquor/liquor.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
@@ -33,7 +32,6 @@ import { GrandtotalComponent } from './components/grandtotal/grandtotal.componen
     LiquorComponent,
     LiquorTileComponent,
     WelcomeComponent,
-    LoadingSpinnerComponent,
     CheckoutComponent,
     PaymentComponent,
     DiscountComponent,
@@ -54,9 +52,6 @@ import { GrandtotalComponent } from './components/grandtotal/grandtotal.componen
         strictStateImmutability: false
       }
     }),
-    // StoreRouterConnectingModule.forRoot({
-    //   serializer: CustomSerializer,
-    // }),
     EffectsModule.forRoot(effects),
     AppRoutingModule,
     GraphQLModule,
@@ -67,7 +62,8 @@ import { GrandtotalComponent } from './components/grandtotal/grandtotal.componen
   ],
   providers: [CookieService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}, JwtHelperService],
   bootstrap: [AppComponent],
-  entryComponents: [CheckoutComponent]
+  entryComponents: [CheckoutComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }
 

@@ -55,8 +55,4 @@ export class AuthService {
     return this.apollo.query({ query: CHECK_USER_EXISTS, variables: { username } });
   }
 
-  // public getOrderInfo() {
-  //   return this.apollo.query({query: GET_ORDER_INFO});
-  // }
-
 }

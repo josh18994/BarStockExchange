@@ -1,4 +1,4 @@
-<div *ngIf="!(authState | async).loading" class="background">
+<div *ngIf="!(authState | async).loading && innerWidth > 599" class="background">
   <div class="header">
     <div class="arc-top">
       <div class="name">
@@ -53,4 +53,9 @@
       <router-outlet *ngIf="!(authState | async).loading"></router-outlet>
     </div>
   </div>
+</div>
+
+<div class="work-container" *ngIf="innerWidth < 600">
+  <div>Mobile View is currently being developed. Try opening the application in a larger display</div>
+  <lottie-player id="firstLottie" src="https://assets3.lottiefiles.com/packages/lf20_6gcjqbyv.json" background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay>"></lottie-player>
 </div>

@@ -29,21 +29,6 @@ export class TotalComponent implements OnInit {
     });
   }
 
-  calculateCartTotal() {
-    // this.subTotal = 0;
-
-    // this.userCart
-    //   .filter((elem) => {
-    //     const find = this.liquorList.find(({ _id }) => elem.liquorId === _id)
-    //     this.subTotal += +find.price.currentPrice * +elem.quantity;
-    //     return find;
-
-    //   });
-    // if (this.subTotal === 0) return '   ';
-    // return '$' + this.subTotal.toString();
-
-  }
-
   calculateTax() {
     this.grandTotal = +(this.subTotal + this.subTotal * 0.06 + +this.subTotal * 0.02).toFixed(2);
     this.tax = +(this.grandTotal - this.subTotal).toFixed(2);

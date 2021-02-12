@@ -14,7 +14,7 @@ export interface Category {
 
 export interface Price {
   currentPrice: string;
-  history: PriceHistory[]
+  history: PriceHistory[];
 }
 
 

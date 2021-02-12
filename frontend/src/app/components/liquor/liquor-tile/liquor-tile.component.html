@@ -1,43 +1,25 @@
-<div (click)="updateCart(liquorItem)" [matBadge]="getQuantity(liquorItem._id)" matBadgeColor="accent" matRipple
+<div (click)="updateCart(liquor)" [matBadge]="getQuantity(liquor._id)" matBadgeColor="accent" matRipple
   class="tile-container">
   <a href=""></a>
   <div class="title-container">
     <div class="image">
       <div class="image-cropper">
-        <img [src]="liquorItem.img" alt="">
+        <img [src]="liquor.img" alt="">
       </div>
     </div>
     <div class="title-info">
-      <div class="title">{{liquorItem.info.name}}</div>
-      <div class="info">{{liquorItem.category.categoryType}}</div>
+      <div class="title">{{liquor.info.name}}</div>
+      <div class="info">{{liquor.category.categoryType}}</div>
     </div>
   </div>
   <div class="price-contianer">
     <div class="container--1">
-      <div class="current-price">${{liquorItem.price.currentPrice}}</div>
-      <div class="difference-percent">+17%</div>
+      <div class="current-price">${{liquor.price.currentPrice}}</div>
+      <div *ngIf="percentPriceDifference > 0" [ngClass]="style" class="difference-percent">{{percentPriceDifference}}%</div>
     </div>
-    <div class="original-price">$6.37</div>
+    <div *ngIf="originalPrice && percentPriceDifference > 0" class="original-price">${{originalPrice}}</div>
   </div>
   <div class="chart-container">
-    <app-chart></app-chart>
+    <app-chart [difference]="percentPriceDifference" [liquor]="liquor"></app-chart>
   </div>
 </div>
-
-
-
-
-<!-- <div class="card-one card-width">
-  <button (click)="updateCart(liquorItem)" class="floating-button">+</button>
-  <div class="img-one" [ngStyle]="generateStyle(liquorItem.category.categoryType)">
-
-  </div>
-  <div class="name">
-    <p style="margin-bottom: 0px;">{{liquorItem.info.name}}</p>
-  </div>
-  <div class="content">
-    <p class="price">
-     ${{liquorItem.price.currentPrice}}
-    </p>
-  </div>
-</div> -->
