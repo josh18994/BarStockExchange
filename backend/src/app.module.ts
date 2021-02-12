@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
-import { LiquorModule } from './liquor/liquor.module';
-import { MongooseModule } from '@nestjs/mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
-import { MONGO_DB_CONNECT } from './constants/personal.settings';
-import { UserModule } from './user/user.module';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { CartModule } from './cart/cart.module';
+import { LiquorModule } from './liquor/liquor.module';
 import { OrderModule } from './order/order.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -23,7 +22,7 @@ import { OrderModule } from './order/order.module';
     }),
 
     // Create file src/constants/personal.settings.ts and add mongo string connect as a enum
-    MongooseModule.forRoot(MONGO_DB_CONNECT, { autoIndex: true, family: 4, useUnifiedTopology: true, keepAlive: true }),
+    MongooseModule.forRoot(process.env.MONGO_DB_CONNECT, { autoIndex: true, family: 4, useUnifiedTopology: true, keepAlive: true }),
 
     AuthModule,
 

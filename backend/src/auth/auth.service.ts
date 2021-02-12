@@ -1,11 +1,10 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { User } from 'src/user/user.schema';
+import { UserService } from 'src/user/user.service';
 import { LoginInput } from './types/auth.input';
 import { AuthType } from './types/auth.types';
-import { LIQUOR_PRICE_CHANGER_USERNAME } from 'src/constants/personal.settings';
 
 
 @Injectable()
@@ -40,7 +39,7 @@ export class AuthService {
     async jwtToken(user: User): Promise<string> {
         const { username, email, firstName, lastName } = user;
         const payload = { username, email, firstName, lastName };
-        if (username === LIQUOR_PRICE_CHANGER_USERNAME) {
+        if (username === process.env.LIQUOR_PRICE_CHANGER_USERNAME) {
             return this.jwtService.signAsync(payload, { expiresIn: '366d' });
         }
         return this.jwtService.signAsync(payload);
