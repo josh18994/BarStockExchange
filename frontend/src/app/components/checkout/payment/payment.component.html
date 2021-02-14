@@ -1,10 +1,10 @@
-<h5>Payment Details</h5>
+<div  class="title">Payment Details</div>
 <form [formGroup]="form">
-  <div class="form-group">
+  <div class="container">
     <label for="name">Name on Card</label>
     <input type="text" class="form-control" formControlName="name">
   </div>
-  <div class="form-group">
+  <div class="container">
     <label for="card number">Card number</label>
     <input type="text" class="form-control" formControlName="card_number">
   </div>
@@ -15,11 +15,11 @@
       </div>
       <div class="input">
         <div class="exp-month">
-          <input type="text" class="form-control text-center" formControlName="expiration_m">
+          <input type="text" class="form-control small" formControlName="expiration_m">
         </div>
         <div style="margin: 0 0.5rem;" class="divider">/</div>
         <div class="exp-date">
-          <input type="text" class="form-control text-center" formControlName="expiration_d">
+          <input type="text" class="form-control small" formControlName="expiration_d">
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
         <label for="card number">CVC</label>
       </div>
       <div class="cvc">
-        <input type="text" class="form-control text-center" formControlName="cvc">
+        <input type="text" class="form-control" formControlName="cvc">
       </div>
     </div>
   </div>

@@ -1,19 +1,37 @@
-.card {
-  background: rgba(255,255,255,0.4);
+.login-card {
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 35px;
-  padding: 15px 5px 0 5px;
 }
 
-
-.btn-link {
-  font-weight: 400;
-  color: #041723;
-  text-decoration: none;
+.content {
+  padding: 15px 12px 10px 12px;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 
-.btn-primary {
-  color: #1BA098;
-  background-color: #041723;
-  border-color: #041723;
+  .user-input {
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    margin-top: 5px;
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+
+  .login-btn {
+    color: #1BA098;
+    background-color: #041723;
+    border-color: #041723;
+    border-radius: 5px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+  }
+
 }

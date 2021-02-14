@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountDashboardRoutingModule } from './account-dashboard-routing.module';
+import { MaterialModule } from '../common/material/material.module';
 
 
 
@@ -17,7 +18,8 @@ import { AccountDashboardRoutingModule } from './account-dashboard-routing.modul
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AccountDashboardRoutingModule
+    AccountDashboardRoutingModule,
+    MaterialModule
   ]
 })
 export class AccountDashboardModule { }

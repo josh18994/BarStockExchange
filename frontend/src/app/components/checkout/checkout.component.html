@@ -5,13 +5,15 @@
   <div class="item order-summary">
     <app-summary></app-summary>
   </div>
-  <div class="item payment">
-    <app-payment></app-payment>
-  </div>
-  <div class="item discount">
-    <app-discount style="width: 100%; transform: translateY(-4px);"></app-discount>
-  </div>
-  <div class="item total">
-    <app-total></app-total>
+  <div *ngIf="innerWidth > 849">
+    <div class="item payment">
+      <app-payment></app-payment>
+    </div>
+    <div class="item discount">
+      <app-discount style="width: 100%; transform: translateY(-4px);"></app-discount>
+    </div>
+    <div class="item total">
+      <app-total></app-total>
+    </div>
   </div>
 </div>

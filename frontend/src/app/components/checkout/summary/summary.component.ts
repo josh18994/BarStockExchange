@@ -11,7 +11,6 @@ import { ICartState } from 'src/app/state/cart/cart.state';
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: [
-    // '../../../../assets/bootstrap.min.css',
     './summary.component.scss'
   ]
 })
