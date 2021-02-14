@@ -51,18 +51,8 @@ export class AuthService {
     return this.apollo.query({ query: AUTHENTICATE_COOKIE });
   }
 
-  // public checkUserExists(username): Observable<any> {
-  //   return this.apollo.query({ query: CHECK_USER_EXISTS, variables: { username } });
-  // }
-
   public checkUserExists(username): Observable<any> {
-    return this.apollo.mutate({
-      mutation: LOGIN_USER,
-      variables: {
-        username,
-        password: 'admin'
-      }
-    });
-    }
+    return this.apollo.query({ query: CHECK_USER_EXISTS, variables: { username } });
+  }
 
 }
