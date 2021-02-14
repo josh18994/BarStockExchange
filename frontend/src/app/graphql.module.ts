@@ -30,9 +30,6 @@ interface Definintion {
         const http = httpLink.create({
           uri: environment.apiURL,
           withCredentials: true,
-          headers: new HttpHeaders({
-            Authorization: 'Bearer ' + localStorage.getItem('token')
-          })
         });
 
         const ws = new WebSocketLink({
