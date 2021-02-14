@@ -8,7 +8,6 @@ import { IAppState } from 'src/app/state';
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: [
-    '../../../assets/bootstrap.min.css',
     './layout.component.scss']
 })
 export class LayoutComponent implements OnInit {

@@ -11,7 +11,6 @@ import { CreateUser } from 'src/app/state/auth/auth.actions';
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: [
-    '../../../assets/bootstrap.min.css',
     './signup.component.scss']
 })
 export class SignupComponent implements OnInit {

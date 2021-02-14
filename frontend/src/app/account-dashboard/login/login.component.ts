@@ -11,7 +11,6 @@ import { CheckUserExists, ClearUsernameExists, LoginUser } from 'src/app/state/a
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: [
-    '../../../assets/bootstrap.min.css',
     './login.component.scss'
   ]
 })

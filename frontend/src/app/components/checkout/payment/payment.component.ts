@@ -5,7 +5,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: [
-    '../../../../assets/bootstrap.min.css',
     './payment.component.scss'
   ]
 })

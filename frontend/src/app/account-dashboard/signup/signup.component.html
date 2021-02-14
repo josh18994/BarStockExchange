@@ -1,4 +1,4 @@
-<div class="card">
+<!-- <div class="card">
   <div class="card-body">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-row">
@@ -57,4 +57,64 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->
+
+<mat-card class="signup-card">
+  <mat-card-content class="content">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="container--double">
+        <div class="container">
+          <label for="firstName">First Name</label>
+          <input (blur)="validateName()" type="text" formControlName="firstName"
+            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" class="user-input" />
+          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors.required">First Name is required</div>
+          </div>
+        </div>
+        <div class="container">
+          <label for="lastName">Last Name</label>
+          <input type="text" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+            class="user-input" />
+          <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+            <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+          </div>
+        </div>
+      </div>
+      <div style="width: 100%;" class="container">
+        <label>Email</label>
+        <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+          class="user-input" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+          <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+        </div>
+      </div>
+      <div class="container--double">
+        <div class="container">
+          <label for="username">Username</label>
+          <input type="text" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            class="user-input" />
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+            <div *ngIf="f.username.errors.minlength">Username must be at least 5g characters</div>
+          </div>
+        </div>
+        <div class=" container">
+          <label for="password">Password</label>
+          <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            class="user-input" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 5g characters</div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button color="primary" class="signup-btn">
+          Signup
+        </button>
+        <button routerLink="../login" mat-button class="">cancel</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

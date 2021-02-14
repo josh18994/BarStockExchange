@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-discount',
   templateUrl: './discount.component.html',
   styleUrls: [
-    '../../../../assets/bootstrap.min.css',
     './discount.component.scss'
   ]
 })

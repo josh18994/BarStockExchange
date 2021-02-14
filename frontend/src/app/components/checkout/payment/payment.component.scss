@@ -1,5 +1,6 @@
+@import "../../../sass/mixins";
+
 label {
-  padding-left: 10px;
   margin-bottom: 0px;
 }
 
@@ -10,8 +11,6 @@ label {
 .cvc-container{
   flex: 0 0 50%;
 }
-
-
 
 .expiration-container {
   display: flex;
@@ -29,7 +28,20 @@ label {
 }
 
 .form-control {
-  background: rgba(255, 255, 255, 0.4);
-  color: white;
+  @include input-field--2;
+  margin-bottom: 5px;
 }
+
+.container {
+  @include container;
+}
+
+.small {
+  width: 35%;
+}
+
+.title {
+  @include title;
+}
+
 

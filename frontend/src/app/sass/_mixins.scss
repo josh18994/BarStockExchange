@@ -28,4 +28,35 @@
   border: 1px solid white;
 }
 
+@mixin input-field--1 {
+  color: #1BA098;
+  background-color: #041723;
+  border-color: #041723;
+  border-radius: 5px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
 
+
+@mixin input-field--2 {
+  padding: 0 12px;
+  color: white;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px white solid;
+  border-radius: 5px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+@mixin container {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
